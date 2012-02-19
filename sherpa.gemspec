@@ -18,8 +18,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_development_dependency('rdoc')
   s.add_development_dependency('aruba')
+  s.add_development_dependency('lll')
+  s.add_development_dependency('rdoc')
   s.add_development_dependency('rake','~> 0.9.2')
+  s.add_development_dependency('rspec')
   s.add_dependency('methadone')
 end
