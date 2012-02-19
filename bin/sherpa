@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'methadone'
+require 'sherpa'
+
+include Methadone::Main
+
+main do
+end
+
+version Sherpa::VERSION
+
+go!
