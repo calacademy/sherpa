@@ -2,7 +2,7 @@
 
 Author::  Mark Wilden (mark@mwilden.com)
 
-Commandline program to parse the citations in Sherborn's Index Animalium
+Command-line program to parse the citations in Sherborn's Index Animalium
 
 == Links
 
