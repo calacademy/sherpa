@@ -3,44 +3,48 @@ require 'optparse'
 require 'methadone'
 require 'csv'
 require 'json'
+require 'lll'
 require_relative '../lib/sherpa'
 require_relative '../lib/progress'
 
 include Methadone::Main
 
 ENV['DEBUG'] = 'true'
-
 main do |file_name|
   Progress.init true
   counts = Hash.new(0)
   citations = []
 
-  File.open file_name do |file|
-    csv = CSV.new file, headers: true, col_sep: "\t"
-
-    loop do
-      begin
-        row = csv.readline
-        Progress.tally_and_show_progress 50
-        break unless row
-        citation = row['Citation']
-        unless citation
-          counts[:no_citation] += 1
-          next
-        end
-        counts[:valid_csv] += 1
-      rescue
-        counts[:invalid_csv] += 1
-        next
-      end
-
-      begin
-        citations << Sherpa.parse(citation)
-        counts[:parsed] += 1
-      rescue Citrus::ParseError
-        counts[:unparsed] += 1
-      end
+  need_to_skip_header = true
+  File.foreach file_name do |line|
+    if need_to_skip_header
+      need_to_skip_header = false
+      next
     end
+
+    begin
+      Progress.tally_and_show_progress 1000
+      row = CSV.parse_line line, col_sep: "\t"
+      break unless row
+      counts[:valid_csv] += 1
+    rescue
+      counts[:invalid_csv] += 1
+      next
+    end
+
+    citation = row[12]
+    unless citation
+      counts[:no_citation] += 1
+      next
+    end
+
+    begin
+      citations << Sherpa.parse(citation)
+      counts[:parsed] += 1
+    rescue Citrus::ParseError
+      counts[:unparsed] += 1
+    end
+
   end
 
   #puts citations.to_json
