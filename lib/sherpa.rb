@@ -8,7 +8,14 @@ module Sherpa
   end
 
   def self.preprocess string
-    remove_mismatched_brackets string
+    remove_mismatched_brackets(
+    remove_trailing_comma(
+      string))
+  end
+
+  def self.remove_trailing_comma string
+    return string[0..-2] if string[-1] == ','
+    string
   end
 
   # copied from AntCat

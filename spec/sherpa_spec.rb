@@ -93,6 +93,10 @@ describe Sherpa do
     it "should leave a normal string alone" do
       @parser.preprocess('[a]').should == '[a]'
     end
+    it "should leave a normal string alone" do
+      @parser.preprocess('Isis (Oken), 1833, 523,').should == 'Isis (Oken), 1833, 523'
+    end
+
   end
 
 end
