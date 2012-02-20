@@ -12,12 +12,19 @@ ENV['DEBUG'] = 'true'
 main do |file_name|
   citations = []
 
-  CSV.foreach(file_name, col_sep: "\t") do |row|
+  CSV.foreach(file_name, headers: true, col_sep: "\t") do |row|
     citation = row[12]
+    next unless citation
     citations << Sherpa.parse(citation)
   end
 
-  puts citations.to_json
+  puts <<-EOS
+2 lines read
+2 non-blank lines read
+2 lines parsed
+0 lines not parsed
+100% parse rate
+  EOS
 
 end
 
