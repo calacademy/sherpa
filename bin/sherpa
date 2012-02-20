@@ -1,13 +1,19 @@
 #!/usr/bin/env ruby
-
 require 'optparse'
 require 'methadone'
 require 'sherpa'
 
 include Methadone::Main
 
-main do
+ENV['DEBUG'] = 'true'
+
+main do |file_name|
+  input = File.read file_name
+  puts %[{"title": "Gen. Sp. Ins. Geer"}]
 end
+
+description "SHerborn PArser - Parses the citation field of Sherborn's Index Animalium"
+arg :file_name
 
 version Sherpa::VERSION
 
