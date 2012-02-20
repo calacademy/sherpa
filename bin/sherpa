@@ -12,7 +12,8 @@ include Methadone::Main
 ENV['DEBUG'] = 'true'
 
 main do |file_name|
-  Progress.init true
+  line_count = file_name =~ /short/ ? 45 : 429830
+  Progress.init true, line_count
   @counts = Hash.new(0)
   @citations = []
 
@@ -67,11 +68,10 @@ main do |file_name|
 end
 
 def show_progress
-  message = Progress.percent(@counts[:valid_csv]) + ' valid, ' +
-            Progress.percent(@counts[:invalid_csv]) + ' invalid, ' +
-            Progress.percent(@counts[:no_citation]) + ' no citation, ' +
-            Progress.percent(@counts[:parsed]) + ' parsed, ' +
-            Progress.percent(@counts[:unparsed]) + ' unparsed'
+  return if Progress.processed_count % 1000 != 0
+  message = "#{Progress.processed_count} lines, " +
+            "#{Progress.percent(@counts[:parsed])} parsed, " +
+            "#{Progress.time_left}"
   Progress.puts message
 end
 
