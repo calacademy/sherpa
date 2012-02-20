@@ -1,12 +1,17 @@
 grammar SherbornGrammar
   rule citation
+    (citation_part (' ; & ' citation_part)?) {
+      {citations: captures[:citation_part].map(&:value), text: to_s}
+    }
+  end
+
+  rule citation_part
     (title /,? / (series_volume_issue ' ')? year ', ' pages '.'?) {
       { title: title.value,
         year: year.value,
         series_volume_issue:
           series_volume_issue && series_volume_issue.value,
         pages: pages.value,
-        text: to_s
       }
     }
   end
@@ -16,29 +21,47 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    /[[:upper:]][[:lower:]]+\.?/
+    capitalized_word_or_abbreviation | parenthesized_phrase
+  end
+
+  rule capitalized_word_or_abbreviation
+    !roman_number capitalized_word '.'?
+  end
+
+  rule capitalized_word
+    /[[:upper:]][[:lower:]]*/
+  end
+  
+  rule parenthesized_phrase
+    '(' capitalized_word_or_abbreviation (' ' capitalized_word_or_abbreviation)* ')'
   end
 
   rule series_volume_issue
-    volume (' ' issue)?
+    ((edition ', ')? volume (' ' issue)?) | issue
+  end
+
+  rule edition
+    /ed\. \d+/
   end
 
   rule volume
-    /I\.?/
+    roman_number '.'?
   end
 
   rule issue
-    /\(\d\)/
+    /\(\d+\)/
   end
 
   rule year
-    /\d{4}/
+    /\[?\d{4}/
   end
 
   rule pages
     /\d+/
   end
 
+  rule roman_number
+    /\b[IVXLC]+\b/i
+  end
+
 end
-
-
