@@ -4,28 +4,55 @@ require 'methadone'
 require 'csv'
 require 'json'
 require_relative '../lib/sherpa'
+require_relative '../lib/progress'
 
 include Methadone::Main
 
 ENV['DEBUG'] = 'true'
 
 main do |file_name|
+  Progress.init true
+  counts = Hash.new(0)
   citations = []
 
-  CSV.foreach(file_name, headers: true, col_sep: "\t") do |row|
-    citation = row[12]
-    next unless citation
-    citations << Sherpa.parse(citation)
+  File.open file_name do |file|
+    csv = CSV.new file, headers: true, col_sep: "\t"
+
+    loop do
+      begin
+        row = csv.readline
+        Progress.tally_and_show_progress 50
+        break unless row
+        citation = row['Citation']
+        unless citation
+          counts[:no_citation] += 1
+          next
+        end
+        counts[:valid_csv] += 1
+      rescue
+        counts[:invalid_csv] += 1
+        next
+      end
+
+      begin
+        citations << Sherpa.parse(citation)
+        counts[:parsed] += 1
+      rescue Citrus::ParseError
+        counts[:unparsed] += 1
+      end
+    end
   end
 
-  puts <<-EOS
-2 lines read
-2 non-blank lines read
-2 lines parsed
-0 lines not parsed
-100% parse rate
-  EOS
+  #puts citations.to_json
 
+  Progress.show_results
+  Progress.show_count counts[:valid_csv], Progress.processed_count, 'valid CSV'
+  Progress.show_count counts[:invalid_csv], Progress.processed_count, 'invalid CSV'
+  Progress.show_count counts[:no_citation], Progress.processed_count, 'no citation'
+  Progress.show_count counts[:parsed], Progress.processed_count, 'parsed'
+  Progress.show_count counts[:unparsed], Progress.processed_count, 'unparsed'
+
+  Progress.puts Progress.percent(counts[:parsed], counts[:valid_csv]) + ' success'
 end
 
 description "SHERborn PArser - Parses the citation field of Sherborn's Index Animalium"
