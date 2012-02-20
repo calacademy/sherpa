@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency('aruba')
+  s.add_development_dependency('citrus')
   s.add_development_dependency('lll')
   s.add_development_dependency('rdoc')
   s.add_development_dependency('rake','~> 0.9.2')
