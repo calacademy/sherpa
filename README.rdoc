@@ -4,17 +4,4 @@ Author::  Mark Wilden (mark@mwilden.com)
 
 Command-line program to parse the citations in Sherborn's Index Animalium
 
-== Links
-
-* https://github.com/calacademy/sherpa
-* RDoc[LINK TO RDOC.INFO]
-
-== Install
-gem install sherpa
-
-== Examples
-sherpa
-
-== Contributing
-Go ahead. Why not?
-
+https://github.com/calacademy/sherpa
