@@ -20,9 +20,15 @@ grammar SherbornGrammar
   end
 
   rule series_volume_issue
-    /I\.?/ {
-      'I'
-    }
+    volume (' ' issue)?
+  end
+
+  rule volume
+    /I\.?/
+  end
+
+  rule issue
+    /\(\d\)/
   end
 
   rule year

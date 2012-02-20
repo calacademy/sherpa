@@ -25,7 +25,10 @@ describe Sherpa do
       run_spec 'Danske Atlas, I 1763, 621', 'Danske Atlas', 'I', '1763', '621'
     end
     it "should handle a journal with a volume" do
-      run_spec 'Mant. I. 1787, 164', 'Mant.', 'I', '1787', '164'
+      run_spec 'Mant. I. 1787, 164', 'Mant.', 'I.', '1787', '164'
+    end
+    it "should handle a journal with a volume and a series" do
+      run_spec 'Uitl. Kapellen, I (8) 1776, 146', 'Uitl. Kapellen', 'I (8)', '1776', '146'
     end
   end
 
