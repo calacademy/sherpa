@@ -1,0 +1,30 @@
+grammar SherbornGrammar
+  rule citation
+    (title /,? / year ', ' pages '.'?) {
+      { title: title.value,
+        year: year.value,
+        pages: pages.value,
+        text: to_s
+      }
+    }
+  end
+
+  rule title
+    title_word (' ' title_word)*
+  end
+
+  rule title_word
+    /[[:upper:]][[:lower:]]*\.?/
+  end
+
+  rule year
+    /\d{4}/
+  end
+
+  rule pages
+    /\d+/
+  end
+
+end
+
+
