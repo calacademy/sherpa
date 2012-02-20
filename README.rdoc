@@ -6,7 +6,7 @@ Command-line program to parse the citations in Sherborn's Index Animalium
 
 == Links
 
-* {Source on Github}https://github.com/calacademy/sherpa
+* https://github.com/calacademy/sherpa
 * RDoc[LINK TO RDOC.INFO]
 
 == Install
