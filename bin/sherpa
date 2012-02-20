@@ -22,6 +22,7 @@ main do |file_name|
 end
 
 description "SHerborn PArser - Parses the citation field of Sherborn's Index Animalium"
+description "SHERborn PArser - Parses the citation field of Sherborn's Index Animalium"
 arg :file_name
 
 version Sherpa::VERSION
