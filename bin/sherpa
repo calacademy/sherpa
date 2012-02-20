@@ -17,10 +17,11 @@ main do |file_name|
   extension = file_name[file_name.rindex('.')..-1]
   output_file_name = file_name_without_extension + '.json'
   unparsed_file_name = file_name_without_extension + '.unparsed.txt'
-  File.open file_name + '.sherpa.json', 'w' do |output_file|
-    File.open file_name + '.errors.txt', 'w' do |error_file|
+
+  File.open output_file_name, 'w' do |output_file|
+    File.open unparsed_file_name, 'w' do |error_file|
       @using_real_file = file_name !~ /short/
-      line_count = @using_real_file ? 45 : 429830
+      line_count = @using_real_file ? 100 : 429830
       Progress.init true, line_count
       @counts = Hash.new(0)
       @citations = []
