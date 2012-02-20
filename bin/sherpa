@@ -1,15 +1,24 @@
 #!/usr/bin/env ruby
 require 'optparse'
 require 'methadone'
-require 'sherpa'
+require 'csv'
+require 'json'
+require_relative '../lib/sherpa'
 
 include Methadone::Main
 
 ENV['DEBUG'] = 'true'
 
 main do |file_name|
-  input = File.read file_name
-  puts %[{"title": "Gen. Sp. Ins. Geer"}]
+  citations = []
+
+  CSV.foreach(file_name, col_sep: "\t") do |row|
+    citation = row[12]
+    citations << Sherpa.parse(citation)
+  end
+
+  puts citations.to_json
+
 end
 
 description "SHerborn PArser - Parses the citation field of Sherborn's Index Animalium"

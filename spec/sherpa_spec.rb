@@ -3,11 +3,10 @@ require 'spec_helper'
 require 'citrus'
 
 describe Sherpa do
-  before(:all) {Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/*'}
-  before() {@grammar = SherbornGrammar}
+  before() {@parser = Sherpa}
 
   def run_spec citation, title, year, pages
-    @grammar.parse(citation).value.should == {
+    @parser.parse(citation).should == {
       title: title, year: year, pages: pages, text: citation
     }
   end

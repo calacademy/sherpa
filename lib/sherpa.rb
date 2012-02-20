@@ -1,6 +1,8 @@
+require 'citrus'
+
 module Sherpa
-  def foo
-    1
+  def self.parse string
+    Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/*'
+    SherbornGrammar.parse(string).value
   end
-  module_function :foo
 end
