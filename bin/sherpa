@@ -32,8 +32,6 @@ main do |file_name|
           next
         end
 
-        test_file.puts line if Progress.processed_count % 4243 == 0
-
         begin
           row = CSV.parse_line line, col_sep: "\t"
           if row
