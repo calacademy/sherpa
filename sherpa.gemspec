@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Mark Wilden"]
   s.email       = ["mark@mwilden.com"]
   s.homepage    = ""
-  s.summary     = %q{The SHEborn PArser}
+  s.summary     = %q{The SHERborn PArser}
   s.description = %q{Parses the citations in Index Animalium}
 
   s.rubyforge_project = "sherpa"

@@ -1,4 +1,4 @@
-Feature: SherPa - the SHErborn PArser
+Feature: SherPa - the SHERborn PArser
   In order to extract bibliographic information from Sherborn
   So we can match it against his bibliography
   So we can match names against Suzanne's matches against his bibliography

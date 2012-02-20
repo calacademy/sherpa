@@ -1,4 +1,4 @@
-= sherpa - SHerborn PArser
+= sherpa - SHERborn PArser
 
 Author::  Mark Wilden (mark@mwilden.com)
 
