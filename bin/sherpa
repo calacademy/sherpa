@@ -10,10 +10,11 @@ require_relative '../lib/progress'
 include Methadone::Main
 
 ENV['DEBUG'] = 'true'
+
 main do |file_name|
   Progress.init true
   counts = Hash.new(0)
-  citations = []
+  @citations = []
 
   need_to_skip_header = true
   File.foreach file_name do |line|
@@ -39,15 +40,15 @@ main do |file_name|
     end
 
     begin
-      citations << Sherpa.parse(citation)
+      citation = Sherpa.parse(citation)
+      @citations << citation
+      show_citation citation
       counts[:parsed] += 1
     rescue Citrus::ParseError
       counts[:unparsed] += 1
     end
 
   end
-
-  #puts citations.to_json
 
   Progress.show_results
   Progress.show_count counts[:valid_csv], Progress.processed_count, 'valid CSV'
@@ -57,6 +58,21 @@ main do |file_name|
   Progress.show_count counts[:unparsed], Progress.processed_count, 'unparsed'
 
   Progress.puts Progress.percent(counts[:parsed], counts[:valid_csv]) + ' success'
+end
+
+def show_citations
+  for citation in @citations
+    show_citation citation
+  end
+end
+
+def show_citation citation
+  puts citation[:text]
+  fields = []
+  fields << %{title:"#{citation[:title]}"}
+  fields << %{year:"#{citation[:year]}"}
+  fields << %{pages:"#{citation[:pages]}"}
+  puts '  ' + fields.join(' ')
 end
 
 description "SHERborn PArser - Parses the citation field of Sherborn's Index Animalium"
