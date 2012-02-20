@@ -1,8 +1,10 @@
 grammar SherbornGrammar
   rule citation
-    (title /,? / year ', ' pages '.'?) {
+    (title /,? / (series_volume_issue ' ')? year ', ' pages '.'?) {
       { title: title.value,
         year: year.value,
+        series_volume_issue:
+          series_volume_issue && series_volume_issue.value,
         pages: pages.value,
         text: to_s
       }
@@ -14,7 +16,13 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    /[[:upper:]][[:lower:]]*\.?/
+    /[[:upper:]][[:lower:]]+\.?/
+  end
+
+  rule series_volume_issue
+    /I\.?/ {
+      'I'
+    }
   end
 
   rule year
