@@ -53,7 +53,7 @@ grammar SherbornGrammar
   end
 
   rule year
-    /\[?\d{4}/
+    /\d{4}/
   end
 
   rule pages

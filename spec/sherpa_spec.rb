@@ -4,8 +4,9 @@ require 'citrus'
 
 describe Sherpa do
 
+  before() {@parser = Sherpa}
+
   describe "Parsing" do
-    before() {@parser = Sherpa}
 
     def run_spec citation, title, series_volume_issue, year, pages
       @parser.parse(citation).should == {citations: [{
@@ -55,9 +56,6 @@ describe Sherpa do
     end
 
     describe "Year" do
-      it "should handle a year with an opening bracket" do
-        run_spec 'Danischer Atlas, I. [1765, 401.', 'Danischer Atlas', 'I.', '[1765', '401'
-      end
     end
 
     describe "Multipart citations" do
@@ -82,11 +80,19 @@ describe Sherpa do
       end
     end
 
-
   end
 
   describe "Preprocessing" do
-
+    # Code under test is copied from AntCat
+    it "should removed unmatched opening brackets" do
+      @parser.preprocess('[a').should == 'a'
+    end
+    it "should leave a normal string alone" do
+      @parser.preprocess('a').should == 'a'
+    end
+    it "should leave a normal string alone" do
+      @parser.preprocess('[a]').should == '[a]'
+    end
   end
 
 end
