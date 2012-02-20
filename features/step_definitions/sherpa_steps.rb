@@ -1,3 +1,5 @@
 Then "it should emit the JSON:" do |json|
-  JSON.parse(all_output).should == JSON.parse(json)
+  match = all_output.match('\[^\]]+')
+  match.should_not be_nil
+  JSON.parse(match[0]).should == JSON.parse(json)
 end
