@@ -3,6 +3,7 @@ require 'optparse'
 require 'methadone'
 require 'csv'
 require 'json'
+require 'pp'
 require 'lll'
 require_relative '../lib/sherpa'
 require_relative '../lib/progress'
@@ -12,58 +13,76 @@ include Methadone::Main
 ENV['DEBUG'] = 'true'
 
 main do |file_name|
-  line_count = file_name =~ /short/ ? 45 : 429830
-  Progress.init true, line_count
-  @counts = Hash.new(0)
-  @citations = []
+  file_name_without_extension = file_name[0...file_name.rindex('.')]
+  extension = file_name[file_name.rindex('.')..-1]
+  output_file_name = file_name_without_extension + '.json'
+  unparsed_file_name = file_name_without_extension + '.unparsed.txt'
+  File.open file_name + '.sherpa.json', 'w' do |output_file|
+    File.open file_name + '.errors.txt', 'w' do |error_file|
+      @using_real_file = file_name !~ /short/
+      line_count = @using_real_file ? 45 : 429830
+      Progress.init true, line_count
+      @counts = Hash.new(0)
+      @citations = []
 
-  need_to_skip_header = true
-  File.foreach file_name do |line|
-    if need_to_skip_header
-      need_to_skip_header = false
-      next
-    end
+      need_to_skip_header = true
+      File.foreach file_name do |line|
+        if need_to_skip_header
+          need_to_skip_header = false
+          next
+        end
 
-    begin
-      row = CSV.parse_line line, col_sep: "\t"
-      if row
-        Progress.tally
-      else
-        break unless row
+        test_file.puts line if Progress.processed_count % 4243 == 0
+
+        begin
+          row = CSV.parse_line line, col_sep: "\t"
+          if row
+            Progress.tally
+          else
+            break unless row
+          end
+          @counts[:valid_csv] += 1
+        rescue
+          @counts[:invalid_csv] += 1
+          next
+        end
+
+        citation = row[12]
+        unless citation
+          @counts[:no_citation] += 1
+          next
+        end
+
+        begin
+          citation = Sherpa.parse(citation)
+          @citations << citation
+          @counts[:parsed] += 1
+        rescue Citrus::ParseError
+          error_file.puts citation
+          @counts[:unparsed] += 1
+        end
+
+        show_progress unless options[:quiet]
+
       end
-      @counts[:valid_csv] += 1
-    rescue
-      @counts[:invalid_csv] += 1
-      next
+
+      output_file.puts '['
+      for citation in @citations
+        output_file.puts citation.to_json
+      end
+      output_file.puts ']'
+
+      unless options[:quiet]
+        Progress.show_results
+        Progress.show_count @counts[:valid_csv], Progress.processed_count, 'valid CSV'
+        Progress.show_count @counts[:invalid_csv], Progress.processed_count, 'invalid CSV'
+        Progress.show_count @counts[:no_citation], Progress.processed_count, 'no citation'
+        Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
+        Progress.show_count @counts[:unparsed], Progress.processed_count, 'unparsed'
+        Progress.puts Progress.percent(@counts[:parsed], @counts[:valid_csv]) + ' success'
+      end
+
     end
-
-    citation = row[12]
-    unless citation
-      @counts[:no_citation] += 1
-      next
-    end
-
-    begin
-      citation = Sherpa.parse(citation)
-      @citations << citation
-      #show_citation citation
-      @counts[:parsed] += 1
-    rescue Citrus::ParseError
-      @counts[:unparsed] += 1
-    end
-
-    show_progress unless options[:quiet]
-
-  end
-
-  unless options[:quiet]
-    Progress.show_results
-    Progress.show_count @counts[:valid_csv], Progress.processed_count, 'valid CSV'
-    Progress.show_count @counts[:invalid_csv], Progress.processed_count, 'invalid CSV'
-    Progress.show_count @counts[:no_citation], Progress.processed_count, 'no citation'
-    Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
-    Progress.show_count @counts[:unparsed], Progress.processed_count, 'unparsed'
-    Progress.puts Progress.percent(@counts[:parsed], @counts[:valid_csv]) + ' success'
   end
 end
 
