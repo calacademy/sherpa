@@ -53,6 +53,12 @@ describe Sherpa do
       it "should handle an issue without a volume" do
         run_spec 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
       end
+      it "should handle a placeholder, when it's just a hyphen" do
+        run_spec 'Ins. Afr. Amer. (-) 1806, 18', 'Ins. Afr. Amer.', '(-)', '1806', '18'
+      end
+      it "should handle a placeholder, even when it's UTF-16" do
+        run_spec 'Ins. Afr. Amer. (—) 1806, 18', 'Ins. Afr. Amer.', '(—)', '1806', '18'
+      end
     end
 
     describe "Year" do

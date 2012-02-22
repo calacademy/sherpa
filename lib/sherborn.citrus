@@ -49,7 +49,11 @@ grammar SherbornGrammar
   end
 
   rule issue
-    /\(\d+\)/
+    '(' issue_designator ')'
+  end
+
+  rule issue_designator
+    /\d+/ | '-' | '—'
   end
 
   rule year
