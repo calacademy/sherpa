@@ -6,9 +6,9 @@ grammar SherbornGrammar
   end
 
   rule citation_part
-    (title /,? / (series_volume_issue ' ')? year ', ' pages '.'?) {
+    (title /,? / (series_volume_issue ' ')? (date ', ') pages '.'?) {
       { title: title.value,
-        year: year.value,
+        date: date && date.value,
         series_volume_issue:
           series_volume_issue && series_volume_issue.value,
         pages: pages.value,
@@ -53,14 +53,38 @@ grammar SherbornGrammar
   end
 
   rule issue_designator
-    /\d+/ | '-' | '—'
+    /\d+/ | hyphen
+  end
+
+  rule hyphen
+    '-' | '—'
+  end
+
+  rule date
+    year_range | year
+  end
+
+  rule year_range
+    year hyphen short_year
   end
 
   rule year
     /\d{4}/
   end
 
+  rule short_year
+    /\d{2}/
+  end
+
   rule pages
+    bracketed_pages | unbracketed_pages
+  end
+
+  rule bracketed_pages
+    '[' unbracketed_pages ']'
+  end
+
+  rule unbracketed_pages
     /\d+/
   end
 

@@ -8,9 +8,9 @@ describe Sherpa do
 
   describe "Parsing" do
 
-    def run_spec citation, title, series_volume_issue, year, pages
+    def run_spec citation, title, series_volume_issue, date, pages
       @parser.parse(citation).should == {citations: [{
-        title: title, year: year, series_volume_issue: series_volume_issue, pages: pages
+        title: title, date: date, series_volume_issue: series_volume_issue, pages: pages
       }], text: citation}
     end
 
@@ -26,6 +26,12 @@ describe Sherpa do
       end
       it "should handle a parenthesized phrase before the volume" do
         run_spec 'Nat. Ins. (Käfer) II. 1789, 53', 'Nat. Ins. (Käfer)', 'II.', '1789', '53'
+      end
+    end
+
+    describe "Combinations" do
+      it "should handle bracketed page without date" do
+        run_spec 'Exot. Schmett. 1978, 23', 'Exot. Schmett.', 'II.', nil, '[23]'
       end
     end
 
@@ -59,9 +65,18 @@ describe Sherpa do
       it "should handle a placeholder, even when it's UTF-16" do
         run_spec 'Ins. Afr. Amer. (—) 1806, 18', 'Ins. Afr. Amer.', '(—)', '1806', '18'
       end
+      it "should handle 'Tab.' as part of the series/volume/issue" do
+        run_spec 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', '[23]'
+      end
     end
 
-    describe "Year" do
+    describe "Date" do
+      it "should handle a year range" do
+        run_spec 'Ins. Afr. Amér. (—) 1813-20, 168', 'Ins. Afr. Amér.', '(—)', '1813-20', '168'
+      end
+      it "should handle a missing date" do
+        run_spec 'Exot. Schmett. II. 1784, 23', 'Exot. Schmett.', 'II.', '1784', '23'
+      end
     end
 
     describe "Multipart citations" do
@@ -71,13 +86,13 @@ describe Sherpa do
             {
               title: 'Danske Atlas',
               series_volume_issue: 'I.',
-              year: '1763',
+              date: '1763',
               pages: '621',
             },
             {
               title: 'Danischer Atlas',
               series_volume_issue: 'I.',
-              year: '1765',
+              date: '1765',
               pages: '401',
             }
           ],
