@@ -43,14 +43,13 @@ main do |file_name|
           next
         end
 
-        citation = get_citation_from_row row
-        unless citation
+        unless citation = get_fields_from_row(row)
           @counts[:no_citation] += 1
           next
         end
 
         begin
-          citation = parse_citation citation
+          parse_citation citation
           @citations << citation
           @counts[:parsed] += 1
         rescue Citrus::ParseError
@@ -73,26 +72,18 @@ def get_line line
   CSV.parse_line line, col_sep: "\t"
 end
 
-def get_citation_from_row row
-  row[12]
+def get_fields_from_row row
+  citation = row[12]
+  return unless citation
+  {citation: citation, rich: 'a'}
 end
 
 def parse_citation citation
-  Sherpa.parse citation
+  citation.merge! Sherpa.parse citation[:citation]
 end
 
 def write_results file
-  file.puts '['
-  outputting_first_citation = true
-  for citation in @citations
-    if outputting_first_citation
-      outputting_first_citation = false
-    else
-      file.puts ','
-    end
-    write_citation file, citation
-  end
-  file.print "\n]"
+  file.write @citations.to_json
 end
 
 def write_citation file, citation
