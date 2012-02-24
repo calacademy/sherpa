@@ -12,14 +12,13 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
 125	1	SIL34_01_01_0067	3	1	abadonna	0	Sphinx	0			J. C. Fabricius	Suppl. Ent. Syst. 1798, 435			Suppl. Ent. Syst. 1798, 435											Suppl Ent Syst				0	1	abadonna Sphinx, J. C. Fabricius, Suppl. Ent. Syst. 1798, 435.	0	70	0		0
     """
     When I run `sherpa sherborn.txt`
-    # TODO: This step should be defined by Aruba, but it says it's not
-    #Then the file "sherborn.json" should contain:
-    #"""
-    #[
-      #{"title": "Gen. Sp. Ins. Geer", "year": "1783", "pages": "32", "text": "Gen. Sp. Ins. Geer, 1783, 32."},
-      #{"title": "Suppl. Ent. Syst.", "year": "1798", "pages": "435", "text": "Suppl. Ent. Syst. 1798, 435"}
-    #]
-    #"""
+    Then the file "sherborn.json" should contain exactly:
+    """
+    [
+    {"citations":[{"title":"Gen. Sp. Ins. Geer","date":"1783","series_volume_issue":null,"pages":"32"}],"text":"Gen. Sp. Ins. Geer, 1783, 32."},
+    {"citations":[{"title":"Suppl. Ent. Syst.","date":"1798","series_volume_issue":null,"pages":"435"}],"text":"Suppl. Ent. Syst. 1798, 435"}
+    ]
+    """
 
   Scenario: Reporting the results
     Given a file named "sherborn.txt" with:

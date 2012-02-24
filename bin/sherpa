@@ -66,10 +66,16 @@ main do |file_name|
       end
 
       output_file.puts '['
+      outputting_first_citation = true
       for citation in @citations
-        output_file.puts citation.to_json
+        if outputting_first_citation
+          outputting_first_citation = false
+        else
+          output_file.puts ','
+        end
+        output_file.print citation.to_json
       end
-      output_file.puts ']'
+      output_file.print "\n]"
 
       unless options[:quiet]
         Progress.show_results
