@@ -1,7 +1,7 @@
 grammar SherbornGrammar
   rule citation
     (citation_part (' ; & ' citation_part)?) {
-      {citations: captures[:citation_part].map(&:value), text: to_s}
+      {citations: captures[:citation_part].map(&:value)}
     }
   end
 

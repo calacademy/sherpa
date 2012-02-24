@@ -11,7 +11,7 @@ describe Sherpa do
     def run_spec citation, title, series_volume_issue, date, pages
       @parser.parse(citation).should == {citations: [{
         title: title, date: date, series_volume_issue: series_volume_issue, pages: pages
-      }], text: citation}
+      }]}
     end
 
     describe "Parsing different kinds of title" do
@@ -97,8 +97,7 @@ describe Sherpa do
               date: '1765',
               pages: '401',
             }
-          ],
-        text: 'Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.'
+          ]
         }
       end
     end
