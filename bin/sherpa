@@ -34,26 +34,23 @@ main do |file_name|
         end
 
         begin
-          row = CSV.parse_line line, col_sep: "\t"
-          if row
-            Progress.tally
-          else
-            break unless row
-          end
+          row = get_line line
+          break unless row
+          Progress.tally
           @counts[:valid_csv] += 1
         rescue
           @counts[:invalid_csv] += 1
           next
         end
 
-        citation = row[12]
+        citation = get_citation_from_row row
         unless citation
           @counts[:no_citation] += 1
           next
         end
 
         begin
-          citation = Sherpa.parse(citation)
+          citation = parse_citation citation
           @citations << citation
           @counts[:parsed] += 1
         rescue Citrus::ParseError
@@ -62,23 +59,26 @@ main do |file_name|
         end
 
         show_progress unless options[:quiet]
-
       end
 
       write_results output_file
 
-      unless options[:quiet]
-        Progress.show_results
-        Progress.show_count @counts[:valid_csv], Progress.processed_count, 'valid CSV'
-        Progress.show_count @counts[:invalid_csv], Progress.processed_count, 'invalid CSV'
-        Progress.show_count @counts[:no_citation], Progress.processed_count, 'no citation'
-        Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
-        Progress.show_count @counts[:unparsed], Progress.processed_count, 'unparsed'
-        Progress.puts Progress.percent(@counts[:parsed], @counts[:valid_csv]) + ' success'
-      end
+      show_results unless options[:quiet]
 
     end
   end
+end
+
+def get_line line
+  CSV.parse_line line, col_sep: "\t"
+end
+
+def get_citation_from_row row
+  row[12]
+end
+
+def parse_citation citation
+  Sherpa.parse citation
 end
 
 def write_results file
@@ -107,20 +107,14 @@ def show_progress
   Progress.puts message
 end
 
-def show_citations
-  for citation in @citations
-    show_citation citation
-  end
-end
-
-def show_citation citation
-  puts citation[:text]
-  fields = []
-  fields << %{title:"#{citation[:title]}"}
-  fields << %{series_volume_issue:"#{citation[:series_volume_issue]}"}
-  fields << %{year:"#{citation[:year]}"}
-  fields << %{pages:"#{citation[:pages]}"}
-  puts '  ' + fields.join(' ')
+def show_results
+  Progress.show_results
+  Progress.show_count @counts[:valid_csv], Progress.processed_count, 'valid CSV'
+  Progress.show_count @counts[:invalid_csv], Progress.processed_count, 'invalid CSV'
+  Progress.show_count @counts[:no_citation], Progress.processed_count, 'no citation'
+  Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
+  Progress.show_count @counts[:unparsed], Progress.processed_count, 'unparsed'
+  Progress.puts Progress.percent(@counts[:parsed], @counts[:valid_csv]) + ' success'
 end
 
 on '--quiet', "Don't display progress messages or results"
