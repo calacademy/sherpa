@@ -3,3 +3,7 @@ Then "it should emit the JSON:" do |json|
   match.should_not be_nil
   JSON.parse(match[0]).should == JSON.parse(json)
 end
+
+When /pending/ do
+  pending
+end
