@@ -65,17 +65,7 @@ main do |file_name|
 
       end
 
-      output_file.puts '['
-      outputting_first_citation = true
-      for citation in @citations
-        if outputting_first_citation
-          outputting_first_citation = false
-        else
-          output_file.puts ','
-        end
-        output_file.print citation.to_json
-      end
-      output_file.print "\n]"
+      write_results output_file
 
       unless options[:quiet]
         Progress.show_results
@@ -89,6 +79,20 @@ main do |file_name|
 
     end
   end
+end
+
+def write_results file
+  file.puts '['
+  outputting_first_citation = true
+  for citation in @citations
+    if outputting_first_citation
+      outputting_first_citation = false
+    else
+      file.puts ','
+    end
+    file.print citation.to_json
+  end
+  file.print "\n]"
 end
 
 def show_progress
