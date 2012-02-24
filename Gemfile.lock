@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sherpa (1.0.0)
+    sherpa (2.0.0)
       methadone
 
 GEM
