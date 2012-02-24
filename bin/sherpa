@@ -90,9 +90,13 @@ def write_results file
     else
       file.puts ','
     end
-    file.print citation.to_json
+    write_citation file, citation
   end
   file.print "\n]"
+end
+
+def write_citation file, citation
+  file.print citation.to_json
 end
 
 def show_progress
