@@ -118,7 +118,19 @@ describe Sherpa do
     it "should leave a normal string alone" do
       @parser.preprocess('Isis (Oken), 1833, 523,').should == 'Isis (Oken), 1833, 523'
     end
-
   end
 
+  describe "Comparing to them" do
+    it "should return no matches if there aren't any" do
+      citation = {citations: []}
+      @parser.compare_us_to_them(citation).should == {}
+    end
+    it "should return a match if there is one" do
+      citation = {citations: [{title: 'Ants'}], them: {title: 'Ants'}}
+      @parser.compare_us_to_them(citation).should == {
+        comparison: {title: :same}
+      }
+    end
+    it "should return a difference if there is one"
+  end
 end

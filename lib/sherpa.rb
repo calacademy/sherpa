@@ -48,4 +48,15 @@ module Sherpa
     string
   end
 
+  def self.compare_us_to_them citation
+    comparison = {}
+    us = citation[:citations].first
+    them = citation[:them]
+
+    our_title = citation[:title]
+    their_title = them && them[:title]
+    comparison[:title] = us == them ? :same : :different if us || them
+    comparison.empty? ? {} : {comparison: comparison}
+  end
+
 end
