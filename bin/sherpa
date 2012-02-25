@@ -20,7 +20,10 @@ main do |file_name|
   @citations = []
 
   Progress.init true, get_line_count(file_name)
-  output_file_name, unparsed_file_name = make_file_names file_name
+  output_file_name, unparsed_file_name, comparison_file_name = make_file_names file_name
+
+  f = File.open comparison_file_name, 'w'
+  f.close
 
   File.open output_file_name, 'w' do |output_file|
     File.open unparsed_file_name, 'w' do |error_file|
@@ -76,7 +79,7 @@ end
 
 def make_file_names file_name
   file_name_without_extension = file_name[0...file_name.rindex('.')]
-  return file_name_without_extension + '.json', file_name_without_extension + '.unparsed.txt'
+  return file_name_without_extension + '.json', file_name_without_extension + '.unparsed.txt', file_name_without_extension + '.comparison.html'
 end
 
 def get_csv_row line
