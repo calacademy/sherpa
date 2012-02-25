@@ -7,9 +7,9 @@ describe Sherpa do
   describe Sherpa::Parser do
     let(:parser) {Sherpa::Parser}
 
-    def run_spec citation, title, series_volume_issue, date, pages
+    def run_spec citation, title, volume, date, pages
       parser.parse(citation).should == {citations: [{
-        title: title, date: date, series_volume_issue: series_volume_issue, pages: pages
+        title: title, date: date, volume: volume, pages: pages
       }]}
     end
 
@@ -84,13 +84,13 @@ describe Sherpa do
           citations: [
             {
               title: 'Danske Atlas',
-              series_volume_issue: 'I.',
+              volume: 'I.',
               date: '1763',
               pages: '621',
             },
             {
               title: 'Danischer Atlas',
-              series_volume_issue: 'I.',
+              volume: 'I.',
               date: '1765',
               pages: '401',
             }
@@ -120,7 +120,7 @@ describe Sherpa do
 
   describe Sherpa::Formatter do
     let(:formatter) {Sherpa::Formatter}
-    citations = [{citations: [{series_volume_issue: 'I'}], them: {number: 'II'}}]
+    citations = [{citations: [{volume: 'I'}], them: {volume: 'II'}}]
     it "should work" do
       formatter.format_comparisons citations
     end

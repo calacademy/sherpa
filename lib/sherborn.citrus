@@ -9,7 +9,7 @@ grammar SherbornGrammar
     (title /,? / (series_volume_issue ' ')? (date ', ') pages '.'?) {
       { title: title.value,
         date: date && date.value,
-        series_volume_issue:
+        volume:
           series_volume_issue && series_volume_issue.value,
         pages: pages.value,
       }

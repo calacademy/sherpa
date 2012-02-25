@@ -68,7 +68,7 @@ module Sherpa
         our_cells = []
         their_cells = []
         any_different = false
-        for column in [:title, :series_volume_issue, :volume, :number, :date, :pages] do
+        for column in [:title, :volume, :date, :pages] do
           cells =  make_value_cells citation, column, ![:title, :pages].include?(column)
           our_cells << cells[:us]
           their_cells << cells[:them]
