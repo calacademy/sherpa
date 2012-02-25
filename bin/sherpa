@@ -44,7 +44,7 @@ main do |file_name|
     begin
       @parsed_citations << parse_citation(citation)
       @counts[:parsed] += 1
-    rescue
+    rescue Citrus::ParseError
       @unparsed_citations << citation
       @counts[:unparsed] += 1
     end
