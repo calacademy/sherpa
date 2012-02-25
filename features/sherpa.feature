@@ -4,18 +4,19 @@ Feature: SherPa - the SHERborn PArser
   So we can match names against Suzanne's matches against his bibliography
   So we can provide original publication source for names
 
-  Scenario: Parsing a file and writing the results
+  Scenario: Parsing a file, comparing results with Rich's, saving the result
     Given a file named "sherborn.txt" with:
     """
 uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgenus	OrigAuthor	CombAuthor	Citation	Cit1Author	Cit1NameString	Cit1Title	Cit1Volume	Cit1Number	Cit1Date	Cit1Pages	Cit1Status	Cit1Other	Cit2	Cit3	Cit4	varr	publication	leftovers	AfterDash	bid	extra_lines_flag	Iteration	Unicode	AdditionCorrection	TaxonRankID	IsHomonym	RLPComments	Flag
-124	1	SIL34_01_01_0067	2	1	abacus	0	Papilio	0			A. J. Retzius	Gen. Sp. Ins. Geer, 1783, 32.			Gen. Sp. Ins. Geer, 1783, 32											Gen Sp Ins Geer				0	12	abacus Papilio. A. J. Retzius, Gen. Sp. Ins. Geer, 1783, 32.	0	70	0		0
+6009	1	SIL34_01_01_0165	36	99	australis	0	Cerambyx	0			J. F. Gmelin	Linn. Syst. Nat., ed. 13, I. 1789, 1849.			Linn. Syst. Nat., ed. 13, I.			1789	1849							Linn Syst Nat				0	12	australis Cerambyx, J. F. Gmelin. Linn. Syst. Nat., ed. 13, I. 1789, 1849.	0	70	0		0
     """
     When I run `sherpa sherborn.txt`
     Then the file "sherborn.json" should contain the JSON:
     """
-    [{"citations":[{"title":"Gen. Sp. Ins. Geer","date":"1783","series_volume_issue":null,"pages":"32"}], "citation":"Gen. Sp. Ins. Geer, 1783, 32.", "rich":{"title":"Gen. Sp. Ins. Geer, 1783, 32"} }]
+    [
+    {"citations":[{"title":"Linn. Syst. Nat.","date":"1789","series_volume_issue":"ed. 13, I.","pages":"1849"}],"citation":"Linn. Syst. Nat., ed. 13, I. 1789, 1849.", "rich":{"title":"Linn. Syst. Nat., ed. 13, I.","volume":null,"number":null,"date":"1789","pages":"1849"}}
+    ]
     """
-
   Scenario: Reporting the results
     Given a file named "sherborn.txt" with:
     """
@@ -45,18 +46,4 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     When I run `sherpa -q sherborn.txt`
     Then the stdout should contain exactly:
     """
-    """
-
-  Scenario: Reporting comparison with Rich's manual parsing
-    Given a file named "sherborn.txt" with:
-    """
-uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgenus	OrigAuthor	CombAuthor	Citation	Cit1Author	Cit1NameString	Cit1Title	Cit1Volume	Cit1Number	Cit1Date	Cit1Pages	Cit1Status	Cit1Other	Cit2	Cit3	Cit4	varr	publication	leftovers	AfterDash	bid	extra_lines_flag	Iteration	Unicode	AdditionCorrection	TaxonRankID	IsHomonym	RLPComments	Flag
-6009	1	SIL34_01_01_0165	36	99	australis	0	Cerambyx	0			J. F. Gmelin	Linn. Syst. Nat., ed. 13, I. 1789, 1849.			Linn. Syst. Nat., ed. 13, I.			1789	1849							Linn Syst Nat				0	12	australis Cerambyx, J. F. Gmelin. Linn. Syst. Nat., ed. 13, I. 1789, 1849.	0	70	0		0
-    """
-    When I run `sherpa sherborn.txt`
-    Then the file "sherborn.json" should contain the JSON:
-    """
-    [
-    {"citations":[{"title":"Linn. Syst. Nat.","date":"1789","series_volume_issue":"ed. 13, I.","pages":"1849"}],"citation":"Linn. Syst. Nat., ed. 13, I. 1789, 1849.", "rich":{"title":"Linn. Syst. Nat., ed. 13, I."}}
-    ]
     """

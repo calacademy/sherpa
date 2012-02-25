@@ -79,7 +79,14 @@ end
 def get_fields_from_row row
   citation = row[letter_to_number('M')]
   return unless citation
-  {citation: citation, rich: {title: row[letter_to_number('P')]}}
+  {citation: citation,
+   rich: {
+    title: row[letter_to_number('P')],
+    volume: row[letter_to_number('Q')],
+    number: row[letter_to_number('R')],
+    date: row[letter_to_number('S')],
+    pages: row[letter_to_number('T')],
+  }}
 end
 
 def parse_citation citation
