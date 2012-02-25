@@ -105,9 +105,11 @@ module Sherpa
     def self.make_value_cells citation, field, interior_column
       them = citation[:them][field]
       us = citation[:citations].first[field]
+      both_blank = (them || '') == '' && (us || '') == ''
       different = us != them
-      css_classes = [different ? 'different' : 'same']
+      css_classes = [different ? 'different' : both_blank ? 'both_blank' : 'same']
       css_classes << field.to_s
+      css_classes << 'value'
       css_classes << 'interior_column' if interior_column
       css_classes = css_classes.join ' '
       {us:   %{<td class="#{css_classes}">#{us}</td>},
