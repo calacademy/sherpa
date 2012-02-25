@@ -48,7 +48,7 @@ module Sherpa
     string
   end
 
-  def self.compare_us_to_them citation
+  def self.compare_us_and_them citation
     us = citation[:citations].first
     return {} unless us
     them = citation[:them]
