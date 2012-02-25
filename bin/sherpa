@@ -13,10 +13,8 @@ include Methadone::Main
 ENV['DEBUG'] = 'true'
 
 main do |file_name|
-  file_name_without_extension = file_name[0...file_name.rindex('.')]
-  extension = file_name[file_name.rindex('.')..-1]
-  output_file_name = file_name_without_extension + '.json'
-  unparsed_file_name = file_name_without_extension + '.unparsed.txt'
+
+  output_file_name, unparsed_file_name = make_file_names file_name
 
   File.open output_file_name, 'w' do |output_file|
     File.open unparsed_file_name, 'w' do |error_file|
@@ -66,6 +64,11 @@ main do |file_name|
 
     end
   end
+end
+
+def make_file_names file_name
+  file_name_without_extension = file_name[0...file_name.rindex('.')]
+  return file_name_without_extension + '.json', file_name_without_extension + '.unparsed.txt'
 end
 
 def get_line line
