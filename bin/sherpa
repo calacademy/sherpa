@@ -15,69 +15,71 @@ include Methadone::Main
 ENV['DEBUG'] = 'true'
 
 main do |file_name|
-
+  @file_name = file_name
   @counts = Hash.new(0)
   @citations = []
+  @unparsed_citations = []
 
-  Progress.init true, get_line_count(file_name)
-  output_file_name, unparsed_file_name, comparison_file_name = make_file_names file_name
+  Progress.init true, get_line_count
+  output_file_name, unparsed_file_name, comparison_file_name = make_file_names
 
-  f = File.open comparison_file_name, 'w'
-  f.close
-
-  File.open unparsed_file_name, 'w' do |error_file|
-
-    need_to_skip_header = true
-    File.foreach file_name do |line|
-      if need_to_skip_header
-        need_to_skip_header = false
-        next
-      end
-
-      begin
-        row = get_csv_row line
-        break unless row
-        Progress.tally
-        @counts[:valid_csv] += 1
-      rescue
-        @counts[:invalid_csv] += 1
-        next
-      end
-
-      unless citation = get_fields_from_row(row)
-        @counts[:no_citation] += 1
-        next
-      end
-
-      begin
-        parse_citation citation
-        @citations << citation
-        @counts[:parsed] += 1
-      rescue Citrus::ParseError
-        error_file.puts citation
-        @counts[:unparsed] += 1
-      end
-
-      compare_us_and_them citation
-
-      show_progress unless options[:quiet]
+  need_to_skip_header = true
+  File.foreach file_name do |line|
+    if need_to_skip_header
+      need_to_skip_header = false
+      next
     end
 
-    write_results output_file_name
+    begin
+      row = get_csv_row line
+      break unless row
+      Progress.tally
+      @counts[:valid_csv] += 1
+    rescue
+      @counts[:invalid_csv] += 1
+      next
+    end
 
-    show_results unless options[:quiet]
+    unless citation = get_fields_from_row(row)
+      @counts[:no_citation] += 1
+      next
+    end
+
+    begin
+      parse_citation citation
+      @citations << citation
+      @counts[:parsed] += 1
+    rescue Citrus::ParseError
+      @unparsed_citations << citation
+      @counts[:unparsed] += 1
+    end
+
+    compare_us_and_them citation
+
+    show_progress unless options[:quiet]
+  end
+
+  write_results
+  write_unparsed_citations unparsed_file_name
+  write_comparison_file comparison_file_name
+
+  show_results unless options[:quiet]
 
 end
+
+def get_line_count
+  return 424285 if @file_name =~ /names\.txt$/
+  `wc '#{@file_name}' | cut -c -9`.to_i
 end
 
-def get_line_count file_name
-  return 424285 if file_name =~ /names\.txt$/
-  `wc '#{file_name}' | cut -c -9`.to_i
-end
-
-def make_file_names file_name
-  file_name_without_extension = file_name[0...file_name.rindex('.')]
+def make_file_names
+  file_name_without_extension = @file_name[0...@file_name.rindex('.')]
   return file_name_without_extension + '.json', file_name_without_extension + '.unparsed.txt', file_name_without_extension + '.comparison.html'
+end
+
+def make_file_name new_extension
+  file_name_without_extension = @file_name[0...@file_name.rindex('.')]
+  file_name_without_extension + '.' + new_extension
 end
 
 def get_csv_row line
@@ -109,8 +111,21 @@ def compare_us_and_them citation
   citation.merge! Sherpa.compare_us_and_them citation
 end
 
-def write_results file_name
+def write_results
+  file_name = make_file_name 'json'
   File.open(file_name, 'w') {|file| file.write @citations.to_json}
+end
+
+def write_comparison_file file_name
+  File.open(file_name, 'w') {|_|}
+end
+
+def write_unparsed_citations file_name
+  File.open(file_name, 'w') do |file|
+    for citation in @unparsed_citations
+      file.puts citation
+    end
+  end
 end
 
 def write_citation file, citation
