@@ -143,6 +143,26 @@ describe Sherpa do
         comparison: {title: :different, date: :same}
       }
     end
+    describe "comparing series/volume/issue" do
+      it "should return a match if there is one" do
+        citation = {citations: [{series_volume_issue: 'I'}], them: {volume: 'I'}}
+        @parser.compare_us_to_them(citation).should == {
+          comparison: {series_volume_issue: :same}
+        }
+      end
+      it "should return a difference if the volume differs" do
+        citation = {citations: [{series_volume_issue: 'I'}], them: {volume: 'II'}}
+        @parser.compare_us_to_them(citation).should == {
+          comparison: {series_volume_issue: :different}
+        }
+      end
+      it "should return a difference if the number differs" do
+        citation = {citations: [{series_volume_issue: 'I'}], them: {number: 'II'}}
+        @parser.compare_us_to_them(citation).should == {
+          comparison: {series_volume_issue: :different}
+        }
+      end
+    end
   end
 
 end
