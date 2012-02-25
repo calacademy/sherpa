@@ -13,11 +13,12 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     When I run `sherpa sherborn.txt`
     Then the file "sherborn.json" should contain the JSON:
     """
-    [
-    {"citations":[{"title":"Linn. Syst. Nat.","date":"1789","series_volume_issue":"ed. 13, I.","pages":"1849"}],"citation":"Linn. Syst. Nat., ed. 13, I. 1789, 1849.", "them":{"title":"Linn. Syst. Nat., ed. 13, I.","volume":null,"number":null,"date":"1789","pages":"1849"},
-    "comparison": {"title":"differs", "series_volume_issue":"differs", "date":"same", "pages":"same"}
-    }
-    ]
+    [{
+    "citations": [{"title": "Linn. Syst. Nat.", "date": "1789", "series_volume_issue": "ed. 13, I.", "pages": "1849"}],
+    "citation": "Linn. Syst. Nat., ed. 13, I. 1789, 1849.",
+    "them": {"title": "Linn. Syst. Nat., ed. 13, I.", "volume":null, "number":null, "date": "1789", "pages": "1849"},
+    "comparison": {"title": "different", "series_volume_issue": "different", "date": "same", "pages": "same"}
+    }]
     """
   Scenario: Reporting the results
     Given a file named "sherborn.txt" with:

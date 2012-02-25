@@ -105,7 +105,7 @@ def parse_citation citation
 end
 
 def compare_us_and_them citation
-  Sherpa.compare_us_and_them citation
+  citation.merge! Sherpa.compare_us_and_them citation
 end
 
 def write_results file
