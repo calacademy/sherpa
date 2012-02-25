@@ -72,10 +72,14 @@ def get_line line
   CSV.parse_line line, col_sep: "\t"
 end
 
+def letter_to_number letter
+  letter.ord - 'A'.ord
+end
+
 def get_fields_from_row row
-  citation = row[12]
+  citation = row[letter_to_number('M')]
   return unless citation
-  {citation: citation, rich: 'a'}
+  {citation: citation, rich: {title: row[letter_to_number('P')]}}
 end
 
 def parse_citation citation

@@ -9,15 +9,11 @@ Feature: SherPa - the SHERborn PArser
     """
 uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgenus	OrigAuthor	CombAuthor	Citation	Cit1Author	Cit1NameString	Cit1Title	Cit1Volume	Cit1Number	Cit1Date	Cit1Pages	Cit1Status	Cit1Other	Cit2	Cit3	Cit4	varr	publication	leftovers	AfterDash	bid	extra_lines_flag	Iteration	Unicode	AdditionCorrection	TaxonRankID	IsHomonym	RLPComments	Flag
 124	1	SIL34_01_01_0067	2	1	abacus	0	Papilio	0			A. J. Retzius	Gen. Sp. Ins. Geer, 1783, 32.			Gen. Sp. Ins. Geer, 1783, 32											Gen Sp Ins Geer				0	12	abacus Papilio. A. J. Retzius, Gen. Sp. Ins. Geer, 1783, 32.	0	70	0		0
-125	1	SIL34_01_01_0067	3	1	abadonna	0	Sphinx	0			J. C. Fabricius	Suppl. Ent. Syst. 1798, 435			Suppl. Ent. Syst. 1798, 435											Suppl Ent Syst				0	1	abadonna Sphinx, J. C. Fabricius, Suppl. Ent. Syst. 1798, 435.	0	70	0		0
     """
     When I run `sherpa sherborn.txt`
     Then the file "sherborn.json" should contain the JSON:
     """
-    [
-    {"citations":[{"title":"Gen. Sp. Ins. Geer","date":"1783","series_volume_issue":null,"pages":"32"}], "citation":"Gen. Sp. Ins. Geer, 1783, 32.", "rich":"a"},
-    {"citations":[{"title":"Suppl. Ent. Syst.","date":"1798","series_volume_issue":null,"pages":"435"}], "citation":"Suppl. Ent. Syst. 1798, 435", "rich":"a"}
-    ]
+    [{"citations":[{"title":"Gen. Sp. Ins. Geer","date":"1783","series_volume_issue":null,"pages":"32"}], "citation":"Gen. Sp. Ins. Geer, 1783, 32.", "rich":{"title":"Gen. Sp. Ins. Geer, 1783, 32"} }]
     """
 
   Scenario: Reporting the results
@@ -52,18 +48,15 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     """
 
   Scenario: Reporting comparison with Rich's manual parsing
-    Given pending
     Given a file named "sherborn.txt" with:
     """
 uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgenus	OrigAuthor	CombAuthor	Citation	Cit1Author	Cit1NameString	Cit1Title	Cit1Volume	Cit1Number	Cit1Date	Cit1Pages	Cit1Status	Cit1Other	Cit2	Cit3	Cit4	varr	publication	leftovers	AfterDash	bid	extra_lines_flag	Iteration	Unicode	AdditionCorrection	TaxonRankID	IsHomonym	RLPComments	Flag
-124	1	SIL34_01_01_0067	2	1	abacus	0	Papilio	0			A. J. Retzius	Gen. Sp. Ins. Geer, 1783, 32.			Gen. Sp. Ins. Geer, 1783, 32											Gen Sp Ins Geer				0	12	abacus Papilio. A. J. Retzius, Gen. Sp. Ins. Geer, 1783, 32.	0	70	0		0
-125	1	SIL34_01_01_0067	3	1	abadonna	0	Sphinx	0			J. C. Fabricius	Suppl. Ent. Syst. 1798, 435			Suppl. Ent. Syst. 1798, 435											Suppl Ent Syst				0	1	abadonna Sphinx, J. C. Fabricius, Suppl. Ent. Syst. 1798, 435.	0	70	0		0
+6009	1	SIL34_01_01_0165	36	99	australis	0	Cerambyx	0			J. F. Gmelin	Linn. Syst. Nat., ed. 13, I. 1789, 1849.			Linn. Syst. Nat., ed. 13, I.			1789	1849							Linn Syst Nat				0	12	australis Cerambyx, J. F. Gmelin. Linn. Syst. Nat., ed. 13, I. 1789, 1849.	0	70	0		0
     """
     When I run `sherpa sherborn.txt`
-    Then the file "sherborn.json" should contain exactly:
+    Then the file "sherborn.json" should contain the JSON:
     """
     [
-    {"citations":[{"title":"Gen. Sp. Ins. Geer","date":"1783","series_volume_issue":null,"pages":"32"}],"text":"Gen. Sp. Ins. Geer, 1783, 32.","comparison":[{"field":"title", "us":"The right title", "them":"The almost right title"}]},
-    {"citations":[{"title":"Suppl. Ent. Syst.","date":"1798","series_volume_issue":null,"pages":"435"}],"text":"Suppl. Ent. Syst. 1798, 435"}
+    {"citations":[{"title":"Linn. Syst. Nat.","date":"1789","series_volume_issue":"ed. 13, I.","pages":"1849"}],"citation":"Linn. Syst. Nat., ed. 13, I. 1789, 1849.", "rich":{"title":"Linn. Syst. Nat., ed. 13, I."}}
     ]
     """
