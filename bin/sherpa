@@ -56,6 +56,8 @@ main do |file_name|
           @counts[:unparsed] += 1
         end
 
+        compare_us_and_them citation
+
         show_progress unless options[:quiet]
       end
 
@@ -100,6 +102,10 @@ end
 
 def parse_citation citation
   citation.merge! Sherpa.parse citation[:citation]
+end
+
+def compare_us_and_them citation
+  citation.merge! comparison: {title:"differs", series_volume_issue:"differs", date:"same", pages:"same"}
 end
 
 def write_results file
