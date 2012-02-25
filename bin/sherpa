@@ -25,51 +25,49 @@ main do |file_name|
   f = File.open comparison_file_name, 'w'
   f.close
 
-  File.open output_file_name, 'w' do |output_file|
-    File.open unparsed_file_name, 'w' do |error_file|
+  File.open unparsed_file_name, 'w' do |error_file|
 
-      need_to_skip_header = true
-      File.foreach file_name do |line|
-        if need_to_skip_header
-          need_to_skip_header = false
-          next
-        end
-
-        begin
-          row = get_csv_row line
-          break unless row
-          Progress.tally
-          @counts[:valid_csv] += 1
-        rescue
-          @counts[:invalid_csv] += 1
-          next
-        end
-
-        unless citation = get_fields_from_row(row)
-          @counts[:no_citation] += 1
-          next
-        end
-
-        begin
-          parse_citation citation
-          @citations << citation
-          @counts[:parsed] += 1
-        rescue Citrus::ParseError
-          error_file.puts citation
-          @counts[:unparsed] += 1
-        end
-
-        compare_us_and_them citation
-
-        show_progress unless options[:quiet]
+    need_to_skip_header = true
+    File.foreach file_name do |line|
+      if need_to_skip_header
+        need_to_skip_header = false
+        next
       end
 
-      write_results output_file
+      begin
+        row = get_csv_row line
+        break unless row
+        Progress.tally
+        @counts[:valid_csv] += 1
+      rescue
+        @counts[:invalid_csv] += 1
+        next
+      end
 
-      show_results unless options[:quiet]
+      unless citation = get_fields_from_row(row)
+        @counts[:no_citation] += 1
+        next
+      end
 
+      begin
+        parse_citation citation
+        @citations << citation
+        @counts[:parsed] += 1
+      rescue Citrus::ParseError
+        error_file.puts citation
+        @counts[:unparsed] += 1
+      end
+
+      compare_us_and_them citation
+
+      show_progress unless options[:quiet]
     end
-  end
+
+    write_results output_file_name
+
+    show_results unless options[:quiet]
+
+end
 end
 
 def get_line_count file_name
@@ -111,8 +109,8 @@ def compare_us_and_them citation
   citation.merge! Sherpa.compare_us_and_them citation
 end
 
-def write_results file
-  file.write @citations.to_json
+def write_results file_name
+  File.open(file_name, 'w') {|file| file.write @citations.to_json}
 end
 
 def write_citation file, citation
