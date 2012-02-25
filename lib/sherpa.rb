@@ -54,47 +54,6 @@ module Sherpa
     end
   end
 
-  module Comparer
-    def self.compare_us_and_them citation
-      us = citation[:citations] && citation[:citations].first
-      return {} unless us
-      them = citation[:them]
-      return {} unless them
-
-      comparison = {}
-      comparison.merge! compare_our_field_to_their_field :title, us, them
-      comparison.merge! compare_our_field_to_their_field :date, us, them
-      comparison.merge! compare_our_field_to_their_field :pages, us, them
-      comparison.merge! compare_our_series_volume_issue_to_theirs us, them
-      comparison.empty? ? {} : {comparison: comparison}
-    end
-
-    def self.compare_our_series_volume_issue_to_theirs us, them
-      our_series_volume_issue = us[:series_volume_issue]
-      their_volume = them[:volume]
-      their_number = them[:number]
-      return {} unless our_series_volume_issue || their_volume || their_number
-      their_series_volume_issue = ''
-      if their_volume
-        their_series_volume_issue << their_volume
-      end
-      if their_number
-        if !their_series_volume_issue.empty?
-          their_series_volume_issue << ' '
-        end
-        their_series_volume_issue << their_number
-      end
-      {series_volume_issue: our_series_volume_issue == their_series_volume_issue ? :same : :different}
-    end
-
-    def self.compare_our_field_to_their_field field, us, them
-      our_field = us[field]
-      their_field = them && them[field]
-      return {} unless our_field || their_field
-      {field => our_field == their_field ? :same : :different}
-    end
-  end
-
   module Formatter
     def self.format_comparisons citations
       string = <<-EOS

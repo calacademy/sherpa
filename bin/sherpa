@@ -49,8 +49,6 @@ main do |file_name|
       @counts[:unparsed] += 1
     end
 
-    compare_us_and_them citation
-
     show_progress unless options[:quiet]
   end
 
@@ -95,10 +93,6 @@ end
 
 def parse_citation citation
   citation.merge! Sherpa::Parser.parse citation[:citation]
-end
-
-def compare_us_and_them citation
-  citation.merge! Sherpa::Comparer.compare_us_and_them citation
 end
 
 def write_citations citations, extension

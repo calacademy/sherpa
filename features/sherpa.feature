@@ -4,7 +4,7 @@ Feature: SherPa - the SHERborn PArser
   So we can match names against Suzanne's matches against his bibliography
   So we can provide original publication source for names
 
-  Scenario: Parsing a file, comparing results with Rich's, saving the result
+  Scenario: Parsing a file and saving the result
     Given a file named "sherborn.txt" with:
     """
 uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgenus	OrigAuthor	CombAuthor	Citation	Cit1Author	Cit1NameString	Cit1Title	Cit1Volume	Cit1Number	Cit1Date	Cit1Pages	Cit1Status	Cit1Other	Cit2	Cit3	Cit4	varr	publication	leftovers	AfterDash	bid	extra_lines_flag	Iteration	Unicode	AdditionCorrection	TaxonRankID	IsHomonym	RLPComments	Flag
@@ -16,8 +16,7 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     [{
     "citations": [{"title": "Linn. Syst. Nat.", "date": "1789", "series_volume_issue": "ed. 13, I.", "pages": "1849"}],
     "citation": "Linn. Syst. Nat., ed. 13, I. 1789, 1849.",
-    "them": {"title": "Linn. Syst. Nat., ed. 13, I.", "volume":null, "number":null, "date": "1789", "pages": "1849"},
-    "comparison": {"title": "different", "series_volume_issue": "different", "date": "same", "pages": "same"}
+    "them": {"title": "Linn. Syst. Nat., ed. 13, I.", "volume":null, "number":null, "date": "1789", "pages": "1849"}
     }]
     """
 
