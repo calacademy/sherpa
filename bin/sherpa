@@ -5,7 +5,9 @@ require 'csv'
 require 'json'
 require 'pp'
 require 'lll'
+
 require_relative '../lib/sherpa'
+require_relative '../lib/sherpa/version'
 require_relative '../lib/progress'
 
 include Methadone::Main
