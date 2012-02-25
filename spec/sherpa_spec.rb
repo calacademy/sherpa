@@ -163,4 +163,10 @@ describe Sherpa do
     end
   end
 
+  describe "Formatting the comparison" do
+    citations = [{citations: [{series_volume_issue: 'I'}], them: {number: 'II'}}]
+    it "should work" do
+      Sherpa.format_comparisons citations
+    end
+  end
 end
