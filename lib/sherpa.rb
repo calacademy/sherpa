@@ -58,51 +58,43 @@ module Sherpa
     def self.format_comparisons citations
       string = <<-EOS
       <html>
-        <head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>
-      <body>
-        <style>
-          .same {
-            background: lightgreen;
-          }
-          .different {
-            background: lightpink;
-          }
-          .citation {
-            width: 400px;
-          }
-          td {
-            min-width: 50px;
-          }
-        </style>
-        <table style='width: 500px'>
+        <head>
+          <meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>
+          <link href="sherpa.css" media="screen" rel="stylesheet" type="text/css" />
+        </head>
+        <body>
+          <table>
       EOS
       for citation in citations
         our_cells = []
         their_cells = []
         any_different = false
         for column in [:title, :series_volume_issue, :volume, :number, :date, :pages] do
-          entry = make_entry citation, column
+          entry = make_entry citation, column, ![:title, :pages].include?(column)
           our_cells << entry[:us]
           their_cells << entry[:them]
           any_different ||= entry[:different]
         end
 
-        string << '<table>'
-        css_class = (any_different ? 'different' : 'same') + ' citation'
+        css_class = 'citation'
         string << <<-EOS
-        <tr class="#{css_class}">
-          <td></td>
-          <td colspan=100>#{citation[:citation]}</td>
-        </tr>
+        <table class="citation">
+          <tr>
+            <td class="caption">Sherborn</td>
+            <td class="citation">#{citation[:citation]}</td>
+          </tr>
+        </table>
         EOS
 
-        string << "<tr><td>Us</td>"
+        string << '<table>'
+
+        string << "<tr><td class='caption'>Us</td>"
         for cell in our_cells
           string << cell
         end
         string << "</tr>"
 
-        string << "<tr><td>Them</td>"
+        string << "<tr><td class='caption'>Them</td>"
         for cell in their_cells
           string << cell
         end
@@ -112,12 +104,17 @@ module Sherpa
       string << "</table></html></body>"
     end
 
-    def self.make_entry citation, field
+    def self.make_entry citation, field, interior_column
       them = citation[:them][field]
       us = citation[:citations].first[field]
       different = us != them
-      css_class = different ? "different" : "same"
-      {us: "<td class=#{css_class}>#{us}</td>", them: "<td class=#{css_class}>#{them}</td>", different: different}
+      css_classes = [different ? 'different' : 'same']
+      css_classes << field.to_s
+      css_classes << 'interior_column' if interior_column
+      css_classes = css_classes.join ' '
+      {us:   %{<td class="#{css_classes}">#{us}</td>},
+       them: %{<td class="#{css_classes}">#{them}</td>},
+       different: different}
     end
   end
 
