@@ -64,7 +64,7 @@ module Sherpa
         </head>
         <body>
       EOS
-      for citation in citations
+      for citation in citations.sort_by{|a| a[:citation]}
         our_cells = []
         their_cells = []
         any_different = false
