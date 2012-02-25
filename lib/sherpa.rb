@@ -1,4 +1,6 @@
 require 'citrus'
+require_relative 'progress'
+require_relative 'sherpa/version'
 
 module Sherpa
 
