@@ -4,12 +4,11 @@ require 'citrus'
 
 describe Sherpa do
 
-  before() {@parser = Sherpa}
-
-  describe "Parsing" do
+  describe Sherpa::Parser do
+    let(:parser) {Sherpa::Parser}
 
     def run_spec citation, title, series_volume_issue, date, pages
-      @parser.parse(citation).should == {citations: [{
+      parser.parse(citation).should == {citations: [{
         title: title, date: date, series_volume_issue: series_volume_issue, pages: pages
       }]}
     end
@@ -81,7 +80,7 @@ describe Sherpa do
 
     describe "Multipart citations" do
       it "should handle it when both parts are complete" do
-        @parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
+        parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
           citations: [
             {
               title: 'Danske Atlas',
@@ -102,71 +101,74 @@ describe Sherpa do
 
   end
 
-  describe "Preprocessing" do
+  describe Sherpa::Preprocessor do
+    let(:preprocessor) {Sherpa::Preprocessor}
     # Code under test is copied from AntCat
     it "should removed unmatched opening brackets" do
-      @parser.preprocess('[a').should == 'a'
+      preprocessor.preprocess('[a').should == 'a'
     end
     it "should leave a normal string alone" do
-      @parser.preprocess('a').should == 'a'
+      preprocessor.preprocess('a').should == 'a'
     end
     it "should leave a normal string alone" do
-      @parser.preprocess('[a]').should == '[a]'
+      preprocessor.preprocess('[a]').should == '[a]'
     end
     it "should leave a normal string alone" do
-      @parser.preprocess('Isis (Oken), 1833, 523,').should == 'Isis (Oken), 1833, 523'
+      preprocessor.preprocess('Isis (Oken), 1833, 523,').should == 'Isis (Oken), 1833, 523'
     end
   end
 
-  describe "Comparing to them" do
+  describe Sherpa::Comparer do
+    let(:comparer) {Sherpa::Comparer}
     it "should return no matches if there aren't any" do
       citation = {citations: []}
-      @parser.compare_us_and_them(citation).should == {}
+      comparer.compare_us_and_them(citation).should == {}
     end
     it "should return a match if there is one" do
       citation = {citations: [{title: 'Ants'}], them: {title: 'Ants'}}
-      @parser.compare_us_and_them(citation).should == {
+      comparer.compare_us_and_them(citation).should == {
         comparison: {title: :same}
       }
     end
     it "should return a difference if there is one" do
       citation = {citations: [{title: 'Ants'}], them: {title: 'Bees'}}
-      @parser.compare_us_and_them(citation).should == {
+      comparer.compare_us_and_them(citation).should == {
         comparison: {title: :different}
       }
     end
     it "should handle all the regular fields" do
       citation = {citations: [{title: 'Ants', date:'1980'}], them: {title: 'Bees', date: '1980'}}
-      @parser.compare_us_and_them(citation).should == {
+      comparer.compare_us_and_them(citation).should == {
         comparison: {title: :different, date: :same}
       }
     end
     describe "comparing series/volume/issue" do
       it "should return a match if there is one" do
         citation = {citations: [{series_volume_issue: 'I'}], them: {volume: 'I'}}
-        @parser.compare_us_and_them(citation).should == {
+        comparer.compare_us_and_them(citation).should == {
           comparison: {series_volume_issue: :same}
         }
       end
       it "should return a difference if the volume differs" do
         citation = {citations: [{series_volume_issue: 'I'}], them: {volume: 'II'}}
-        @parser.compare_us_and_them(citation).should == {
+        comparer.compare_us_and_them(citation).should == {
           comparison: {series_volume_issue: :different}
         }
       end
       it "should return a difference if the number differs" do
         citation = {citations: [{series_volume_issue: 'I'}], them: {number: 'II'}}
-        @parser.compare_us_and_them(citation).should == {
+        comparer.compare_us_and_them(citation).should == {
           comparison: {series_volume_issue: :different}
         }
       end
     end
   end
 
-  describe "Formatting the comparison" do
+  describe Sherpa::Formatter do
+    let(:formatter) {Sherpa::Formatter}
     citations = [{citations: [{series_volume_issue: 'I'}], them: {number: 'II'}}]
     it "should work" do
-      Sherpa.format_comparisons citations
+      formatter.format_comparisons citations
     end
   end
 end

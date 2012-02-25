@@ -94,11 +94,11 @@ def get_fields_from_row row
 end
 
 def parse_citation citation
-  citation.merge! Sherpa.parse citation[:citation]
+  citation.merge! Sherpa::Parser.parse citation[:citation]
 end
 
 def compare_us_and_them citation
-  citation.merge! Sherpa.compare_us_and_them citation
+  citation.merge! Sherpa::Comparer.compare_us_and_them citation
 end
 
 def write_citations citations, extension
@@ -113,7 +113,7 @@ end
 
 def write_comparisons
   File.open make_file_name('comparison.html'), 'w' do |file|
-    file.write Sherpa.format_comparisons @parsed_citations
+    file.write Sherpa::Formatter.format_comparisons @parsed_citations
   end
 end
 
