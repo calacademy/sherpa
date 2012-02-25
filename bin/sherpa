@@ -14,15 +14,14 @@ ENV['DEBUG'] = 'true'
 
 main do |file_name|
 
-  output_file_name, unparsed_file_name = make_file_names file_name
+  @counts = Hash.new(0)
+  @citations = []
 
-  line_count = get_line_count file_name
+  Progress.init true, get_line_count(file_name)
+  output_file_name, unparsed_file_name = make_file_names file_name
 
   File.open output_file_name, 'w' do |output_file|
     File.open unparsed_file_name, 'w' do |error_file|
-      Progress.init true, line_count
-      @counts = Hash.new(0)
-      @citations = []
 
       need_to_skip_header = true
       File.foreach file_name do |line|
@@ -32,7 +31,7 @@ main do |file_name|
         end
 
         begin
-          row = get_line line
+          row = get_csv_row line
           break unless row
           Progress.tally
           @counts[:valid_csv] += 1
@@ -76,7 +75,7 @@ def make_file_names file_name
   return file_name_without_extension + '.json', file_name_without_extension + '.unparsed.txt'
 end
 
-def get_line line
+def get_csv_row line
   CSV.parse_line line, col_sep: "\t"
 end
 
