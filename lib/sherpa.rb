@@ -78,7 +78,7 @@ module Sherpa
         string << <<-EOS
         <table class="citation">
           <tr>
-            <td class="caption">Sherborn</td>
+            <td class="caption"></td>
             <td class="citation">#{citation[:citation]}</td>
           </tr>
         </table>
