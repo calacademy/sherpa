@@ -63,20 +63,18 @@ module Sherpa
           <link href="sherpa.css" media="screen" rel="stylesheet" type="text/css" />
         </head>
         <body>
-          <table>
       EOS
       for citation in citations
         our_cells = []
         their_cells = []
         any_different = false
         for column in [:title, :series_volume_issue, :volume, :number, :date, :pages] do
-          entry = make_entry citation, column, ![:title, :pages].include?(column)
-          our_cells << entry[:us]
-          their_cells << entry[:them]
-          any_different ||= entry[:different]
+          cells =  make_value_cells citation, column, ![:title, :pages].include?(column)
+          our_cells << cells[:us]
+          their_cells << cells[:them]
+          any_different ||= cells[:different]
         end
 
-        css_class = 'citation'
         string << <<-EOS
         <table class="citation">
           <tr>
@@ -87,24 +85,24 @@ module Sherpa
         EOS
 
         string << '<table>'
+          string << "<tr><td class='caption'>Us</td>"
+          for cell in our_cells
+            string << cell
+          end
+          string << "</tr>"
 
-        string << "<tr><td class='caption'>Us</td>"
-        for cell in our_cells
-          string << cell
-        end
-        string << "</tr>"
-
-        string << "<tr><td class='caption'>Them</td>"
-        for cell in their_cells
-          string << cell
-        end
-        string << "</tr>"
+          string << "<tr><td class='caption'>Them</td>"
+          for cell in their_cells
+            string << cell
+          end
+          string << "</tr>"
         string << '</table>'
+
       end
-      string << "</table></html></body>"
+      string << "</body></html>"
     end
 
-    def self.make_entry citation, field, interior_column
+    def self.make_value_cells citation, field, interior_column
       them = citation[:them][field]
       us = citation[:citations].first[field]
       different = us != them
