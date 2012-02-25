@@ -131,6 +131,18 @@ describe Sherpa do
         comparison: {title: :same}
       }
     end
-    it "should return a difference if there is one"
+    it "should return a difference if there is one" do
+      citation = {citations: [{title: 'Ants'}], them: {title: 'Bees'}}
+      @parser.compare_us_to_them(citation).should == {
+        comparison: {title: :different}
+      }
+    end
+    it "should handle all the regular fields" do
+      citation = {citations: [{title: 'Ants', date:'1980'}], them: {title: 'Bees', date: '1980'}}
+      @parser.compare_us_to_them(citation).should == {
+        comparison: {title: :different, date: :same}
+      }
+    end
   end
+
 end

@@ -51,12 +51,20 @@ module Sherpa
   def self.compare_us_to_them citation
     comparison = {}
     us = citation[:citations].first
+    return {} unless us
     them = citation[:them]
+    return {} unless them
 
-    our_title = citation[:title]
+    our_title = us[:title]
     their_title = them && them[:title]
-    comparison[:title] = us == them ? :same : :different if us || them
+    comparison[:title] = our_title == their_title ? :same : :different if our_title || their_title
     comparison.empty? ? {} : {comparison: comparison}
+
+    our_date = us[:date]
+    their_date = them && them[:date]
+    comparison[:date] = our_date == their_date ? :same : :different if our_date || their_date
+    comparison.empty? ? {} : {comparison: comparison}
+
   end
 
 end
