@@ -52,6 +52,10 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     """
     """
 
+  Scenario: The file name is not supplied
+    When I run `sherpa`
+    Then the stdout should contain "parse error: 'file_name' is required"
+
   Scenario: Producing a report on the comparison
     Given a file named "sherborn.txt" with:
     """
