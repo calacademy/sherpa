@@ -49,7 +49,7 @@ module Sherpa
   end
 
   def self.compare_us_and_them citation
-    us = citation[:citations].first
+    us = citation[:citations] && citation[:citations].first
     return {} unless us
     them = citation[:them]
     return {} unless them
