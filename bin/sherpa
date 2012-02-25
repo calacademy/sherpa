@@ -21,10 +21,9 @@ main do |file_name|
   @unparsed_citations = []
 
   Progress.init true, get_line_count
-  output_file_name, unparsed_file_name, comparison_file_name = make_file_names
 
   need_to_skip_header = true
-  File.foreach file_name do |line|
+  File.foreach @file_name do |line|
     if need_to_skip_header
       need_to_skip_header = false
       next
@@ -46,8 +45,7 @@ main do |file_name|
     end
 
     begin
-      parse_citation citation
-      @citations << citation
+      @citations << parse_citation(citation)
       @counts[:parsed] += 1
     rescue Citrus::ParseError
       @unparsed_citations << citation
@@ -70,11 +68,6 @@ end
 def get_line_count
   return 424285 if @file_name =~ /names\.txt$/
   `wc '#{@file_name}' | cut -c -9`.to_i
-end
-
-def make_file_names
-  file_name_without_extension = @file_name[0...@file_name.rindex('.')]
-  return file_name_without_extension + '.json', file_name_without_extension + '.unparsed.txt', file_name_without_extension + '.comparison.html'
 end
 
 def make_file_name new_extension
