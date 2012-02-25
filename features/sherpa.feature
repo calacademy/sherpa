@@ -11,7 +11,7 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
 6009	1	SIL34_01_01_0165	36	99	australis	0	Cerambyx	0			J. F. Gmelin	Linn. Syst. Nat., ed. 13, I. 1789, 1849.			Linn. Syst. Nat., ed. 13, I.			1789	1849							Linn Syst Nat				0	12	australis Cerambyx, J. F. Gmelin. Linn. Syst. Nat., ed. 13, I. 1789, 1849.	0	70	0		0
     """
     When I run `sherpa sherborn.txt`
-    Then the file "sherborn.json" should contain the JSON:
+    Then the file "sherborn.parsed.json" should contain the JSON:
     """
     [{
     "citations": [{"title": "Linn. Syst. Nat.", "date": "1789", "series_volume_issue": "ed. 13, I.", "pages": "1849"}],

@@ -57,8 +57,8 @@ main do |file_name|
     show_progress unless options[:quiet]
   end
 
-  write_parsed_citations
-  write_unparsed_citations
+  write_citations @citations, 'parsed.json'
+  write_citations @unparsed_citations, 'unparsed.json'
   write_comparison
 
   show_results unless options[:quiet]
@@ -104,23 +104,19 @@ def compare_us_and_them citation
   citation.merge! Sherpa.compare_us_and_them citation
 end
 
-def write_parsed_citations
-  File.open make_file_name('json'), 'w' do |file|
-    file.write @citations.to_json
+def write_citations citations, extension
+  File.open make_file_name(extension), 'w' do |file|
+    file.puts '['
+    for citation in citations
+      file.puts citation.to_json
+    end
+    file.puts ']'
   end
 end
 
 def write_comparison
   File.open make_file_name('comparison.html'), 'w' do |file|
     #
-  end
-end
-
-def write_unparsed_citations
-  File.open make_file_name('unparsed.txt'), 'w' do |file|
-    for citation in @unparsed_citations
-      file.puts citation
-    end
   end
 end
 
