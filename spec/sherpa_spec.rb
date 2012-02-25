@@ -29,12 +29,11 @@ describe Sherpa do
       end
     end
 
-    describe "Combinations" do
-      it "should handle bracketed page without date" do
-        pending
-        run_spec 'Exot. Schmett. 1978, 23', 'Exot. Schmett.', 'II.', nil, '[23]'
-      end
-    end
+    #describe "Combinations" do
+      #it "should handle bracketed page without date" do
+        #run_spec 'Exot. Schmett. 1978, 23', 'Exot. Schmett.', 'II.', nil, '[23]'
+      #end
+    #end
 
     describe "Series, volume, issue" do
       it "should handle a journal with a volume" do
@@ -66,10 +65,9 @@ describe Sherpa do
       it "should handle a placeholder, even when it's UTF-16" do
         run_spec 'Ins. Afr. Amer. (—) 1806, 18', 'Ins. Afr. Amer.', '(—)', '1806', '18'
       end
-      it "should handle 'Tab.' as part of the series/volume/issue" do
-        pending
-        run_spec 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', nil, '[23]'
-      end
+      #it "should handle 'Tab.' as part of the series/volume/issue" do
+        #run_spec 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', nil, '[23]'
+      #end
     end
 
     describe "Date" do
