@@ -91,7 +91,7 @@ def get_fields_from_row row
   citation = row[letter_to_number('M')]
   return unless citation
   {citation: citation,
-   rich: {
+   them: {
     title: row[letter_to_number('P')],
     volume: row[letter_to_number('Q')],
     number: row[letter_to_number('R')],
