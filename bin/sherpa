@@ -16,10 +16,10 @@ main do |file_name|
 
   output_file_name, unparsed_file_name = make_file_names file_name
 
+  line_count = get_line_count file_name
+
   File.open output_file_name, 'w' do |output_file|
     File.open unparsed_file_name, 'w' do |error_file|
-      @using_real_file = file_name !~ /short/
-      line_count = @using_real_file ? 100 : 429830
       Progress.init true, line_count
       @counts = Hash.new(0)
       @citations = []
@@ -64,6 +64,11 @@ main do |file_name|
 
     end
   end
+end
+
+def get_line_count file_name
+  return 424285 if file_name =~ /names\.txt$/
+  `wc '#{file_name}' | cut -c -9`.to_i
 end
 
 def make_file_names file_name
