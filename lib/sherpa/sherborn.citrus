@@ -6,12 +6,28 @@ grammar SherbornGrammar
   end
 
   rule citation_part
-    (title /,? / (series_volume_issue ' ')? (date ', ')? pages '.'?) {
+    (
+      ('' atlas_adour) |
+      (title /,? / (series_volume_issue ' ')? (date ', ')? pages '.'?)
+    ) {
+      if atlas_adour
+        return atlas_adour.value
+      end
       { title: title.value,
         date: date && date.value,
         volume:
           series_volume_issue && series_volume_issue.value,
         pages: pages.value,
+      }
+    }
+  end
+
+  rule atlas_adour
+    (title ', ' date ' ' plate_section) {
+      { title: title.value,
+        date: date.value,
+        volume: nil,
+        pages: plate_section.value,
       }
     }
   end
@@ -89,7 +105,7 @@ grammar SherbornGrammar
   end
 
   rule plate_section
-    capitalized_word ', pl. ' roman_number
+    ('Suppl.' | (capitalized_word ',')) ' pl. ' roman_number
   end
 
   rule roman_number

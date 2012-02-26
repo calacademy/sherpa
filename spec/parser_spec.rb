@@ -18,6 +18,11 @@ describe Sherpa::Parser do
       }]}
     end
 
+    it "should handle these Atlas's" do
+      parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
+      parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil , "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
+    end
+
     describe "Title" do
       it "should handle a title ending with an abbreviated word" do
         parse_and_check 'Suppl. Ent. Syst. 1798, 435', 'Suppl. Ent. Syst.', nil, '1798', '435',
