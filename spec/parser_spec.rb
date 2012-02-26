@@ -108,7 +108,7 @@ describe Sherpa::Parser do
       describe "Date" do
         before(:all) do
           unless defined? SherbornGrammar
-            Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/*'
+            Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/sherpa/*'
           end
         end
 
