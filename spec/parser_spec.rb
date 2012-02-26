@@ -63,9 +63,9 @@ describe Sherpa::Parser do
     it "should handle a placeholder, even when it's UTF-16" do
       run_spec 'Ins. Afr. Amer. (—) 1806, 18', 'Ins. Afr. Amer.', '(—)', '1806', '18'
     end
-    #it "should handle 'Tab.' as part of the series/volume/issue" do
-      #run_spec 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', nil, '[23]'
-    #end
+    it "should handle 'Tab.' as part of the series/volume/issue" do
+      run_spec 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', nil, '[23]'
+    end
   end
 
   describe "Date" do

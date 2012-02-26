@@ -6,7 +6,7 @@ grammar SherbornGrammar
   end
 
   rule citation_part
-    (title /,? / (series_volume_issue ' ')? (date ', ') pages '.'?) {
+    (title /,? / (series_volume_issue ' ')? (date ', ')? pages '.'?) {
       { title: title.value,
         date: date && date.value,
         volume:
@@ -45,7 +45,7 @@ grammar SherbornGrammar
   end
 
   rule volume
-    roman_number '.'?
+    roman_number '.'? ' Tab.'?
   end
 
   rule issue
