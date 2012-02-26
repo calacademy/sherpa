@@ -21,7 +21,7 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    capitalized_word_or_abbreviation | parenthesized_phrase
+    capitalized_word_or_abbreviation | parenthesized_phrase | 'to' | 'foss.' | 'tert.'
   end
 
   rule capitalized_word_or_abbreviation
