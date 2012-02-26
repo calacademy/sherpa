@@ -1,22 +1,11 @@
 require 'citrus'
 require_relative 'progress'
-require_relative 'version'
+
+require_relative 'parser'
 require_relative 'preprocessor'
+require_relative 'version'
 
 module Sherpa
-
-  module Parser
-    def self.parse string, options = {}
-      require_grammars
-      string = Preprocessor.preprocess string
-      SherbornGrammar.parse(string, options).value
-    end
-    def self.require_grammars
-      unless defined? SherbornGrammar
-        Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '*'
-      end
-    end
-  end
 
   module Formatter
     def self.format_comparisons citations
