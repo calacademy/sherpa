@@ -78,20 +78,19 @@ module Sherpa
         string << <<-EOS
         <table class="citation">
           <tr>
-            <td class="caption"></td>
             <td class="citation">#{citation[:citation]}</td>
           </tr>
         </table>
         EOS
 
         string << '<table>'
-          string << "<tr><td class='caption'>Us</td>"
+          string << "<tr>"
           for cell in our_cells
             string << cell
           end
           string << "</tr>"
 
-          string << "<tr><td class='caption'>Them</td>"
+          string << "<tr>"
           for cell in their_cells
             string << cell
           end
