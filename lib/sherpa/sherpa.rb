@@ -5,9 +5,10 @@ require_relative 'version'
 module Sherpa
 
   module Parser
-    def self.parse string
+    def self.parse string, options = {}
       require_grammars
-      SherbornGrammar.parse(Preprocessor.preprocess string).value
+      string = Preprocessor.preprocess string
+      SherbornGrammar.parse(string, options).value
     end
     def self.require_grammars
       unless defined? SherbornGrammar
