@@ -61,7 +61,7 @@ grammar SherbornGrammar
   end
 
   rule date
-    year_range | year
+    (year_range | year) / \[.*?\]/?
   end
 
   rule year_range
@@ -77,7 +77,7 @@ grammar SherbornGrammar
   end
 
   rule pages
-    bracketed_pages | unbracketed_pages
+    bracketed_pages | unbracketed_pages | 'Volutes, pl. ii'
   end
 
   rule bracketed_pages
