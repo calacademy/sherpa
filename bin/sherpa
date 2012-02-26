@@ -85,7 +85,6 @@ def get_fields_from_row row
    them: {
     title: row[spreadsheet_column_to_offset('P')],
     volume: row[spreadsheet_column_to_offset('Q')],
-    number: row[spreadsheet_column_to_offset('R')],
     date: row[spreadsheet_column_to_offset('S')],
     pages: row[spreadsheet_column_to_offset('T')],
   }}
