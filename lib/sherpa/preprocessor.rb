@@ -5,9 +5,14 @@ require_relative 'version'
 module Sherpa::Preprocessor
   def self.preprocess string
     remove_mismatched_brackets(
+    fix_incorrect_closing_parenthesis(
     remove_trailing_comma(
     correct_conch(
-      string)))
+      string))))
+  end
+
+  def self.fix_incorrect_closing_parenthesis string
+    string.gsub /\[([^\]\)]+)\)/, '[\1]'
   end
 
   def self.correct_conch string

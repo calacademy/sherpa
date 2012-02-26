@@ -8,7 +8,7 @@ describe Sherpa::Preprocessor do
     # The code under test is copied from AntCat, so
     # these tests are minimal
     it "should removed unmatched opening brackets" do
-    preprocessor.preprocess('[a').should == 'a'
+      preprocessor.preprocess('[a').should == 'a'
     end
     it "should leave a normal string alone" do
       preprocessor.preprocess('a').should == 'a'
@@ -24,6 +24,10 @@ describe Sherpa::Preprocessor do
 
   it "should correct 'Conch,' to 'Conch.'" do
     preprocessor.preprocess('Conch,').should == 'Conch.'
+  end
+
+  it "should fix incorrect ending brackets" do
+    preprocessor.preprocess('[<em>vero propius</em> 1847)').should == '[<em>vero propius</em> 1847]'
   end
 
 end
