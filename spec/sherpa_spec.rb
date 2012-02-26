@@ -1,12 +1,12 @@
 # coding: UTF-8
 require 'spec_helper'
-require 'citrus'
 
 describe Sherpa do
 
+  # The code under test is copied from AntCat, so
+  # these tests are minimal
   describe Sherpa::Preprocessor do
     let(:preprocessor) {Sherpa::Preprocessor}
-    # Code under test is copied from AntCat
     it "should removed unmatched opening brackets" do
       preprocessor.preprocess('[a').should == 'a'
     end
@@ -21,6 +21,7 @@ describe Sherpa do
     end
   end
 
+  # This code is changing too rapidly, in an untestable way
   describe Sherpa::Formatter do
     let(:formatter) {Sherpa::Formatter}
     citations = [{citations: [{volume: 'I'}], them: {volume: 'II'}}]
