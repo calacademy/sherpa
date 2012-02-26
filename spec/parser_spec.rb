@@ -18,9 +18,13 @@ describe Sherpa::Parser do
       }]}
     end
 
-    it "should handle these Atlas's" do
-      parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
-      parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
+    describe "Atlas...Adour" do
+      it "should handle this one" do
+        parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
+      end
+      it "should handle this one" do
+        parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
+      end
     end
 
     describe "Title" do
@@ -114,10 +118,13 @@ describe Sherpa::Parser do
 
     describe "Pages" do
       it "should handle a reference to a section of a plate" do
-        parser.parse("Volutes, pl. ii", root: :pages)
+        parser.parse "Volutes, pl. ii", root: :pages
       end
       it "should handle a reference to another section of a plate" do
-        parser.parse("Turbinellus, pl. iii", root: :pages)
+        parser.parse "Turbinellus, pl. iii", root: :pages
+      end
+      it "should handle an arabic plate number " do
+        parser.parse "Buccins, pl. 1", root: :pages
       end
     end
 
