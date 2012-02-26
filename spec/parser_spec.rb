@@ -97,30 +97,25 @@ describe Sherpa::Parser do
         }
       end
     end
+  end
 
-    describe "Component rules" do
-      let(:grammar) do
-        unless defined? SherbornGrammar
-          Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/sherpa/*'
-        end
-        SherbornGrammar
+  describe "Component rules" do
+
+    describe "Date" do
+      it "should include a bracketed phrase following a date in the date" do
+        parser.parse("1840-46 [<em>vero propius</em> 1847]", root: :date)
       end
+    end
 
-      describe "Date" do
-        it "should include a bracketed phrase following a date in the date" do
-          grammar.parse("1840-46 [<em>vero propius</em> 1847]", root: :date)
-        end
+    describe "Pages" do
+      it "should handle a reference to a section of a plate" do
+        parser.parse("Volutes, pl. ii", root: :pages)
       end
-
-      describe "Pages" do
-        it "should handle a reference to a section of a plate" do
-          grammar.parse("Volutes, pl. ii", root: :pages)
-        end
-        it "should handle a reference to another section of a plate" do
-          grammar.parse("Turbinellus, pl. iii", root: :pages)
-        end
+      it "should handle a reference to another section of a plate" do
+        parser.parse("Turbinellus, pl. iii", root: :pages)
       end
     end
 
   end
+
 end
