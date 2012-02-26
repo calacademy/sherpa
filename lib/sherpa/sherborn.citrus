@@ -105,7 +105,7 @@ grammar SherbornGrammar
   end
 
   rule plate_section
-    ('Suppl.' | (capitalized_word ',')) ' pl. ' (roman_number | arabic_number)
+    ('Suppl.' | (capitalized_word ',')) ' pl. ' arabic_or_roman_number
   end
 
   rule arabic_number
@@ -114,6 +114,10 @@ grammar SherbornGrammar
 
   rule roman_number
     /\b[IVXLC]+\b/i
+  end
+
+  rule arabic_or_roman_number
+    roman_number | arabic_number
   end
 
 end
