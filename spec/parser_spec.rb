@@ -6,10 +6,6 @@ describe Sherpa::Parser do
 
   describe "Parsing the whole citation" do
 
-    it "should handle this" do
-      parse_and_check "Atlas to Conch foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Volutes, pl. ii", "Atlas to Conch foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Volutes, pl. ii"
-    end
-
     #describe "Combinations" do
       #it "should handle bracketed page without date" do
         #parse_and_check 'Exot. Schmett. 1978, 23', 'Exot. Schmett.', 'II.', nil, '[23]'
@@ -103,20 +99,25 @@ describe Sherpa::Parser do
     end
 
     describe "Component rules" do
-      let(:grammar) {SherbornGrammar}
+      let(:grammar) do
+        unless defined? SherbornGrammar
+          Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/sherpa/*'
+        end
+        SherbornGrammar
+      end
 
       describe "Date" do
-        before(:all) do
-          unless defined? SherbornGrammar
-            Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/sherpa/*'
-          end
-        end
-
         it "should include a bracketed phrase following a date in the date" do
           grammar.parse("1840-46 [<em>vero propius</em> 1847]", root: :date)
         end
-
       end
+
+      describe "Pages" do
+        it "should handle a reference to a section of a plate" do
+          grammar.parse("Volutes, pl. ii", root: :pages)
+        end
+      end
+
     end
 
   end
