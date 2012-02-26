@@ -11,12 +11,10 @@ module Sherpa::Formatter
     for citation in citations.sort_by{|a| a[:citation]}.uniq
       our_cells = []
       their_cells = []
-      any_different = false
       for column in [:title, :volume, :date, :pages] do
         cells =  make_value_cells citation, column
         our_cells << cells[:us]
         their_cells << cells[:them]
-        any_different ||= cells[:different]
       end
 
       string << <<-EOS
@@ -28,17 +26,8 @@ module Sherpa::Formatter
       EOS
 
       string << '<table>'
-        string << "<tr>"
-        for cell in our_cells
-          string << cell
-        end
-        string << "</tr>"
-
-        string << "<tr>"
-        for cell in their_cells
-          string << cell
-        end
-        string << "</tr>"
+        string << '<tr>' << our_cells.join << '</tr>'
+        string << '<tr>' << their_cells.join << '</tr>' unless our_cells.join == their_cells.join
       string << '</table>'
 
     end
@@ -48,9 +37,8 @@ module Sherpa::Formatter
   def self.make_value_cells citation, field
     them = citation[:them][field]
     us = citation[:citations].first[field]
-    both_blank = (them || '') == '' && (us || '') == ''
     different = us != them
-    css_classes = [different ? 'different' : both_blank ? 'both_blank' : 'same']
+    css_classes = [different ? 'different' : 'same']
     css_classes << field.to_s
     css_classes << 'value'
     css_classes = css_classes.join ' '
