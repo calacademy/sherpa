@@ -29,13 +29,4 @@ describe Sherpa do
     end
   end
 
-  # This code is changing too rapidly, in an untestable way
-  describe Sherpa::Formatter do
-    let(:formatter) {Sherpa::Formatter}
-    citations = [{citations: [{volume: 'I'}], them: {volume: 'II'}}]
-    it "should work" do
-      formatter.format_comparisons citations
-    end
-  end
-
 end
