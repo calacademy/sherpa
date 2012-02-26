@@ -106,7 +106,11 @@ describe Sherpa::Parser do
       let(:grammar) {SherbornGrammar}
 
       describe "Date" do
-        before(:all) {Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/*'}
+        before(:all) do
+          unless defined? SherbornGrammar
+            Citrus.require File.join File.expand_path(File.dirname __FILE__ ), '..', 'lib/*'
+          end
+        end
 
         it "should include a bracketed phrase following a date in the date" do
           grammar.parse("1840-46 [<em>vero propius</em> 1847]", root: :date)
