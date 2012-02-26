@@ -77,7 +77,7 @@ grammar SherbornGrammar
   end
 
   rule pages
-    bracketed_pages | unbracketed_pages | 'Volutes, pl. ii'
+    bracketed_pages | unbracketed_pages | plate_section
   end
 
   rule bracketed_pages
@@ -86,6 +86,10 @@ grammar SherbornGrammar
 
   rule unbracketed_pages
     /\d+/
+  end
+
+  rule plate_section
+    capitalized_word ', pl. ' roman_number
   end
 
   rule roman_number

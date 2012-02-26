@@ -116,8 +116,10 @@ describe Sherpa::Parser do
         it "should handle a reference to a section of a plate" do
           grammar.parse("Volutes, pl. ii", root: :pages)
         end
+        it "should handle a reference to another section of a plate" do
+          grammar.parse("Turbinellus, pl. iii", root: :pages)
+        end
       end
-
     end
 
   end
