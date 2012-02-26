@@ -24,6 +24,9 @@ describe Sherpa do
       preprocessor.preprocess('Isis (Oken), 1833, 523,').should == 'Isis (Oken), 1833, 523'
     end
 
+    it "should correct 'Conch,' to 'Conch.'" do
+      preprocessor.preprocess('Conch,').should == 'Conch.'
+    end
   end
 
   # This code is changing too rapidly, in an untestable way

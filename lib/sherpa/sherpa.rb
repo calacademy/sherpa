@@ -21,7 +21,12 @@ module Sherpa
     def self.preprocess string
       remove_mismatched_brackets(
       remove_trailing_comma(
-        string))
+      correct_conch(
+        string)))
+    end
+
+    def self.correct_conch string
+      string.gsub /\bConch,/, 'Conch.'
     end
 
     def self.remove_trailing_comma string
