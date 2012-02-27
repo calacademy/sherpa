@@ -11,11 +11,10 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    (title /,? / (series_volume_issue ' ')? (date ', ')? pages '.'?) {
+    (title /,? / (series_volume_issue ' ')? (date /,? /)? pages '.'?) {
       { title: title.value,
         date: date && date.value,
-        volume:
-          series_volume_issue && series_volume_issue.value,
+        volume: series_volume_issue && series_volume_issue.value,
         pages: pages.value,
       }
     }
