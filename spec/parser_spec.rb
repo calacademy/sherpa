@@ -30,6 +30,14 @@ describe Sherpa::Parser do
       end
     end
 
+    describe "Ic. hist lepidopt" do
+      it "should parse these variants" do
+        parse_and_check "Ic. hist, lepidopt. Europe, II (—) 1837, 177", "Ic. hist, lepidopt. Europe", "II (—)", "1837", "177"
+        parse_and_check "Ic. hist, lépidopt. Europe, II (—) 1834, 71", "Ic. hist, lépidopt. Europe", "II (—)", "1834", "71"
+        parse_and_check "Ic. hist. Lépidopt. Europe, I (—) 1833, 183", "Ic. hist. Lépidopt. Europe", "I (—)", "1833", "183"
+      end
+    end
+
     describe "Title" do
       it "should handle a title ending with an abbreviated word" do
         parse_and_check 'Suppl. Ent. Syst. 1798, 435', 'Suppl. Ent. Syst.', nil, '1798', '435',
