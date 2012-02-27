@@ -19,11 +19,14 @@ describe Sherpa::Parser do
     end
 
     describe "Atlas...Adour" do
-      it "should handle this one" do
+      it "should handle this group of special cases" do
         parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
       end
-      it "should handle this one" do
+      it "should put the suplement with the page section, for now" do
         parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
+      end
+      it "should handle 'foss' without a period" do
+        parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
       end
     end
 

@@ -37,7 +37,11 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    capitalized_word_or_abbreviation | parenthesized_phrase | 'to' | 'foss.' | 'tert.'
+    !date (literal_title_word | capitalized_word_or_abbreviation | parenthesized_phrase)
+  end
+
+  rule literal_title_word
+    'foss.' | 'foss,' | 'tert.' | 'to'
   end
 
   rule capitalized_word_or_abbreviation
