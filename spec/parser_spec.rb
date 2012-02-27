@@ -140,8 +140,11 @@ describe Sherpa::Parser do
       it "should handle a reference to another section of a plate" do
         parser.parse "Turbinellus, pl. iii", root: :pages
       end
-      it "should handle an arabic plate number " do
+      it "should handle an arabic plate number" do
         parser.parse "Buccins, pl. 1", root: :pages
+      end
+      it "should handle a plate in parentheses" do
+        parser.parse "(pl. 17)", root: :pages
       end
     end
 

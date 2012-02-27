@@ -111,7 +111,7 @@ grammar SherbornGrammar
   end
 
   rule unbracketed_pages
-    /\d+/
+    ('pl. ' /\d+/) | /\d+/
   end
 
   rule plate_section
