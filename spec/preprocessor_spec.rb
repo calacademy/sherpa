@@ -30,4 +30,10 @@ describe Sherpa::Preprocessor do
     preprocessor.preprocess('[<em>vero propius</em> 1847)').should == '[<em>vero propius</em> 1847]'
   end
 
+  it "should fix misspelled strings" do
+    for test in [['pi. 1', 'pl. 1']]
+      preprocessor.preprocess(test[0]).should == test[1]
+    end
+  end
+
 end

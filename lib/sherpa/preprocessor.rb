@@ -4,19 +4,27 @@ require_relative 'version'
 
 module Sherpa::Preprocessor
   def self.preprocess string
+    fix_space_after_hyphen(
     remove_mismatched_brackets(
     fix_incorrect_closing_parenthesis(
     remove_trailing_comma(
-    correct_conch(
-      string))))
+    correct_typos(
+      string)))))
   end
 
   def self.fix_incorrect_closing_parenthesis string
     string.gsub /\[([^\]\)]+)\)/, '[\1]'
   end
 
-  def self.correct_conch string
-    string.gsub /\bConch,/, 'Conch.'
+  def self.correct_typos string
+    string = string.gsub /\bConch,/, 'Conch.'
+    string = string.gsub /\bpi\./, 'pl.'
+    string
+  end
+
+  def self.fix_space_after_hyphen string
+    return string
+    string.gsub /- (\d)/, '- \1'
   end
 
   def self.remove_trailing_comma string
