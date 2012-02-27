@@ -6,35 +6,35 @@ describe Sherpa::Parser do
 
   describe "Parsing the whole citation" do
 
-    #describe "Combinations" do
-      #it "should handle bracketed page without date" do
-        #parse_and_check 'Exot. Schmett. 1978, 23', 'Exot. Schmett.', 'II.', nil, '[23]'
-      #end
-    #end
-
     def parse_and_check citation, title, volume, date, pages
       parser.parse(citation).should == {citations: [{
         title: title, date: date, volume: volume, pages: pages
       }]}
     end
 
-    describe "Atlas...Adour" do
-      it "should handle this group of special cases" do
-        parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
+    describe "Specific combinations or patterns of data" do
+      it "should handle a bracketed year range without a trailing comma followed by a plate section in brackets" do
+        parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
       end
-      it "should put the suplement with the page section, for now" do
-        parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
-      end
-      it "should handle 'foss' without a period" do
-        parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
-      end
-    end
 
-    describe "Ic. hist lepidopt" do
-      it "should parse these variants" do
-        parse_and_check "Ic. hist, lepidopt. Europe, II (—) 1837, 177", "Ic. hist, lepidopt. Europe", "II (—)", "1837", "177"
-        parse_and_check "Ic. hist, lépidopt. Europe, II (—) 1834, 71", "Ic. hist, lépidopt. Europe", "II (—)", "1834", "71"
-        parse_and_check "Ic. hist. Lépidopt. Europe, I (—) 1833, 183", "Ic. hist. Lépidopt. Europe", "I (—)", "1833", "183"
+      describe "Atlas...Adour" do
+        it "should handle one" do
+          parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
+        end
+        it "should put the supplement with the page section, for now" do
+          parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
+        end
+        it "should handle 'foss' without a period" do
+          parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
+        end
+      end
+
+      describe "Ic. hist lepidopt" do
+        it "should parse these variants" do
+          parse_and_check "Ic. hist, lepidopt. Europe, II (—) 1837, 177", "Ic. hist, lepidopt. Europe", "II (—)", "1837", "177"
+          parse_and_check "Ic. hist, lépidopt. Europe, II (—) 1834, 71", "Ic. hist, lépidopt. Europe", "II (—)", "1834", "71"
+          parse_and_check "Ic. hist. Lépidopt. Europe, I (—) 1833, 183", "Ic. hist. Lépidopt. Europe", "I (—)", "1833", "183"
+        end
       end
     end
 
