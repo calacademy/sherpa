@@ -12,12 +12,11 @@ ENV['DEBUG'] = 'true'
 
 main do |file_name|
   @file_name = file_name
-  @line_count = get_line_count
   @counts = Hash.new(0)
   @parsed_citations = []
   @unparsed_citations = []
 
-  Progress.init true, @line_count
+  Progress.init true, line_count
 
   need_to_skip_header = true
   File.foreach @file_name do |line|
@@ -42,26 +41,33 @@ main do |file_name|
     end
 
     begin
-      @parsed_citations << parse_citation(citation)
+      citation = parse_citation citation
+      @parsed_citations << citation unless file_is_really_big
       @counts[:parsed] += 1
     rescue Citrus::ParseError
-      @unparsed_citations << citation
+      @unparsed_citations << citation unless file_is_really_big
       @counts[:unparsed] += 1
     end
 
     show_progress
   end
 
-  write_citations @parsed_citations, 'parsed.json'
-  write_citations @unparsed_citations.sort_by{|a| a[:citation]}.uniq, 'unparsed.json'
-  write_comparisons
+  unless file_is_really_big
+    write_citations @parsed_citations, 'parsed.json'
+    write_citations @unparsed_citations.sort_by{|a| a[:citation]}.uniq, 'unparsed.json'
+    write_comparisons
+  end
 
   show_results
 
 end
 
-def get_line_count
-  @line_count = `wc '#{@file_name}' | cut -c -9`.to_i
+def file_is_really_big
+  line_count > 2000
+end
+
+def line_count
+  @line_count ||= `wc '#{@file_name}' | cut -c -9`.to_i
 end
 
 def make_file_name new_extension
@@ -110,8 +116,8 @@ def write_comparisons
 end
 
 def show_progress
-  return unless @line_count >= 2000
-  return if Progress.processed_count % 1000 != 0
+  return unless line_count >= 2000
+  return if Progress.processed_count % 10_000 != 0
   message = "#{Progress.processed_count} lines, " +
             "#{Progress.percent(@counts[:parsed])} parsed, " +
             "#{Progress.time_left}"
