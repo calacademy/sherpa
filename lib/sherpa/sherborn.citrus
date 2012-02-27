@@ -41,21 +41,25 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    literal_title_word | capitalized_word_or_abbreviation | parenthesized_phrase
+    lowercase_word_or_abbreviation | capitalized_word_or_abbreviation | parenthesized_phrase
   end
 
-  rule literal_title_word
-    (/foss/ | /tert/ | /to/ | /hist/ | /l[eé]pidopt/) /[.,]/?
+  rule lowercase_word_or_abbreviation
+    !lowercase_roman_number lowercase_word /[.,]?/
   end
 
   rule capitalized_word_or_abbreviation
-    !roman_number capitalized_word '.'?
+    !uppercase_roman_number capitalized_word '.'?
   end
 
   rule capitalized_word
     /[[:upper:]][[:lower:]]*/
   end
-  
+
+  rule lowercase_word
+    /[[:lower:]]+/
+  end
+
   rule parenthesized_phrase
     '(' capitalized_word_or_abbreviation (' ' capitalized_word_or_abbreviation)* ')'
   end
