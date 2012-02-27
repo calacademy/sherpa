@@ -61,7 +61,6 @@ main do |file_name|
 end
 
 def get_line_count
-  return 424285 if @file_name =~ /names\.txt$/
   @line_count = `wc '#{@file_name}' | cut -c -9`.to_i
 end
 
