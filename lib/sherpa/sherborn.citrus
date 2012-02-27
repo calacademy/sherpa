@@ -1,6 +1,6 @@
 grammar SherbornGrammar
   rule citation
-    (citation_part (' ; & ' citation_part)?) {
+    (citation_part (' ; ' '& '? citation_part)?) {
       {citations: captures[:citation_part].map(&:value)}
     }
   end

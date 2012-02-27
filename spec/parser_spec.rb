@@ -116,6 +116,16 @@ describe Sherpa::Parser do
           ]
         }
       end
+
+      it "should handle a multipart without a &" do
+        parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {
+          citations: [
+            {title: 'Proc. Boston Soc. N. H.', volume: 'I (—)', date: '1844', pages: '187'},
+            {title: 'Boston Journ. N. H.', volume: 'V (1)', date: '1845', pages: '84'},
+          ]
+        }
+      end
+
     end
   end
 
