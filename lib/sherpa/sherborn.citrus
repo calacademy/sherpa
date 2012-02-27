@@ -41,7 +41,7 @@ grammar SherbornGrammar
   end
 
   rule literal_title_word
-    'foss.' | 'foss,' | 'tert.' | 'to'
+    'foss.' | 'foss,' | 'tert.' | 'to' | 'hist,' | 'hist.' | 'lepidopt.' | 'lépidopt.'
   end
 
   rule capitalized_word_or_abbreviation
