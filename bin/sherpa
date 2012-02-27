@@ -53,8 +53,8 @@ main do |file_name|
   end
 
   unless file_is_really_big
-    write_citations @parsed_citations, 'parsed.json'
-    write_citations @unparsed_citations.sort_by{|a| a[:citation]}.uniq, 'unparsed.json'
+    write_parsed_citations
+    write_unparsed_citations
     write_comparisons
   end
 
@@ -99,13 +99,34 @@ def parse_citation citation
   citation.merge! Sherpa::Parser.parse citation[:citation]
 end
 
-def write_citations citations, extension
-  File.open make_file_name(extension), 'w' do |file|
+def write_parsed_citations
+  File.open make_file_name('parsed.json'), 'w' do |file|
     file.puts '['
-    for citation in citations
+    for citation in @parsed_citations
       file.puts citation.to_json
     end
     file.puts ']'
+  end
+end
+
+def write_unparsed_citations
+  File.open make_file_name('unparsed.txt'), 'w' do |file|
+    strings = sort_by_frequency @unparsed_citations.map{|e| e[:citation]}.uniq
+    for string in sort_by_frequency strings
+      file.puts string
+    end
+  end
+end
+
+def sort_by_frequency strings
+  prefix_length = 10
+  strings.sort_by do |a|
+    this_prefix = a[0, prefix_length]
+    group_size = 0
+    for citation in @unparsed_citations
+      group_size += 1 if citation[:citation][0, prefix_length] == this_prefix
+    end
+    - group_size
   end
 end
 
