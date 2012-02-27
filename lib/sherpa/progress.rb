@@ -90,6 +90,18 @@ class Progress
     sprintf "%.0f #{noun}", mins
   end
 
+  def self.time secs
+    minutes = (secs / 60).floor
+    seconds = (secs % 60).floor
+    string = ''
+    if minutes > 0
+      string << minutes.to_s
+    end
+    string << ':'
+    string << '0' if seconds < 10
+    string << seconds.to_s
+  end
+
   def self.method
     string = caller[0].to_s
     string = string.match(/`(.*?)'/)[1].to_s
@@ -111,13 +123,13 @@ class Progress
   def self.time_left total_count = nil, processed_count = nil
     total_count ||= @total_count
     processed_count ||= @processed_count
-    mins_left = (total_count - processed_count).to_f / rate_per_sec(processed_count) / 60
-    mins_left = [mins_left, 1.0].max unless processed_count == total_count
-    sprintf "#{mins(mins_left)} left", mins_left
+    time_left = (total_count - processed_count).to_f / rate_per_sec(processed_count)
+    time_left = [time_left, 1.0].max unless processed_count == total_count
+    sprintf "#{time(time_left)} left", time_left
   end
 
   def self.elapsed
-    mins [(elapsed_secs.to_f / 60), 1.0].max
+    time elapsed_secs
   end
 
   def self.processed_count
