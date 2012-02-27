@@ -5,14 +5,13 @@ grammar SherbornGrammar
     }
   end
 
+  #####################################
   rule citation_part
-    (
-      ('' atlas_adour) |
-      (title /,? / (series_volume_issue ' ')? (date ', ')? pages '.'?)
-    ) {
-      if atlas_adour
-        return atlas_adour.value
-      end
+    special_citation_part | regular_citation_part
+  end
+
+  rule regular_citation_part
+    (title /,? / (series_volume_issue ' ')? (date ', ')? pages '.'?) {
       { title: title.value,
         date: date && date.value,
         volume:
@@ -20,6 +19,10 @@ grammar SherbornGrammar
         pages: pages.value,
       }
     }
+  end
+
+  rule special_citation_part
+    atlas_adour
   end
 
   rule atlas_adour
@@ -32,6 +35,7 @@ grammar SherbornGrammar
     }
   end
 
+  #####################################
   rule title
     title_word (' ' title_word)*
   end
