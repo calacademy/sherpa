@@ -41,7 +41,7 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    !date (literal_title_word | capitalized_word_or_abbreviation | parenthesized_phrase)
+    literal_title_word | capitalized_word_or_abbreviation | parenthesized_phrase
   end
 
   rule literal_title_word
