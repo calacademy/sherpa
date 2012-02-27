@@ -125,6 +125,12 @@ describe Sherpa::Parser do
       it "should include a bracketed phrase following a date in the date" do
         parser.parse("1840-46 [<em>vero propius</em> 1847]", root: :date)
       end
+      it "should handle a one-digit end year in a range" do
+        parser.parse("1830-2", root: :date)
+      end
+      it "should handle a bracketed date" do
+        parser.parse("[1830-2]", root: :date)
+      end
     end
 
     describe "Pages" do

@@ -87,7 +87,7 @@ grammar SherbornGrammar
 
   #####################################
   rule date
-    (year_range | year) / \[.*?\]/?
+    ((year_range | year) / \[.*?\]/?) | '[' date ']'
   end
 
   rule year_range
@@ -99,7 +99,7 @@ grammar SherbornGrammar
   end
 
   rule short_year
-    /\d{2}/
+    /\d{1,2}/
   end
 
   #####################################
