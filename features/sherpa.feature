@@ -32,12 +32,7 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     When I run `sherpa sherborn.txt`
     Then it should pass with:
     """
-    4 (100%) valid CSV
-    0 (0%) invalid CSV
-    2 (50%) no citation
     1 (25%) parsed
-    1 (25%) unparsed
-    25% success
     """
 
   Scenario: Running silently

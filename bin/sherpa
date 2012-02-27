@@ -120,12 +120,7 @@ end
 
 def show_results
   Progress.show_results
-  Progress.show_count @counts[:valid_csv], Progress.processed_count, 'valid CSV'
-  Progress.show_count @counts[:invalid_csv], Progress.processed_count, 'invalid CSV'
-  Progress.show_count @counts[:no_citation], Progress.processed_count, 'no citation'
   Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
-  Progress.show_count @counts[:unparsed], Progress.processed_count, 'unparsed'
-  Progress.puts Progress.percent(@counts[:parsed], @counts[:valid_csv]) + ' success'
 end
 
 on '--quiet', "Don't display progress messages or results"
