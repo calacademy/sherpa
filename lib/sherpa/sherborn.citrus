@@ -107,7 +107,7 @@ grammar SherbornGrammar
   end
 
   rule bracketed_pages
-    '[' unbracketed_pages ']'
+    ('[' unbracketed_pages ']') | ('(' unbracketed_pages ')')
   end
 
   rule unbracketed_pages
