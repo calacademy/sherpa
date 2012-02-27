@@ -45,7 +45,7 @@ grammar SherbornGrammar
   end
 
   rule literal_title_word
-    /\b/ (/foss/ | /tert/ | /to/ | /hist/ | /l[eé]pidopt/) /[.,]/?
+    (/foss/ | /tert/ | /to/ | /hist/ | /l[eé]pidopt/) /[.,]/?
   end
 
   rule capitalized_word_or_abbreviation
@@ -60,6 +60,7 @@ grammar SherbornGrammar
     '(' capitalized_word_or_abbreviation (' ' capitalized_word_or_abbreviation)* ')'
   end
 
+  #####################################
   rule series_volume_issue
     ((edition ', ')? volume (' ' issue)?) | issue
   end
@@ -80,10 +81,7 @@ grammar SherbornGrammar
     /\d+/ | hyphen
   end
 
-  rule hyphen
-    '-' | '—'
-  end
-
+  #####################################
   rule date
     (year_range | year) / \[.*?\]/?
   end
@@ -100,6 +98,7 @@ grammar SherbornGrammar
     /\d{2}/
   end
 
+  #####################################
   rule pages
     bracketed_pages | unbracketed_pages | plate_section
   end
@@ -115,6 +114,9 @@ grammar SherbornGrammar
   rule plate_section
     ('Suppl.' | (capitalized_word ',')) ' pl. ' arabic_or_roman_number
   end
+
+  #####################################
+  # utility
 
   rule arabic_number
     /\d/+
@@ -134,6 +136,10 @@ grammar SherbornGrammar
 
   rule arabic_or_roman_number
     roman_number | arabic_number
+  end
+
+  rule hyphen
+    '-' | '—'
   end
 
 end
