@@ -45,7 +45,7 @@ grammar SherbornGrammar
   end
 
   rule literal_title_word
-    'foss.' | 'foss,' | 'tert.' | 'to' | 'hist,' | 'hist.' | 'lepidopt.' | 'lépidopt.'
+    /\b/ (/foss/ | /tert/ | /to/ | /hist/ | /l[eé]pidopt/) /[.,]/?
   end
 
   rule capitalized_word_or_abbreviation
