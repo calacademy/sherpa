@@ -117,7 +117,15 @@ grammar SherbornGrammar
   end
 
   rule roman_number
-    /\b[IVXLC]+\b/i
+    uppercase_roman_number | lowercase_roman_number
+  end
+
+  rule uppercase_roman_number
+    /\b[IVXLC]+\b/
+  end
+
+  rule lowercase_roman_number
+    /\b[ivxlc]+\b/
   end
 
   rule arabic_or_roman_number

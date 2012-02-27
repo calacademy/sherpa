@@ -131,6 +131,15 @@ describe Sherpa::Parser do
       end
     end
 
+    describe "Roman numerals" do
+      it "should detect roman numbers" do
+        parser.parse "II", root: :roman_number
+      end
+      it "should not use mixed case" do
+        -> {parser.parse "Ic", root: :roman_number}.should raise_error Citrus::ParseError
+      end
+    end
+
   end
 
 end
