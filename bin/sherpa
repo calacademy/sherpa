@@ -49,14 +49,14 @@ main do |file_name|
       @counts[:unparsed] += 1
     end
 
-    show_progress unless options[:quiet]
+    show_progress
   end
 
   write_citations @parsed_citations, 'parsed.json'
   write_citations @unparsed_citations.sort_by{|a| a[:citation]}.uniq, 'unparsed.json'
   write_comparisons
 
-  show_results unless options[:quiet]
+  show_results
 
 end
 
@@ -122,8 +122,6 @@ def show_results
   Progress.show_results
   Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
 end
-
-on '--quiet', "Don't display progress messages or results"
 
 description "SHERborn PArser - Parses the citation field of Sherborn's Index Animalium"
 arg :file_name
