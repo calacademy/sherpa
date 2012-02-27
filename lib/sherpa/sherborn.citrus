@@ -86,11 +86,19 @@ grammar SherbornGrammar
 
   #####################################
   rule date
-    ((year_range | year) / \[.*?\]/?) | '[' date ']'
+    ((year_alternates | year_range | year) / \[.*?\]/?) | '[' date ']'
   end
 
   rule year_range
     year hyphen short_year
+  end
+
+  rule year_alternates
+    year ' ' vel ' ' year
+  end
+
+  rule vel
+    '<em>vel</em>'
   end
 
   rule year

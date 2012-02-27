@@ -123,13 +123,16 @@ describe Sherpa::Parser do
 
     describe "Date" do
       it "should include a bracketed phrase following a date in the date" do
-        parser.parse("1840-46 [<em>vero propius</em> 1847]", root: :date)
+        parser.parse "1840-46 [<em>vero propius</em> 1847]", root: :date
       end
       it "should handle a one-digit end year in a range" do
-        parser.parse("1830-2", root: :date)
+        parser.parse "1830-2", root: :date
       end
       it "should handle a bracketed date" do
-        parser.parse("[1830-2]", root: :date)
+        parser.parse "[1830-2]", root: :date
+      end
+      it "should handle x or y" do
+        parser.parse '1830 <em>vel</em> 1831', root: :date
       end
     end
 
