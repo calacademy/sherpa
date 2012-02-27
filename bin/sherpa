@@ -53,7 +53,7 @@ main do |file_name|
   end
 
   write_citations @parsed_citations, 'parsed.json'
-  write_citations @unparsed_citations, 'unparsed.json'
+  write_citations @unparsed_citations.sort_by{|a| a[:citation]}.uniq, 'unparsed.json'
   write_comparisons
 
   show_results unless options[:quiet]
