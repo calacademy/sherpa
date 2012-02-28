@@ -96,11 +96,15 @@ grammar SherbornGrammar
 
   #####################################
   rule date
-    ((year_alternates | year_range | year) / \[.*?\]/?) | '[' date ']'
+    ((year_alternates | year_with_open_last_digit | year_range | year) / \[.*?\]/?) | '[' date ']'
   end
 
   rule year_range
     year hyphen short_year
+  end
+
+  rule year_with_open_last_digit
+    /d{3}/ hyphen
   end
 
   rule year_alternates

@@ -38,6 +38,11 @@ describe Sherpa::Parser do
       end
     end
 
+    it "should handle this" do
+      pending
+      parser.parse "Proc. Boston Soc. N. H. I (—) 184-, 129 ; Boston Journ. N. H. IV (3) 1843, 337 & 347"
+    end
+
     describe "Title" do
       it "should handle a title ending with an abbreviated word" do
         parse_and_check 'Suppl. Ent. Syst. 1798, 435', 'Suppl. Ent. Syst.', nil, '1798', '435',
@@ -148,6 +153,10 @@ describe Sherpa::Parser do
       end
       it "should handle x or y" do
         parser.parse '1830 <em>vel</em> 1831', root: :date
+      end
+      it "should handle a year with open last digit" do
+        pending
+        parser.parse '184-', root: :date
       end
     end
 
