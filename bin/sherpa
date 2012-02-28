@@ -111,8 +111,8 @@ end
 
 def write_unparsed_citations
   File.open make_file_name('unparsed.txt'), 'w' do |file|
-    strings = sort_by_frequency @unparsed_citations.map{|e| e[:citation]}.uniq
-    for string in sort_by_frequency strings
+    strings = @unparsed_citations.map{|e| e[:citation]}.uniq.sort
+    for string in strings
       file.puts string
     end
   end
