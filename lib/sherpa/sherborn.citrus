@@ -11,7 +11,10 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    (title ' ' volume ' ' date ', ' pages) {
+    (
+        (title /,? / volume ' ' date ', ' pages)
+      | (title /,? / date ', ' pages)
+    ) {
       { title:  title.value,
         date:   date && date.value,
         volume: volume && volume.value,

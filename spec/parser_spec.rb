@@ -20,6 +20,12 @@ describe Sherpa::Parser do
       it "should handle the canonical case of TITLE VOLUME DATE, PAGE" do
         parse_and_check 'Ent. Syst. IV. 1794, 262', 'Ent. Syst.', 'IV.', '1794', '262'
       end
+      it "should handle TITLE, DATE, PAGE (no volume; title does not end in a period)" do
+        parse_and_check 'Gen. Sp. Ins. Geer, 1783, 32.', 'Gen. Sp. Ins. Geer', nil, '1783', '32'
+      end
+      it "should handle TITLE VOLUME (ISSUE) DATE, PAGE" do
+        parse_and_check 'Uitl. Kapellen, I. (8) 1776, 146', 'Uitl. Kapellen', 'I. (8)', '1776', '146'
+      end
     end
   end
 
