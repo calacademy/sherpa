@@ -11,11 +11,11 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    (title /,? / (series_volume_issue ' ')? (date /,? /)? pages '.'?) {
-      { title: title.value,
-        date: date && date.value,
+    (title /,? / (series_volume_issue /,? ?/)? (date /,? ?/)? pages? '.'?) {
+      { title:  title.value,
+        date:   date && date.value,
         volume: series_volume_issue && series_volume_issue.value,
-        pages: pages.value,
+        pages:  pages && pages.value,
       }
     }
   end
@@ -72,8 +72,14 @@ grammar SherbornGrammar
     /ed\. \d+/
   end
 
-  rule volume
-    roman_number '.'? ' Tab.'?
+  rule volume 
+      roman_number '.'? ' ' tab_and_taxon_name
+    | tab_and_taxon_name
+    | roman_number '.'?
+  end
+
+  rule tab_and_taxon_name
+    'Tab.' (' ' taxon_name)?
   end
 
   rule issue
@@ -82,6 +88,10 @@ grammar SherbornGrammar
 
   rule issue_designator
     /\d+/ | hyphen
+  end
+
+  rule taxon_name
+    capitalized_word (' ' lowercase_word)?
   end
 
   #####################################

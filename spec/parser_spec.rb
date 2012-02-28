@@ -83,9 +83,25 @@ describe Sherpa::Parser do
       it "should handle a placeholder, even when it's UTF-16" do
         parse_and_check 'Ins. Afr. Amer. (—) 1806, 18', 'Ins. Afr. Amer.', '(—)', '1806', '18'
       end
-      it "should handle 'Tab.' as part of the series/volume/issue" do
-        parse_and_check 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', nil, '[23]'
+
+      describe "the various permutations of Tab." do
+        it "should handle Tab. Word, Year" do
+          parse_and_check 'Exot. Schmett., Tab. Nereis, 1806', 'Exot. Schmett.', 'Tab. Nereis', '1806', nil
+        end
+        it "should handle Tab. Word" do
+          parse_and_check 'Exot. Schmett., Tab. Idia', 'Exot. Schmett.', 'Tab. Idia', nil, nil
+        end
+        it "should handle 'Tab. Page'" do
+          parse_and_check 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', nil, '[23]'
+        end
+        it "should handle 'Tab. Word word'" do
+          parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
+        end
+        it "should handle 'Tab.' alone" do
+          parse_and_check 'Exot. Schmett. II. Tab.', 'Exot. Schmett.', 'II. Tab.', nil, nil
+        end
       end
+
     end
 
     describe "Date" do
