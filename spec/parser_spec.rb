@@ -101,22 +101,11 @@ describe Sherpa::Parser do
       it "should handle it when both parts are complete" do
         parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
           citations: [
-            {
-              title: 'Danske Atlas',
-              volume: 'I.',
-              date: '1763',
-              pages: '621',
-            },
-            {
-              title: 'Danischer Atlas',
-              volume: 'I.',
-              date: '1765',
-              pages: '401',
-            }
+            {title: 'Danske Atlas', volume: 'I.', date: '1763', pages: '621'},
+            {title: 'Danischer Atlas', volume: 'I.', date: '1765', pages: '401'},
           ]
         }
       end
-
       it "should handle a multipart without a &" do
         parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {
           citations: [
@@ -125,8 +114,8 @@ describe Sherpa::Parser do
           ]
         }
       end
-
     end
+
   end
 
   describe "Component rules" do
