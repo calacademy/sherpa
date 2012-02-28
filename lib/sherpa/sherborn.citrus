@@ -36,65 +36,32 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_with_trailing_comma | title_without_trailing_comma
+    title_word (' ' title_word)*
   end
-
-  rule title_with_trailing_comma
-    ((title_word ' ')* unabbreviated_title_word ',') {
-      to_s[0..-2]
-    }
-  end
-
-  rule title_without_trailing_comma
-    (title_word ' ')* abbreviated_title_word 
-  end
-
-  #rule title
-      #(abbreviated_title_word ' ' unabbreviated_title_word ',')
-    #| (title_word+ (' ' title_word)* ' ' unabbreviated_title_word ',')
-    #| (title_word+ (' ' title_word)* ' (' abbreviated_title_word ')')
-    #| (title_word+ (' ' title_word)* ' ' abbreviated_title_word)
-    #| (title_word+ '(' abbreviated_title_word ')')
-  #end
 
   rule title_word
-    abbreviated_title_word | unabbreviated_title_word
-  end
-
-  rule abbreviated_title_word
-    unabbreviated_title_word '.'
-  end
-
-  rule unabbreviated_title_word
-    /\w+/
+    !roman_number /[[:alpha:]]+/ '.'?
   end
 
   #####################################
-    #((edition ', ')? volume (' ' issue)?) | issue
   rule volume
-    volume_with_issue | volume_without_issue
+    volume_with_issue | volume_without_period_with_issue | volume_without_issue | issue_without_volume
   end
 
   rule volume_without_issue
-    roman_number '.'
+    roman_number '.'?
   end
 
   rule volume_with_issue
-    volume_without_issue ' ' issue
+    roman_number '. ' issue
   end
 
-  rule edition
-    /ed\. \d+/
+  rule volume_without_period_with_issue
+    roman_number ' ' issue
   end
 
-  #rule volume 
-      #roman_number '.'? ' ' tab_and_taxon_name
-    #| tab_and_taxon_name
-    #| roman_number '.'?
-  #end
-
-  rule tab_and_taxon_name
-    'Tab.' (' ' taxon_name)?
+  rule issue_without_volume
+    issue
   end
 
   rule issue
@@ -105,37 +72,17 @@ grammar SherbornGrammar
     /\d+/ | hyphen
   end
 
-  rule taxon_name
-    capitalized_word (' ' lowercase_word)?
-  end
-
   #####################################
   rule date
-    ((year_alternates | year_with_open_last_digit | year_range | year) / \[.*?\]/?) | '[' date ']'
+      year | (abbreviated_month ' ' year)
   end
 
-  rule year_range
-    year hyphen short_year
-  end
-
-  rule year_with_open_last_digit
-    /d{3}/ hyphen
-  end
-
-  rule year_alternates
-    year ' ' vel ' ' year
-  end
-
-  rule vel
-    '<em>vel</em>'
+  rule abbreviated_month
+    'Oct.'
   end
 
   rule year
     /\d{4}/
-  end
-
-  rule short_year
-    /\d{1,2}/
   end
 
   #####################################
@@ -164,11 +111,7 @@ grammar SherbornGrammar
     /[[:upper:]][[:lower:]]*/
   end
 
-  rule lowercase_word
-    /[[:lower:]]+/
-  end
-
-  rule arabic_number
+ rule arabic_number
     /\d/+
   end
 
