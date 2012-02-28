@@ -11,10 +11,10 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    (title /,? / (series_volume_issue /,? ?/)? (date /,? ?/)? pages? '.'?) {
+    (title ' ' volume ' ' date ', ' pages) {
       { title:  title.value,
         date:   date && date.value,
-        volume: series_volume_issue && series_volume_issue.value,
+        volume: volume && volume.value,
         pages:  pages && pages.value,
       }
     }
@@ -36,47 +36,62 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_word (' ' title_word)*
+    title_with_trailing_comma | title_without_trailing_comma
   end
+
+  rule title_with_trailing_comma
+    ((title_word ' ')* unabbreviated_title_word ',') {
+      to_s[0..-2]
+    }
+  end
+
+  rule title_without_trailing_comma
+    (title_word ' ')* abbreviated_title_word 
+  end
+
+  #rule title
+      #(abbreviated_title_word ' ' unabbreviated_title_word ',')
+    #| (title_word+ (' ' title_word)* ' ' unabbreviated_title_word ',')
+    #| (title_word+ (' ' title_word)* ' (' abbreviated_title_word ')')
+    #| (title_word+ (' ' title_word)* ' ' abbreviated_title_word)
+    #| (title_word+ '(' abbreviated_title_word ')')
+  #end
 
   rule title_word
-    lowercase_word_or_abbreviation | capitalized_word_or_abbreviation | parenthesized_phrase
+    abbreviated_title_word | unabbreviated_title_word
   end
 
-  rule lowercase_word_or_abbreviation
-    !lowercase_roman_number lowercase_word /[.,]?/
+  rule abbreviated_title_word
+    unabbreviated_title_word '.'
   end
 
-  rule capitalized_word_or_abbreviation
-    !uppercase_roman_number capitalized_word '.'?
-  end
-
-  rule capitalized_word
-    /[[:upper:]][[:lower:]]*/
-  end
-
-  rule lowercase_word
-    /[[:lower:]]+/
-  end
-
-  rule parenthesized_phrase
-    '(' capitalized_word_or_abbreviation (' ' capitalized_word_or_abbreviation)* ')'
+  rule unabbreviated_title_word
+    /\w+/
   end
 
   #####################################
-  rule series_volume_issue
-    ((edition ', ')? volume (' ' issue)?) | issue
+    #((edition ', ')? volume (' ' issue)?) | issue
+  rule volume
+    volume_with_issue | volume_without_issue
+  end
+
+  rule volume_without_issue
+    roman_number '.'
+  end
+
+  rule volume_with_issue
+    volume_without_issue ' ' issue
   end
 
   rule edition
     /ed\. \d+/
   end
 
-  rule volume 
-      roman_number '.'? ' ' tab_and_taxon_name
-    | tab_and_taxon_name
-    | roman_number '.'?
-  end
+  #rule volume 
+      #roman_number '.'? ' ' tab_and_taxon_name
+    #| tab_and_taxon_name
+    #| roman_number '.'?
+  #end
 
   rule tab_and_taxon_name
     'Tab.' (' ' taxon_name)?
@@ -133,7 +148,9 @@ grammar SherbornGrammar
   end
 
   rule unbracketed_pages
-    ('pl. ' /\d+/) | /\d+/
+    ('pl. ' /\d+/) | (/\d+/ '.'?) {
+      to_s[-1] == '.' ? to_s[0..-2] : to_s
+    }
   end
 
   rule plate_section
@@ -142,6 +159,14 @@ grammar SherbornGrammar
 
   #####################################
   # utility
+
+  rule capitalized_word
+    /[[:upper:]][[:lower:]]*/
+  end
+
+  rule lowercase_word
+    /[[:lower:]]+/
+  end
 
   rule arabic_number
     /\d/+

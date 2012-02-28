@@ -3,6 +3,10 @@ require 'spec_helper'
 
 describe Sherpa::Parser do
   let(:parser) {Sherpa::Parser}
+  let(:grammar) do
+    parser.require_grammars
+    SherbornGrammar
+  end
 
   describe "Parsing the whole citation" do
 
@@ -44,17 +48,11 @@ describe Sherpa::Parser do
     end
 
     describe "Title" do
-      it "should handle a title ending with an abbreviated word" do
-        parse_and_check 'Suppl. Ent. Syst. 1798, 435', 'Suppl. Ent. Syst.', nil, '1798', '435',
-      end
-      it "should handle a title ending with an unabbreviated word" do
-        parse_and_check 'Gen. Sp. Ins. Geer, 1783, 32.', 'Gen. Sp. Ins. Geer', nil, '1783', '32'
-      end
-      it "handle an abbreviation that's not a roman number" do
+      it "handle a title ending with an unabbreviated word" do
         parse_and_check 'F. Boica, I. 1798, 542', 'F. Boica', 'I.', '1798', '542'
       end
-      it "should handle a parenthesized phrase before the volume" do
-        parse_and_check 'Nat. Ins. (Käfer) II. 1789, 53', 'Nat. Ins. (Käfer)', 'II.', '1789', '53'
+      it "should handle a title ending with an unabbreviated word" do
+        parse_and_check 'Gen. Sp. Ins. Geer, I. 1783, 32.', 'Gen. Sp. Ins. Geer', 'I.', '1783', '32'
       end
     end
 
@@ -140,6 +138,30 @@ describe Sherpa::Parser do
   end
 
   describe "Component rules" do
+
+    describe "New stuff (remove this describe)" do
+      describe "Title" do
+        it "should handle a title ending with an unabbreviated word" do
+          grammar.parse 'Gen. Sp. Ins. Geer,', root: :title_with_trailing_comma
+          grammar.parse 'Gen. Sp. Ins. Geer,', root: :title
+        end
+        it "should handle a title ending with an abbreviated word" do
+          grammar.parse 'Suppl. Ent. Syst.', root: :title_without_trailing_comma
+          grammar.parse 'Suppl. Ent. Syst.', root: :title
+        end
+      end
+
+      describe "Volume" do
+        it "should handle a roman number + period" do
+          grammar.parse 'I.', root: :volume_without_issue
+          grammar.parse 'I.', root: :volume
+        end
+        it "should handle a roman number + (issue)" do
+          grammar.parse 'I. (1)', root: :volume_with_issue
+          grammar.parse 'I. (1)', root: :volume
+        end
+      end
+    end
 
     describe "Date" do
       it "should include a bracketed phrase following a date in the date" do
