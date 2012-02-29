@@ -198,15 +198,6 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       end
     end
 
-    describe "Multipart citations" do
-      it "should handle a multipart without a &" do
-        parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {citations: [
-            {title: 'Proc. Boston Soc. N. H.', volume: 'I (—)', date: '1844', pages: '187'},
-            {title: 'Boston Journ. N. H.', volume: 'V (1)', date: '1845', pages: '84'},
-          ]}
-      end
-    end
-
     describe "Pages" do
       it "should handle a reference to a section of a plate" do
         parser.parse "Volutes, pl. ii", root: :pages
@@ -219,6 +210,15 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       end
       it "should handle a plate in parentheses" do
         parser.parse "(pl. 17)", root: :pages
+      end
+    end
+
+    describe "Multipart citations" do
+      it "should handle a multipart without a &" do
+        parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {citations: [
+            {title: 'Proc. Boston Soc. N. H.', volume: 'I (—)', date: '1844', pages: '187'},
+            {title: 'Boston Journ. N. H.', volume: 'V (1)', date: '1845', pages: '84'},
+          ]}
       end
     end
 
@@ -250,5 +250,6 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
         parser.parse 'Atta major', root: :taxon_name
       end
     end
+
   end
 end
