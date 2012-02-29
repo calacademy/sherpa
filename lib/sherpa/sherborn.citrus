@@ -14,6 +14,7 @@ grammar SherbornGrammar
       | (title /,? / volume /,? / date)
       | (title /,? / volume /,? / pages)
       | (title /,? / date /,? / pages)
+      | (title /,? / date)
       | (title /,? / volume)
     ) {
       { title:  title.value,

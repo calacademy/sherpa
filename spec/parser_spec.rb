@@ -51,6 +51,9 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
     it "should handle TITLE VOLUME" do
       parse_and_check 'Exot. Schmett. II. Tab. [103]', 'Exot. Schmett.', 'II. Tab. [103]', nil, nil
     end
+    it "should handle TITLE DATE" do
+      parse_and_check 'Classif. Batrach. 1838', 'Classif. Batrach.', nil, '1838', nil
+    end
     it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
       parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
     end
