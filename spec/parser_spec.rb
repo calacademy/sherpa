@@ -27,6 +27,9 @@ describe Sherpa::Parser do
     it "should handle TITLE VOLUME (ISSUE) DATE, PAGE" do
       parse_and_check 'Uitl. Kapellen, I. (8) 1776, 146', 'Uitl. Kapellen', 'I. (8)', '1776', '146'
     end
+    it "should handle TITLE (ISSUE) DATE, PAGE" do
+      parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
+    end
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
         citations: [
@@ -37,6 +40,9 @@ describe Sherpa::Parser do
     end
     it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
       parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
+    end
+    it "should handle an exotic Schmett" do
+      parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
     end
 
     #it "should handle Atlas..Adour" do
@@ -60,26 +66,8 @@ describe Sherpa::Parser do
     #end
 
     #describe "Series, volume, issue" do
-      #it "should handle an issue without a volume" do
-        #parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
-      #end
 
       #describe "the various permutations of Tab." do
-        #it "should handle Tab. Word, Year" do
-          #parse_and_check 'Exot. Schmett., Tab. Nereis, 1806', 'Exot. Schmett.', 'Tab. Nereis', '1806', nil
-        #end
-        #it "should handle Tab. Word" do
-          #parse_and_check 'Exot. Schmett., Tab. Idia', 'Exot. Schmett.', 'Tab. Idia', nil, nil
-        #end
-        #it "should handle 'Tab. Page'" do
-          #parse_and_check 'Exot. Schmett. II. Tab. [23]', 'Exot. Schmett.', 'II. Tab.', nil, '[23]'
-        #end
-        #it "should handle 'Tab. Word word'" do
-          #parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
-        #end
-        #it "should handle 'Tab.' alone" do
-          #parse_and_check 'Exot. Schmett. II. Tab.', 'Exot. Schmett.', 'II. Tab.', nil, nil
-        #end
       #end
 
     #end
@@ -96,6 +84,9 @@ describe Sherpa::Parser do
       end
       it "should handle a title with an accented character" do
         grammar.parse 'Ency. Méth.', root: :title
+      end
+      it "should handle a title ending in a parenthesized phrase" do
+        grammar.parse 'Ency. Méth. (Vers)', root: :title
       end
       it "should not include the volume in the title" do
         -> {grammar.parse 'Ent. Syst. IV.', root: :title}.should raise_error Citrus::ParseError
@@ -134,6 +125,26 @@ describe Sherpa::Parser do
       it "should handle an edition" do
         grammar.parse 'ed. 13, I', root: :volume
       end
+
+      describe "Tab." do
+        it "should handle a volume with a Tab." do
+          grammar.parse 'II. Tab. Hamadryas amphinosa', root: :volume_with_tab
+          grammar.parse 'II. Tab. Hamadryas amphinosa', root: :volume
+        end
+        it "should handle Tab. genus name" do
+          grammar.parse 'Tab. Idia', root: :tab
+        end
+        it "should handle a Tab. species name" do
+          grammar.parse 'Tab. Hamadryas amphinosa', root: :tab
+        end
+        #it "should handle Tab. Word, Year" do
+          #grammar.parse 'Tab. Nereis', 'Exot. Schmett.', 'Tab. Nereis', '1806', nil
+        #end
+        #it "should handle 'Tab.' alone" do
+          #grammar.parse 'Tab.', 'Exot. Schmett.', 'II. Tab.', nil, nil
+        #end
+      end
+
     end
 
     describe "Date" do
@@ -211,6 +222,15 @@ describe Sherpa::Parser do
     describe "Bracketed phrase" do
       it "should be parsed" do
         parser.parse '[phrase]', root: :bracketed_phrase
+      end
+    end
+
+    describe "Taxon name" do
+      it "should recognize a genus name" do
+        parser.parse 'Atta', root: :taxon_name
+      end
+      it "should recognize a species name" do
+        parser.parse 'Atta major', root: :taxon_name
       end
     end
 

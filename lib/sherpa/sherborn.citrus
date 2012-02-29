@@ -12,8 +12,9 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    ( (title /,? / volume ' ' date /,? / pages) |
-      (title /,? / date ', ' pages)
+    (   (title /,? / volume ' ' date /,? / pages)
+      | (title /,? / volume)
+      | (title /,? / date ', ' pages)
     ) {
       { title:  title.value,
         date:   date && date.value,
@@ -25,7 +26,7 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_word (' ' title_word)*
+    title_word (' ' title_word)* (' (' title_word ')')?
   end
 
   rule title_word
@@ -34,8 +35,18 @@ grammar SherbornGrammar
 
   #####################################
   rule volume
-    (edition ', ')?
-    (volume_with_issue | volume_without_period_with_issue | volume_without_issue | issue_without_volume)
+      volume_with_tab
+    | (edition ', ')?
+      (
+          volume_with_issue
+        | volume_without_period_with_issue
+        | volume_without_issue
+        | issue_without_volume
+      )
+  end
+
+  rule volume_with_tab
+    'II. Tab. Hamadryas amphinosa'
   end
 
   rule volume_without_issue
@@ -64,6 +75,26 @@ grammar SherbornGrammar
 
   rule edition
     /ed\. \d+/
+  end
+
+  rule tab
+    'Tab. ' taxon_name
+  end 
+
+  rule taxon_name
+    species_name | genus_name
+  end
+
+  rule genus_name
+    capitalized_word
+  end
+
+  rule species_name
+    genus_name ' ' species_epithet
+  end
+
+  rule species_epithet
+    lowercase_word
   end
 
   #####################################
@@ -132,6 +163,10 @@ grammar SherbornGrammar
 
   rule capitalized_word
     /[[:upper:]][[:lower:]]*/
+  end
+
+  rule lowercase_word
+    /[[:lower:]]+/
   end
 
   rule number
