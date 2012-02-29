@@ -1,11 +1,17 @@
 grammar SherbornGrammar
 
   rule citations
-    (   citation ',—<em>ex</em> ' citation
-      | citation (' ; ' '& '? citation)?
-    ) {
+    (citation_with_ex | multipart_citation) {
       {citations: captures[:citation].map(&:value)}
     }
+  end
+
+  rule citation_with_ex
+    citation /[.,]/? '—<em>ex</em> ' citation
+  end
+  
+  rule multipart_citation
+    citation (' ; ' '& '? citation)?
   end
 
   #####################################
