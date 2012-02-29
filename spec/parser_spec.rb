@@ -30,12 +30,16 @@ describe Sherpa::Parser do
     it "should handle TITLE (ISSUE) DATE, PAGE" do
       parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
     end
+    it "should handle TITLE VOLUME PAGE" do
+      parse_and_check 'Exot. Schmett. II. Tab. [103]', 'Exot. Schmett.', 'II. Tab.', nil, '[103]'
+    end
     it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
       parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
     end
     it "should handle an exotic Schmett" do
       parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
     end
+
     #parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
   #parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
   #parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"

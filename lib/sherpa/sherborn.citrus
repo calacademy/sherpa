@@ -13,8 +13,9 @@ grammar SherbornGrammar
 
   rule regular_citation_part
     (   (title /,? / volume ' ' date /,? / pages)
-      | (title /,? / volume)
+      | (title /,? / volume ' ' pages)
       | (title /,? / date ', ' pages)
+      | (title /,? / volume)
     ) {
       { title:  title.value,
         date:   date && date.value,
@@ -46,7 +47,7 @@ grammar SherbornGrammar
   end
 
   rule volume_with_tab
-    roman_number '. Tab. ' taxon_name
+    roman_number '. ' tab
   end
 
   rule volume_without_issue
