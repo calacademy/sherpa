@@ -12,8 +12,9 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    (   (title /,? / volume ' ' date /,? / pages)
-      | (title /,? / volume ' ' pages)
+    (   (title /,? / volume /,? / date /,? / pages)
+      | (title /,? / volume /,? / date)
+      | (title /,? / volume /,? / pages)
       | (title /,? / date ', ' pages)
       | (title /,? / volume)
     ) {
@@ -47,7 +48,7 @@ grammar SherbornGrammar
   end
 
   rule volume_with_tab
-    roman_number '. ' tab
+    roman_number /.,? / tab
   end
 
   rule volume_without_issue
@@ -118,8 +119,13 @@ grammar SherbornGrammar
 
   rule year_range
       year hyphen (year_in_century | year_in_decade)
+    | century hyphen
     | decade hyphen
     | year ' ' vel ' ' year
+  end
+
+  rule century
+    /\d{2}/
   end
 
   rule decade

@@ -15,11 +15,30 @@ describe Sherpa::Parser do
       }]}
     end
 
+=begin
+(Roret's Suite à Buffon), Acalèphes, 1843, 121
+Aanhang. Cramer's Uitl. Kapellen, V. 1790, 160
+Abh. K. bayer. Ak. Wiss. I. 1829-30 (Dec. 1832), 533
+Ann. Soc. Ent. France, I (1) <em>c.</em> Ap. 1832, 72
+Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii
+Classif. Batrach. 1838,—<em>ex</em> Mém. Soc. Sci. Nat. Neuchütel, II. 1839 [1840], 38 & 78
+Reise (Senckenb. Nat. Ges.) Fische (—) 1830 <em>vel</em> 1831, 118
+H. N. g. et p. Moll., wrapper of livr. 15, 1822
+Mon. Limniades N. Amer., wrapper of (3) July 1841 [3]
+Nom. Brit. Ins., ed. 2, July 1833, App. ; & Ill. [Brit. Ent. (Mand. V.) Mar. 1835, 426
+Proc. Boston Soc. N. H. I (—) 184-, 186 ; Boston [Journ. N. H. V (1) 1845, 64
+Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
+Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
+=end
+
     it "should handle Linnaeus" do
       parse_and_check 'Linn. Syst. Nat., ed. 13, I. 1789, 1849.', 'Linn. Syst. Nat.', 'ed. 13, I.', '1789', '1849'
     end
     it "should handle TITLE VOLUME DATE, PAGE" do
       parse_and_check 'Ent. Syst. IV. 1794, 262', 'Ent. Syst.', 'IV.', '1794', '262'
+    end
+    it "should handle TITLE VOLUME, DATE" do
+      parse_and_check 'Exot. Schmett. II. Tab. [168], 18—', 'Exot. Schmett.', 'II. Tab. [168]', '18—', nil
     end
     it "should handle TITLE, DATE, PAGE (no volume; title does not end in a period)" do
       parse_and_check 'Gen. Sp. Ins. Geer, 1783, 32.', 'Gen. Sp. Ins. Geer', nil, '1783', '32'
@@ -114,6 +133,9 @@ describe Sherpa::Parser do
           grammar.parse 'I. Tab. Rusticus', root: :volume_with_tab
           grammar.parse 'I. Tab. Rusticus', root: :volume
         end
+        it "should handle a volume with comma before Tab." do
+          grammar.parse 'II., Tab. [160]', root: :volume
+        end
         it "should handle Tab. genus name" do
           grammar.parse 'Tab. Idia', root: :tab
         end
@@ -158,6 +180,10 @@ describe Sherpa::Parser do
       it "should handle a year with open last digit" do
         parser.parse '184-', root: :year_range
         parser.parse '184-', root: :date
+      end
+      it "should handle a year with open last two digits" do
+        parser.parse '18-', root: :year_range
+        parser.parse '18-', root: :date
       end
     end
 
