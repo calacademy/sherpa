@@ -30,8 +30,8 @@ describe Sherpa::Parser do
     it "should handle TITLE (ISSUE) DATE, PAGE" do
       parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
     end
-    it "should handle TITLE VOLUME PAGE" do
-      parse_and_check 'Exot. Schmett. II. Tab. [103]', 'Exot. Schmett.', 'II. Tab.', nil, '[103]'
+    it "should handle TITLE VOLUME" do
+      parse_and_check 'Exot. Schmett. II. Tab. [103]', 'Exot. Schmett.', 'II. Tab. [103]', nil, nil
     end
     it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
       parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
@@ -122,6 +122,9 @@ describe Sherpa::Parser do
         end
         it "should handle Tab. by itself" do
           grammar.parse 'Tab.', root: :tab
+        end
+        it "should handle Tab. with bracketed number" do
+          grammar.parse 'Tab. [2]', root: :tab
         end
       end
     end

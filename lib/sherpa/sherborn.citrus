@@ -79,7 +79,9 @@ grammar SherbornGrammar
   end
 
   rule tab
-    'Tab.' (' ' taxon_name)?
+      'Tab.' ' ' taxon_name
+    | 'Tab.' ' ' bracketed_number
+    | 'Tab.'
   end 
 
   rule taxon_name
@@ -200,6 +202,10 @@ grammar SherbornGrammar
 
   rule bracketed_phrase
     /\[[^\]].+\]/
+  end
+
+  rule bracketed_number
+    '[' number ']'
   end
 
 end
