@@ -36,11 +36,9 @@ describe Sherpa::Parser do
     it "should handle an exotic Schmett" do
       parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
     end
-
     #parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
   #parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
   #parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
-  #parser.parse "Proc. Boston Soc. N. H. I (—) 184-, 129 ; Boston Journ. N. H. IV (3) 1843, 337 & 347"
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
         citations: [
@@ -118,7 +116,9 @@ describe Sherpa::Parser do
         it "should handle a Tab. species name" do
           grammar.parse 'Tab. Hamadryas amphinosa', root: :tab
         end
-
+        it "should handle Tab. by itself" do
+          grammar.parse 'Tab.', root: :tab
+        end
       end
     end
 

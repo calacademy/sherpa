@@ -78,7 +78,7 @@ grammar SherbornGrammar
   end
 
   rule tab
-    'Tab. ' taxon_name
+    'Tab.' (' ' taxon_name)?
   end 
 
   rule taxon_name
