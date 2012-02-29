@@ -1,7 +1,9 @@
 grammar SherbornGrammar
 
   rule citations
-    (citation (' ; ' '& '? citation)?) {
+    (   citation ',—<em>ex</em> ' citation
+      | citation (' ; ' '& '? citation)?
+    ) {
       {citations: captures[:citation].map(&:value)}
     }
   end

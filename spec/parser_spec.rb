@@ -69,6 +69,14 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
         ]
       }
     end
+    it "should handle a multipart citation with ex" do
+      parser.parse('Classif. Batrach. 1838,—<em>ex</em> Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').should == {
+        citations: [
+          {title: 'Classif. Batrach.', volume: nil, date: '1838', pages: nil},
+          {title: 'Mém. Soc. Sci. Nat. Neuchâtel', volume: 'II.', date: '1839 [1840]', pages: '59'},
+        ]
+      }
+    end
   end
 
   describe "Component rules" do
