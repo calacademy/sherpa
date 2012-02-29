@@ -8,7 +8,7 @@ module Sherpa::Preprocessor
     remove_mismatched_brackets(
     fix_incorrect_closing_parenthesis(
     remove_trailing_comma(
-    correct_typos(
+    fix_typos(
       string)))))
   end
 
@@ -16,9 +16,10 @@ module Sherpa::Preprocessor
     string.gsub /\[([^\]\)]+)\)/, '[\1]'
   end
 
-  def self.correct_typos string
+  def self.fix_typos string
     string = string.gsub /\bConch,/, 'Conch.'
     string = string.gsub /\bpi\./, 'pl.'
+    string = string.gsub /\bhist,/, 'hist.'
     string
   end
 

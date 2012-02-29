@@ -36,4 +36,7 @@ describe Sherpa::Preprocessor do
     end
   end
 
+  it "should change 'hist,' to 'hist.'" do
+    preprocessor.preprocess('Ic. hist, lepidopt. Europe, II (—) 1837, 177').should == 'Ic. hist. lepidopt. Europe, II (—) 1837, 177'
+  end
 end
