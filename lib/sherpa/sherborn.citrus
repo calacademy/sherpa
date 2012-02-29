@@ -8,7 +8,7 @@ grammar SherbornGrammar
 
   #####################################
   rule citation_part
-    special_citation_part | regular_citation_part
+    regular_citation_part
   end
 
   rule regular_citation_part
@@ -19,20 +19,6 @@ grammar SherbornGrammar
         date:   date && date.value,
         volume: volume && volume.value,
         pages:  pages && pages.value,
-      }
-    }
-  end
-
-  rule special_citation_part
-    atlas_adour
-  end
-
-  rule atlas_adour
-    (title ', ' date ' ' plate_section) {
-      { title: title.value,
-        date: date.value,
-        volume: nil,
-        pages: plate_section.value,
       }
     }
   end
@@ -82,7 +68,9 @@ grammar SherbornGrammar
 
   #####################################
   rule date
-      year | (abbreviated_month ' ' year)
+      year_range (' ' bracketed_phrase)*
+    | year
+    | abbreviated_month ' ' year
   end
 
   rule abbreviated_month
@@ -93,9 +81,17 @@ grammar SherbornGrammar
     /\d{4}/
   end
 
+  rule year_range
+    year hyphen year_in_century
+  end
+
+  rule year_in_century
+    /\d{2}/
+  end
+
   #####################################
   rule pages
-    bracketed_pages | unbracketed_pages | plate_section
+    plate_section | bracketed_pages | unbracketed_pages
   end
 
   rule bracketed_pages
@@ -149,6 +145,10 @@ grammar SherbornGrammar
 
   rule hyphen
     '-' | '—'
+  end
+
+  rule bracketed_phrase
+    /\[[^\]].+\]/
   end
 
 end
