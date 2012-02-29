@@ -137,16 +137,16 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
           grammar.parse 'II., Tab. [160]', root: :volume
         end
         it "should handle Tab. genus name" do
-          grammar.parse 'Tab. Idia', root: :tab
+          grammar.parse 'Tab. Idia', root: :volume_with_tab
         end
         it "should handle a Tab. species name" do
-          grammar.parse 'Tab. Hamadryas amphinosa', root: :tab
+          grammar.parse 'Tab. Hamadryas amphinosa', root: :volume_with_tab
         end
         it "should handle Tab. by itself" do
-          grammar.parse 'Tab.', root: :tab
+          grammar.parse 'Tab.', root: :volume_with_tab
         end
         it "should handle Tab. with bracketed number" do
-          grammar.parse 'Tab. [2]', root: :tab
+          grammar.parse 'Tab. [2]', root: :volume_with_tab
         end
       end
     end
