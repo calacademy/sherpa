@@ -36,6 +36,7 @@ describe Sherpa::Parser do
     it "should handle an exotic Schmett" do
       parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
     end
+
     #parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
   #parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
   #parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
@@ -107,12 +108,17 @@ describe Sherpa::Parser do
           grammar.parse 'II. Tab. Hamadryas amphinosa', root: :volume_with_tab
           grammar.parse 'II. Tab. Hamadryas amphinosa', root: :volume
         end
+        it "should handle a volume with Tab. and genus name" do
+          grammar.parse 'I. Tab. Rusticus', root: :volume_with_tab
+          grammar.parse 'I. Tab. Rusticus', root: :volume
+        end
         it "should handle Tab. genus name" do
           grammar.parse 'Tab. Idia', root: :tab
         end
         it "should handle a Tab. species name" do
           grammar.parse 'Tab. Hamadryas amphinosa', root: :tab
         end
+
       end
     end
 

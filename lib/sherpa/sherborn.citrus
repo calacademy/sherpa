@@ -46,7 +46,7 @@ grammar SherbornGrammar
   end
 
   rule volume_with_tab
-    'II. Tab. Hamadryas amphinosa'
+    roman_number '. Tab. ' taxon_name
   end
 
   rule volume_without_issue
