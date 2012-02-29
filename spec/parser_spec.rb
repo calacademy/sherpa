@@ -162,9 +162,10 @@ describe Sherpa::Parser do
         parser.parse '1830 <em>vel</em> 1831', root: :year_range
         parser.parse '1830 <em>vel</em> 1831', root: :date
       end
-      #it "should handle a year with open last digit" do
-        #parser.parse '184-', root: :date
-      #end
+      it "should handle a year with open last digit" do
+        parser.parse '184-', root: :year_range
+        parser.parse '184-', root: :date
+      end
     end
 
     describe "Multipart citations" do

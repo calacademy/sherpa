@@ -84,7 +84,12 @@ grammar SherbornGrammar
 
   rule year_range
       year hyphen (year_in_century | year_in_decade)
+    | decade hyphen
     | year ' ' vel ' ' year
+  end
+
+  rule decade
+    /\d{3}/
   end
 
   rule year_in_century
