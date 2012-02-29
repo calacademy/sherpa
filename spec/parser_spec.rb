@@ -30,6 +30,16 @@ describe Sherpa::Parser do
     it "should handle TITLE (ISSUE) DATE, PAGE" do
       parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
     end
+    it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
+      parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
+    end
+    it "should handle an exotic Schmett" do
+      parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
+    end
+    #parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
+  #parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
+  #parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
+  #parser.parse "Proc. Boston Soc. N. H. I (—) 184-, 129 ; Boston Journ. N. H. IV (3) 1843, 337 & 347"
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
         citations: [
@@ -38,43 +48,9 @@ describe Sherpa::Parser do
         ]
       }
     end
-    it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
-      parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
-    end
-    it "should handle an exotic Schmett" do
-      parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
-    end
-
-    #it "should handle Atlas..Adour" do
-      #parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
-    #end
-
   end
 
-
-      #describe "Atlas...Adour" do
-        #it "should put the supplement with the page section, for now" do
-          #parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
-        #end
-        #it "should handle 'foss' without a period" do
-          #parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
-        #end
-      #end
-
-    #it "should handle this" do
-      #parser.parse "Proc. Boston Soc. N. H. I (—) 184-, 129 ; Boston Journ. N. H. IV (3) 1843, 337 & 347"
-    #end
-
-    #describe "Series, volume, issue" do
-
-      #describe "the various permutations of Tab." do
-      #end
-
-    #end
-  #end
-
   describe "Component rules" do
-
     describe "Title" do
       it "should handle a title ending with an unabbreviated word" do
         grammar.parse 'Gen. Sp. Ins. Geer', root: :title
@@ -137,14 +113,7 @@ describe Sherpa::Parser do
         it "should handle a Tab. species name" do
           grammar.parse 'Tab. Hamadryas amphinosa', root: :tab
         end
-        #it "should handle Tab. Word, Year" do
-          #grammar.parse 'Tab. Nereis', 'Exot. Schmett.', 'Tab. Nereis', '1806', nil
-        #end
-        #it "should handle 'Tab.' alone" do
-          #grammar.parse 'Tab.', 'Exot. Schmett.', 'II. Tab.', nil, nil
-        #end
       end
-
     end
 
     describe "Date" do
@@ -181,12 +150,10 @@ describe Sherpa::Parser do
 
     describe "Multipart citations" do
       it "should handle a multipart without a &" do
-        parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {
-          citations: [
+        parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {citations: [
             {title: 'Proc. Boston Soc. N. H.', volume: 'I (—)', date: '1844', pages: '187'},
             {title: 'Boston Journ. N. H.', volume: 'V (1)', date: '1845', pages: '84'},
-          ]
-        }
+          ]}
       end
     end
 
@@ -233,7 +200,5 @@ describe Sherpa::Parser do
         parser.parse 'Atta major', root: :taxon_name
       end
     end
-
   end
-
 end
