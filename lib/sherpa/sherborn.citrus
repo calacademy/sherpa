@@ -83,7 +83,8 @@ grammar SherbornGrammar
   end
 
   rule year_range
-    year hyphen (year_in_century | year_in_decade)
+      year hyphen (year_in_century | year_in_decade)
+    | year ' ' vel ' ' year
   end
 
   rule year_in_century
@@ -92,6 +93,10 @@ grammar SherbornGrammar
 
   rule year_in_decade
     /\d/
+  end
+
+  rule vel
+    '<em>vel</em>'
   end
 
   #####################################

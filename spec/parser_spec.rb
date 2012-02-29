@@ -55,14 +55,6 @@ describe Sherpa::Parser do
         #end
       #end
 
-      #describe "Ic. hist lepidopt" do
-        #it "should parse these variants" do
-          #parse_and_check "Ic. hist, lépidopt. Europe, II (—) 1834, 71", "Ic. hist, lépidopt. Europe", "II (—)", "1834", "71"
-          #parse_and_check "Ic. hist. Lépidopt. Europe, I (—) 1833, 183", "Ic. hist. Lépidopt. Europe", "I (—)", "1833", "183"
-        #end
-      #end
-    #end
-
     #it "should handle this" do
       #parser.parse "Proc. Boston Soc. N. H. I (—) 184-, 129 ; Boston Journ. N. H. IV (3) 1843, 337 & 347"
     #end
@@ -166,9 +158,10 @@ describe Sherpa::Parser do
       it "should handle a bracketed date" do
         parser.parse "[1830-2]", root: :date
       end
-      #it "should handle x or y" do
-        #parser.parse '1830 <em>vel</em> 1831', root: :date
-      #end
+      it "should handle x or y" do
+        parser.parse '1830 <em>vel</em> 1831', root: :year_range
+        parser.parse '1830 <em>vel</em> 1831', root: :date
+      end
       #it "should handle a year with open last digit" do
         #parser.parse '184-', root: :date
       #end
