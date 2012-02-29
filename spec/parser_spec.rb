@@ -73,6 +73,9 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
 
   describe "Component rules" do
     describe "Title" do
+      it "should handle a phrase in parentheses" do
+        parser.parse 'Reise (Senckenb. Nat. Ges.) Fische', root: :title
+      end
       it "should handle a title ending with an unabbreviated word" do
         grammar.parse 'Gen. Sp. Ins. Geer', root: :title
       end

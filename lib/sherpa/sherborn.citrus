@@ -24,11 +24,11 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_word (' ' title_word)* (' (' title_word ')')?
+    title_word (' ' title_word)*
   end
 
   rule title_word
-    !roman_number word '.'?
+    !roman_number word '.'? | '(' title ')'
   end
 
   #####################################
