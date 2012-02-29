@@ -8,10 +8,6 @@ grammar SherbornGrammar
 
   #####################################
   rule citation_part
-    regular_citation_part
-  end
-
-  rule regular_citation_part
     (   (title /,? / volume /,? / date /,? / pages)
       | (title /,? / volume /,? / date)
       | (title /,? / volume /,? / pages)
