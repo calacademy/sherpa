@@ -11,9 +11,8 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    (
-        (title /,? / volume ' ' date ', ' pages)
-      | (title /,? / date ', ' pages)
+    ( (title /,? / volume ' ' date ', ' pages) |
+      (title /,? / date ', ' pages)
     ) {
       { title:  title.value,
         date:   date && date.value,
@@ -39,11 +38,15 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_word (' ' title_word)*
+    title_word (' ' title_word)* edition?
   end
 
   rule title_word
-    !roman_number /[[:alpha:]]+/ '.'?
+    !roman_number word '.'?
+  end
+
+  rule edition
+    /, ed\. \d+/
   end
 
   #####################################
@@ -109,6 +112,10 @@ grammar SherbornGrammar
 
   #####################################
   # utility
+
+  rule word
+    /[[:alpha:]]+/ 
+  end
 
   rule capitalized_word
     /[[:upper:]][[:lower:]]*/
