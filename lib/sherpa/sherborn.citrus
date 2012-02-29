@@ -45,7 +45,7 @@ grammar SherbornGrammar
 
   rule volume_with_tab
       (volume_number /,? /)? 'Tab.' ' ' taxon_name
-    | (volume_number /,? /)? 'Tab.' ' ' bracketed_number
+    | (volume_number /,? /)? 'Tab.' ' ' bracketed_tab_number
     | (volume_number /,? /)? 'Tab.'
   end 
 
@@ -81,6 +81,10 @@ grammar SherbornGrammar
     /ed\. \d+/
   end
 
+  rule bracketed_tab_number
+    '[' (number|hyphen) ']'
+  end
+
   rule taxon_name
     species_name | genus_name
   end
@@ -100,13 +104,19 @@ grammar SherbornGrammar
   #####################################
   rule date
       year_range (' ' bracketed_phrase)*
+    | '? ' year
+    | '<em>die indet.</em>'
     | year
     | abbreviated_month ' ' year
-    | '[' date ']'
+    | bracketed_date
   end
 
   rule abbreviated_month
     'Oct.'
+  end
+
+  rule bracketed_date
+    '[' date /[^\]]*/ ']'
   end
 
   rule year
@@ -204,10 +214,6 @@ grammar SherbornGrammar
 
   rule bracketed_phrase
     /\[[^\]].+\]/
-  end
-
-  rule bracketed_number
-    '[' number ']'
   end
 
 end

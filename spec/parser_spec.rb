@@ -148,6 +148,9 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
         it "should handle Tab. with bracketed number" do
           grammar.parse 'Tab. [2]', root: :volume_with_tab
         end
+        it "should handle Tab. with bracketed hyphen" do
+          grammar.parse 'Tab. [—]', root: :volume_with_tab
+        end
       end
     end
 
@@ -184,6 +187,15 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       it "should handle a year with open last two digits" do
         parser.parse '18-', root: :year_range
         parser.parse '18-', root: :date
+      end
+      it "should handle a bracketed date with query" do
+        parser.parse '[? 1820]', root: :date
+      end
+      it "should handle a indeterminate date note" do
+        parser.parse '<em>die indet.</em>', root: :date
+      end
+      it "should handle this" do
+        parser.parse '[1822-26, <em>teste</em> Scudder]', root: :date
       end
     end
 
