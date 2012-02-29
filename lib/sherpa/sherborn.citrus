@@ -1,13 +1,13 @@
 grammar SherbornGrammar
 
-  rule citation
-    (citation_part (' ; ' '& '? citation_part)?) {
-      {citations: captures[:citation_part].map(&:value)}
+  rule citations
+    (citation (' ; ' '& '? citation)?) {
+      {citations: captures[:citation].map(&:value)}
     }
   end
 
   #####################################
-  rule citation_part
+  rule citation
     (   (title /,? / volume /,? / date /,? / pages)
       | (title /,? / volume /,? / date)
       | (title /,? / volume /,? / pages)
