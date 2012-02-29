@@ -58,7 +58,7 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
     end
     it "should handle the Atlas..Adour" do
-      parse_and_check 'Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii',
+      parse_and_check 'Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii.',
         'Atlas to Conch. foss. tert. Adour', nil, '1840-46 [<em>vero propius</em> 1847]', 'Turbinellus, pl. iii'
     end
     it "should handle multipart citations where both parts are complete" do

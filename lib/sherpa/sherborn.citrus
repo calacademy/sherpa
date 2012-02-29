@@ -152,7 +152,9 @@ grammar SherbornGrammar
 
   #####################################
   rule pages
-    plate_section | bracketed_pages | unbracketed_pages
+    (plate_section | bracketed_pages | unbracketed_pages) {
+      to_s[-1] == '.' ? to_s[0..-2] : to_s
+    }
   end
 
   rule bracketed_pages
@@ -160,13 +162,11 @@ grammar SherbornGrammar
   end
 
   rule unbracketed_pages
-    ('pl. ' number) | (number '.'?) {
-      to_s[-1] == '.' ? to_s[0..-2] : to_s
-    }
+    ('pl. ' number) | (number '.'?)
   end
 
   rule plate_section
-    ('Suppl.' | (capitalized_word ',')) ' pl. ' arabic_or_roman_number
+    ('Suppl.' | (capitalized_word ',')) ' pl. ' arabic_or_roman_number '.'?
   end
 
   #####################################
