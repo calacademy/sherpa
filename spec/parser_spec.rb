@@ -57,7 +57,6 @@ describe Sherpa::Parser do
 
       #describe "Ic. hist lepidopt" do
         #it "should parse these variants" do
-          #parse_and_check "Ic. hist, lepidopt. Europe, II (—) 1837, 177", "Ic. hist, lepidopt. Europe", "II (—)", "1837", "177"
           #parse_and_check "Ic. hist, lépidopt. Europe, II (—) 1834, 71", "Ic. hist, lépidopt. Europe", "II (—)", "1834", "71"
           #parse_and_check "Ic. hist. Lépidopt. Europe, I (—) 1833, 183", "Ic. hist. Lépidopt. Europe", "I (—)", "1833", "183"
         #end
@@ -92,27 +91,6 @@ describe Sherpa::Parser do
       #end
 
     #end
-
-    #describe "Date" do
-      #it "should handle a year range" do
-        #parse_and_check 'Ins. Afr. Amér. (—) 1813-20, 168', 'Ins. Afr. Amér.', '(—)', '1813-20', '168'
-      #end
-      #it "should handle a missing date" do
-        #parse_and_check 'Exot. Schmett. II. 1784, 23', 'Exot. Schmett.', 'II.', '1784', '23'
-      #end
-    #end
-
-    #describe "Multipart citations" do
-      #it "should handle a multipart without a &" do
-        #parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {
-          #citations: [
-            #{title: 'Proc. Boston Soc. N. H.', volume: 'I (—)', date: '1844', pages: '187'},
-            #{title: 'Boston Journ. N. H.', volume: 'V (1)', date: '1845', pages: '84'},
-          #]
-        #}
-      #end
-    #end
-
   #end
 
   describe "Component rules" do
@@ -196,40 +174,52 @@ describe Sherpa::Parser do
       #end
     end
 
-  end
-
-  describe "Pages" do
-    it "should handle a reference to a section of a plate" do
-      parser.parse "Volutes, pl. ii", root: :pages
-    end
-    it "should handle a reference to another section of a plate" do
-      parser.parse "Turbinellus, pl. iii", root: :pages
-    end
-    it "should handle an arabic plate number" do
-      parser.parse "Buccins, pl. 1", root: :pages
-    end
-    it "should handle a plate in parentheses" do
-      parser.parse "(pl. 17)", root: :pages
-    end
-  end
-
-  describe "Roman numerals" do
-    it "should understand these" do
-      for number in ['III', 'I', 'II', 'IV', 'V']
-        parser.parse number, root: :roman_number
-      end
-      for number in ['iii', 'i', 'ii', 'iv', 'v']
-        parser.parse number, root: :roman_number
+    describe "Multipart citations" do
+      it "should handle a multipart without a &" do
+        parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {
+          citations: [
+            {title: 'Proc. Boston Soc. N. H.', volume: 'I (—)', date: '1844', pages: '187'},
+            {title: 'Boston Journ. N. H.', volume: 'V (1)', date: '1845', pages: '84'},
+          ]
+        }
       end
     end
-    it "should not use mixed case" do
-      -> {parser.parse "Ic", root: :roman_number}.should raise_error Citrus::ParseError
+
+    describe "Pages" do
+      it "should handle a reference to a section of a plate" do
+        parser.parse "Volutes, pl. ii", root: :pages
+      end
+      it "should handle a reference to another section of a plate" do
+        parser.parse "Turbinellus, pl. iii", root: :pages
+      end
+      it "should handle an arabic plate number" do
+        parser.parse "Buccins, pl. 1", root: :pages
+      end
+      it "should handle a plate in parentheses" do
+        parser.parse "(pl. 17)", root: :pages
+      end
     end
+
+    describe "Roman numerals" do
+      it "should understand these" do
+        for number in ['III', 'I', 'II', 'IV', 'V']
+          parser.parse number, root: :roman_number
+        end
+        for number in ['iii', 'i', 'ii', 'iv', 'v']
+          parser.parse number, root: :roman_number
+        end
+      end
+      it "should not use mixed case" do
+        -> {parser.parse "Ic", root: :roman_number}.should raise_error Citrus::ParseError
+      end
+    end
+
+    describe "Bracketed phrase" do
+      it "should be parsed" do
+        parser.parse '[phrase]', root: :bracketed_phrase
+      end
+    end
+
   end
 
-  describe "Bracketed phrase" do
-    it "should be parsed" do
-      parser.parse '[phrase]', root: :bracketed_phrase
-    end
-  end
 end
