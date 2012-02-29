@@ -35,6 +35,9 @@ describe Sherpa::Parser do
         ]
       }
     end
+    it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
+      parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
+    end
 
     #it "should handle Atlas..Adour" do
       #parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
@@ -42,9 +45,6 @@ describe Sherpa::Parser do
 
   end
 
-      #it "should handle a bracketed year range without a trailing comma followed by a plate section in brackets" do
-        #parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
-      #end
 
       #describe "Atlas...Adour" do
         #it "should put the supplement with the page section, for now" do
@@ -181,12 +181,13 @@ describe Sherpa::Parser do
       it "should include a bracketed phrase following a year range" do
         parser.parse "1840-46 [<em>vero propius</em> 1847]", root: :date
       end
-      #it "should handle a one-digit end year in a range" do
-        #parser.parse "1830-2", root: :date
-      #end
-      #it "should handle a bracketed date" do
-        #parser.parse "[1830-2]", root: :date
-      #end
+      it "should handle a one-digit end year in a range" do
+        parser.parse "1830-2", root: :year_range
+        parser.parse "1830-2", root: :date
+      end
+      it "should handle a bracketed date" do
+        parser.parse "[1830-2]", root: :date
+      end
       #it "should handle x or y" do
         #parser.parse '1830 <em>vel</em> 1831', root: :date
       #end

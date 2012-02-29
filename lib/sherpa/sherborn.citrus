@@ -12,7 +12,7 @@ grammar SherbornGrammar
   end
 
   rule regular_citation_part
-    ( (title /,? / volume ' ' date ', ' pages) |
+    ( (title /,? / volume ' ' date /,? / pages) |
       (title /,? / date ', ' pages)
     ) {
       { title:  title.value,
@@ -71,6 +71,7 @@ grammar SherbornGrammar
       year_range (' ' bracketed_phrase)*
     | year
     | abbreviated_month ' ' year
+    | '[' date ']'
   end
 
   rule abbreviated_month
@@ -82,11 +83,15 @@ grammar SherbornGrammar
   end
 
   rule year_range
-    year hyphen year_in_century
+    year hyphen (year_in_century | year_in_decade)
   end
 
   rule year_in_century
     /\d{2}/
+  end
+
+  rule year_in_decade
+    /\d/
   end
 
   #####################################
