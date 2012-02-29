@@ -128,6 +128,7 @@ grammar SherbornGrammar
     | century hyphen
     | decade hyphen
     | year ' ' vel ' ' year
+    | year ' [' year ']'
   end
 
   rule century
@@ -162,11 +163,13 @@ grammar SherbornGrammar
   end
 
   rule unbracketed_pages
-    ('pl. ' number) | (number '.'?)
+      'pl. ' number
+    | number ' & ' number
+    | number '.'? 
   end
 
   rule plate_section
-    ('Suppl.' | (capitalized_word ',')) ' pl. ' arabic_or_roman_number '.'?
+    ('Suppl.' | (capitalized_word ','?)) ' pl. ' arabic_or_roman_number '.'?
   end
 
   #####################################

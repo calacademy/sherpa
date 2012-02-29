@@ -193,12 +193,18 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       it "should handle a indeterminate date note" do
         parser.parse '<em>die indet.</em>', root: :date
       end
-      it "should handle bracketed date followed by note" do
+      it "should handle a bracketed date followed by note" do
         parser.parse '[1822-26, <em>teste</em> Scudder]', root: :date
+      end
+      it "should handle year followed by bracketed year" do
+        parser.parse '1883 [1932]', root: :date
       end
     end
 
     describe "Pages" do
+      it "should handle page & page" do
+        parser.parse '2 & 4', root: :pages
+      end
       it "should handle a reference to a section of a plate" do
         parser.parse "Volutes, pl. ii", root: :pages
       end
@@ -207,6 +213,9 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       end
       it "should handle an arabic plate number" do
         parser.parse "Buccins, pl. 1", root: :pages
+      end
+      it "should handle it when there's no comma after the word" do
+        parser.parse 'Ranelles pl. ii', root: :pages
       end
       it "should handle a plate in parentheses" do
         parser.parse "(pl. 17)", root: :pages
