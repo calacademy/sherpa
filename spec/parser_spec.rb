@@ -20,7 +20,6 @@ describe Sherpa::Parser do
 Aanhang. Cramer's Uitl. Kapellen, V. 1790, 160
 Abh. K. bayer. Ak. Wiss. I. 1829-30 (Dec. 1832), 533
 Ann. Soc. Ent. France, I (1) <em>c.</em> Ap. 1832, 72
-Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii
 Classif. Batrach. 1838,—<em>ex</em> Mém. Soc. Sci. Nat. Neuchütel, II. 1839 [1840], 38 & 78
 Reise (Senckenb. Nat. Ges.) Fische (—) 1830 <em>vel</em> 1831, 118
 H. N. g. et p. Moll., wrapper of livr. 15, 1822
@@ -58,10 +57,10 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
     it "should handle an exotic Schmett" do
       parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
     end
-
-    #parse_and_check "Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii", "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Turbinellus, pl. iii"
-  #parse_and_check "Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Suppl. pl. iii",  "Atlas to Conch. foss. tert. Adour", nil, "1840-46 [<em>vero propius</em> 1847]", "Suppl. pl. iii"
-  #parser.parse "Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii"
+    it "should handle the Atlas..Adour" do
+      parse_and_check 'Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii',
+        'Atlas to Conch. foss. tert. Adour', nil, '1840-46 [<em>vero propius</em> 1847]', 'Turbinellus, pl. iii'
+    end
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
         citations: [
@@ -194,7 +193,7 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       it "should handle a indeterminate date note" do
         parser.parse '<em>die indet.</em>', root: :date
       end
-      it "should handle this" do
+      it "should handle bracketed date followed by note" do
         parser.parse '[1822-26, <em>teste</em> Scudder]', root: :date
       end
     end
