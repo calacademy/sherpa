@@ -1,4 +1,5 @@
 grammar SherbornGrammar
+
   rule citation
     (citation_part (' ; ' '& '? citation_part)?) {
       {citations: captures[:citation_part].map(&:value)}
@@ -38,20 +39,17 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_word (' ' title_word)* edition?
+    title_word (' ' title_word)*
   end
 
   rule title_word
     !roman_number word '.'?
   end
 
-  rule edition
-    /, ed\. \d+/
-  end
-
   #####################################
   rule volume
-    volume_with_issue | volume_without_period_with_issue | volume_without_issue | issue_without_volume
+    (edition ', ')?
+    (volume_with_issue | volume_without_period_with_issue | volume_without_issue | issue_without_volume)
   end
 
   rule volume_without_issue
@@ -78,6 +76,10 @@ grammar SherbornGrammar
     /\d+/ | hyphen
   end
 
+  rule edition
+    /ed\. \d+/
+  end
+
   #####################################
   rule date
       year | (abbreviated_month ' ' year)
@@ -101,7 +103,7 @@ grammar SherbornGrammar
   end
 
   rule unbracketed_pages
-    ('pl. ' /\d+/) | (/\d+/ '.'?) {
+    ('pl. ' number) | (number '.'?) {
       to_s[-1] == '.' ? to_s[0..-2] : to_s
     }
   end
@@ -119,6 +121,10 @@ grammar SherbornGrammar
 
   rule capitalized_word
     /[[:upper:]][[:lower:]]*/
+  end
+
+  rule number
+    arabic_number
   end
 
  rule arabic_number

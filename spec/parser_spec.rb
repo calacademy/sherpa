@@ -8,39 +8,35 @@ describe Sherpa::Parser do
     SherbornGrammar
   end
 
-  describe "Parsing the whole citation" do
-
+  describe "Exemplars" do
     def parse_and_check citation, title, volume, date, pages
       parser.parse(citation).should == {citations: [{
         title: title, date: date, volume: volume, pages: pages
       }]}
     end
 
-    describe "Exemplars" do
-      it "should handle Linnaeus" do
-        parse_and_check 'Linn. Syst. Nat., ed. 13, I. 1789, 1849.', 'Linn. Syst. Nat., ed. 13', 'I.', '1789', '1849'
-      end
-      it "should handle TITLE VOLUME DATE, PAGE" do
-        parse_and_check 'Ent. Syst. IV. 1794, 262', 'Ent. Syst.', 'IV.', '1794', '262'
-      end
-      it "should handle TITLE, DATE, PAGE (no volume; title does not end in a period)" do
-        parse_and_check 'Gen. Sp. Ins. Geer, 1783, 32.', 'Gen. Sp. Ins. Geer', nil, '1783', '32'
-      end
-      it "should handle TITLE VOLUME (ISSUE) DATE, PAGE" do
-        parse_and_check 'Uitl. Kapellen, I. (8) 1776, 146', 'Uitl. Kapellen', 'I. (8)', '1776', '146'
-      end
-      it "should handle multipart citations where both parts are complete" do
-        parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
-          citations: [
-            {title: 'Danske Atlas', volume: 'I.', date: '1763', pages: '621'},
-            {title: 'Danischer Atlas', volume: 'I.', date: '1765', pages: '401'},
-          ]
-        }
-      end
+    it "should handle Linnaeus" do
+      parse_and_check 'Linn. Syst. Nat., ed. 13, I. 1789, 1849.', 'Linn. Syst. Nat.', 'ed. 13, I.', '1789', '1849'
+    end
+    it "should handle TITLE VOLUME DATE, PAGE" do
+      parse_and_check 'Ent. Syst. IV. 1794, 262', 'Ent. Syst.', 'IV.', '1794', '262'
+    end
+    it "should handle TITLE, DATE, PAGE (no volume; title does not end in a period)" do
+      parse_and_check 'Gen. Sp. Ins. Geer, 1783, 32.', 'Gen. Sp. Ins. Geer', nil, '1783', '32'
+    end
+    it "should handle TITLE VOLUME (ISSUE) DATE, PAGE" do
+      parse_and_check 'Uitl. Kapellen, I. (8) 1776, 146', 'Uitl. Kapellen', 'I. (8)', '1776', '146'
+    end
+    it "should handle multipart citations where both parts are complete" do
+      parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
+        citations: [
+          {title: 'Danske Atlas', volume: 'I.', date: '1763', pages: '621'},
+          {title: 'Danischer Atlas', volume: 'I.', date: '1765', pages: '401'},
+        ]
+      }
     end
   end
 
-    #describe "Specific combinations or patterns of data" do
       #it "should handle a bracketed year range without a trailing comma followed by a plate section in brackets" do
         #parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
       #end
@@ -67,32 +63,10 @@ describe Sherpa::Parser do
     #end
 
     #it "should handle this" do
-      #pending
       #parser.parse "Proc. Boston Soc. N. H. I (—) 184-, 129 ; Boston Journ. N. H. IV (3) 1843, 337 & 347"
     #end
 
-    #describe "Title" do
-      #it "handle a title ending with an unabbreviated word" do
-        #parse_and_check 'F. Boica, I. 1798, 542', 'F. Boica', 'I.', '1798', '542'
-      #end
-      #it "should handle a title ending with an unabbreviated word" do
-        #parse_and_check 'Gen. Sp. Ins. Geer, I. 1783, 32.', 'Gen. Sp. Ins. Geer', 'I.', '1783', '32'
-      #end
-    #end
-
     #describe "Series, volume, issue" do
-      #it "should handle a title with a volume (missing the period)" do
-        #parse_and_check 'Danske Atlas, I 1763, 621', 'Danske Atlas', 'I', '1763', '621'
-      #end
-      ##it "should handle a title without a volume" do
-        ##parse_and_check 'Mant. I. 1787, 164', 'Mant.', 'I.', '1787', '164'
-      ##end
-      #it "should handle a title with a volume without a period and an issue" do
-        #parse_and_check 'Uitl. Kapellen, I (8) 1776, 146', 'Uitl. Kapellen', 'I (8)', '1776', '146'
-      #end
-      #it "should handle an edition" do
-        #parse_and_check 'Syst. Nat., ed. 13, I. 1789, 1900', 'Syst. Nat.', 'ed. 13, I.', '1789', '1900'
-      #end
       #it "should handle an issue without a volume" do
         #parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
       #end
@@ -127,14 +101,6 @@ describe Sherpa::Parser do
     #end
 
     #describe "Multipart citations" do
-      #it "should handle it when both parts are complete" do
-        #parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
-          #citations: [
-            #{title: 'Danske Atlas', volume: 'I.', date: '1763', pages: '621'},
-            #{title: 'Danischer Atlas', volume: 'I.', date: '1765', pages: '401'},
-          #]
-        #}
-      #end
       #it "should handle a multipart without a &" do
         #parser.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').should == {
           #citations: [
@@ -162,11 +128,8 @@ describe Sherpa::Parser do
       it "should not include the volume in the title" do
         -> {grammar.parse 'Ent. Syst. IV.', root: :title}.should raise_error Citrus::ParseError
       end
-      it "should not include the volume in the title" do
+      it "should not include the volume in the title, even if it doesn't have a period" do
         -> {grammar.parse 'Ent. Syst. IV', root: :title}.should raise_error Citrus::ParseError
-      end
-      it "should handle Linnaeus" do
-        grammar.parse 'Linn. Syst. Nat., ed. 13', root: :title
       end
     end
 
@@ -196,8 +159,8 @@ describe Sherpa::Parser do
       it "should handle a placeholder issue" do
         grammar.parse '(-)', root: :issue
       end
-      it "should handle a placeholder issue" do
-        grammar.parse '(—)', root: :issue
+      it "should handle an edition" do
+        grammar.parse 'ed. 13, I', root: :volume
       end
     end
 
