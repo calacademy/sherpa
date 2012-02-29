@@ -20,6 +20,7 @@ module Sherpa::Preprocessor
     string = string.gsub /\bConch,/, 'Conch.'
     string = string.gsub /\bpi\./, 'pl.'
     string = string.gsub /\bhist,/, 'hist.'
+    string = string.gsub /\bfoss,/, 'foss.'
     string
   end
 
