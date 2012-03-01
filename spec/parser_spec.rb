@@ -61,6 +61,13 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
       parse_and_check 'Atlas to Conch, foss. tert. Adour, 1840-46 [vero propius 1847] Turbinellus, pl. iii.',
         'Atlas to Conch. foss. tert. Adour', nil, '1840-46 [vero proprius 1847]', 'Turbinellus, pl. iii'
     end
+    it "should handle this one by doing its best, then putting the rest in :unparsed" do
+      parser.parse("Revue Entom. I (—) 1833, Descr. d'esp. nouv., [no. 9").should == {
+        citations: [
+          {title: 'Revue Entom.', volume: 'I (—)', date: '1833', pages: nil, unparsed: "Descr. d'esp. nouv., no. 9"},
+        ]
+      }
+    end
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
         citations: [

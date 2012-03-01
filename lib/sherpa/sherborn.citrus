@@ -17,18 +17,26 @@ grammar SherbornGrammar
   #####################################
   rule citation
     (   (title /,? / volume /,? / date /,? / pages)
+      | (title /,? / volume /,? / date /,? / unparsed)
       | (title /,? / volume /,? / date)
       | (title /,? / volume /,? / pages)
       | (title /,? / date /,? / pages)
       | (title /,? / date)
       | (title /,? / volume)
     ) {
-      { title:  title.value,
-        date:   date && date.value,
-        volume: volume && volume.value,
-        pages:  pages && pages.value,
-      }
+      value = 
+        { title:  title.value,
+          date:   date && date.value,
+          volume: volume && volume.value,
+          pages:  pages && pages.value,
+        }
+      value[:unparsed] = unparsed.value if unparsed
+      value
     }
+  end
+
+  rule unparsed
+    /.*/
   end
 
   #####################################
@@ -172,15 +180,15 @@ grammar SherbornGrammar
   # utility
 
   rule word
-    /[[:alpha:]]+/ 
+    /[[:alpha:]']+/ 
   end
 
   rule capitalized_word
-    /[[:upper:]][[:lower:]]*/
+    /[[:upper:]][[:lower:]']*/
   end
 
   rule lowercase_word
-    /[[:lower:]]+/
+    /[[:lower:]']+/
   end
 
   rule number
