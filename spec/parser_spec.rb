@@ -19,15 +19,15 @@ describe Sherpa::Parser do
 (Roret's Suite à Buffon), Acalèphes, 1843, 121
 Aanhang. Cramer's Uitl. Kapellen, V. 1790, 160
 Abh. K. bayer. Ak. Wiss. I. 1829-30 (Dec. 1832), 533
-Ann. Soc. Ent. France, I (1) <em>c.</em> Ap. 1832, 72
-Classif. Batrach. 1838,—<em>ex</em> Mém. Soc. Sci. Nat. Neuchütel, II. 1839 [1840], 38 & 78
-Reise (Senckenb. Nat. Ges.) Fische (—) 1830 <em>vel</em> 1831, 118
+Ann. Soc. Ent. France, I (1) c. Ap. 1832, 72
+Classif. Batrach. 1838,—ex Mém. Soc. Sci. Nat. Neuchütel, II. 1839 [1840], 38 & 78
+Reise (Senckenb. Nat. Ges.) Fische (—) 1830 vel 1831, 118
 H. N. g. et p. Moll., wrapper of livr. 15, 1822
 Mon. Limniades N. Amer., wrapper of (3) July 1841 [3]
 Nom. Brit. Ins., ed. 2, July 1833, App. ; & Ill. [Brit. Ent. (Mand. V.) Mar. 1835, 426
 Proc. Boston Soc. N. H. I (—) 184-, 186 ; Boston [Journ. N. H. V (1) 1845, 64
 Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
-Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
+Tav. sin. Hem. 1850,—ex Mem. Soc. Ital. Sci. XXV (1) 1852, [99
 =end
 
     it "should handle Linnaeus" do
@@ -61,8 +61,8 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
     end
     it "should handle the Atlas..Adour" do
-      parse_and_check 'Atlas to Conch, foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847] Turbinellus, pl. iii.',
-        'Atlas to Conch. foss. tert. Adour', nil, '1840-46 [<em>vero propius</em> 1847]', 'Turbinellus, pl. iii'
+      parse_and_check 'Atlas to Conch, foss. tert. Adour, 1840-46 [vero propius 1847] Turbinellus, pl. iii.',
+        'Atlas to Conch. foss. tert. Adour', nil, '1840-46 [vero propius 1847]', 'Turbinellus, pl. iii'
     end
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
@@ -73,7 +73,7 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       }
     end
     it "should handle a multipart citation with ex" do
-      parser.parse('Classif. Batrach. 1838,—<em>ex</em> Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').should == {
+      parser.parse('Classif. Batrach. 1838,—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').should == {
         citations: [
           {title: 'Classif. Batrach.', volume: nil, date: '1838', pages: nil},
           {title: 'Mém. Soc. Sci. Nat. Neuchâtel', volume: 'II.', date: '1839 [1840]', pages: '59'},
@@ -180,7 +180,7 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
         parser.parse '1840-46', root: :date
       end
       it "should include a bracketed phrase following a year range" do
-        parser.parse "1840-46 [<em>vero propius</em> 1847]", root: :date
+        parser.parse "1840-46 [vero propius 1847]", root: :date
       end
       it "should handle a one-digit end year in a range" do
         parser.parse "1830-2", root: :year_range
@@ -190,8 +190,8 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
         parser.parse "[1830-2]", root: :date
       end
       it "should handle x vel y" do
-        parser.parse '1830 <em>vel</em> 1831', root: :year_range
-        parser.parse '1830 <em>vel</em> 1831', root: :date
+        parser.parse '1830 vel 1831', root: :year_range
+        parser.parse '1830 vel 1831', root: :date
       end
       it "should handle x & y" do
         parser.parse '1830 & 1831', root: :year_range
@@ -212,10 +212,10 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
         parser.parse '[? 1820]', root: :date
       end
       it "should handle a indeterminate date note" do
-        parser.parse '<em>die indet.</em>', root: :date
+        parser.parse 'die indet.', root: :date
       end
       it "should handle a bracketed date followed by note" do
-        parser.parse '[1822-26, <em>teste</em> Scudder]', root: :date
+        parser.parse '[1822-26, teste Scudder]', root: :date
       end
       it "should handle year followed by bracketed year" do
         parser.parse '1883 [1932]', root: :date
@@ -253,7 +253,7 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
 
       describe "With ex" do
         it "should handle a multipart citation with ex" do
-          parser.parse('Classif. Batrach. 1838,—<em>ex</em> Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').should == {
+          parser.parse('Classif. Batrach. 1838,—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').should == {
             citations: [
               {title: 'Classif. Batrach.', volume: nil, date: '1838', pages: nil},
               {title: 'Mém. Soc. Sci. Nat. Neuchâtel', volume: 'II.', date: '1839 [1840]', pages: '59'},
@@ -261,10 +261,10 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
           }
         end
         it "should handle period instead of comma" do
-          parser.parse "Classif. Batrach. 1838.—<em>ex</em> Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 34"
+          parser.parse "Classif. Batrach. 1838.—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 34"
         end
         it "handle nothing before dash" do
-          parser.parse 'Classif. Batrach. 1838—<em>ex</em> Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 32'
+          parser.parse 'Classif. Batrach. 1838—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 32'
         end
       end
     end

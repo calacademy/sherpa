@@ -7,7 +7,7 @@ grammar SherbornGrammar
   end
 
   rule citation_with_ex
-    citation /[.,]/? '—<em>ex</em> ' citation
+    citation /[.,]/? '—ex ' citation
   end
   
   rule multipart_citation
@@ -114,7 +114,7 @@ grammar SherbornGrammar
   rule date
       year_range (' ' bracketed_phrase)*
     | '? ' year
-    | '<em>die indet.</em>'
+    | 'die indet.'
     | year
     | abbreviated_month ' ' year
     | bracketed_date
@@ -158,7 +158,7 @@ grammar SherbornGrammar
   end
 
   rule or_or_vel
-    '<em>vel</em>' | 'or'
+    'vel' | 'or'
   end
 
   #####################################
@@ -179,7 +179,11 @@ grammar SherbornGrammar
   end
 
   rule plate_section
-    ('Suppl.' | (capitalized_word ','?)) ' pl. ' arabic_or_roman_number '.'?
+    plate_section_word  /,?/ ' pl. ' arabic_or_roman_number '.'?
+  end
+
+  rule plate_section_word
+    'Suppl.' | capitalized_word '.'?
   end
 
   #####################################

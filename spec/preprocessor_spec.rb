@@ -48,9 +48,8 @@ describe Sherpa::Preprocessor do
     preprocessor.preprocess('   x y   z   ').should == 'x y z'
   end
 
-  it "should handle this" do
-    preprocessor.preprocess(
-      "Proc. Boston Soc. N. H. I (—) 1842, 48 ;  Boston [Journ. N. H. IV (1) 1842, 40").should ==
-      "Proc. Boston Soc. N. H. I (—) 1842, 48 ; Boston Journ. N. H. IV (1) 1842, 40"
+  it "should remove <em> tags, even if mismatched" do
+    preprocessor.preprocess('<em>foo</em><em>').should == 'foo'
   end
+
 end

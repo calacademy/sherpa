@@ -9,10 +9,15 @@ module Sherpa::Preprocessor
     remove_mismatched_brackets(
     fix_incorrect_closing_parenthesis(
     remove_trailing_comma(
+    remove_em(
     squish_spaces(
     fix_typos(
-      string))))))
+      string)))))))
 
+  end
+
+  def self.remove_em string
+    string.gsub %r{</?em>}, ''
   end
 
   def self.squish_spaces string
@@ -44,7 +49,6 @@ module Sherpa::Preprocessor
     string
   end
 
-  # copied from AntCat
   def self.remove_mismatched_brackets string
     remove_mismatched string, '(', ')'
     remove_mismatched string, '[', ']'
