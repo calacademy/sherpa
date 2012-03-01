@@ -99,7 +99,7 @@ grammar SherbornGrammar
   end
 
   rule bracketed_date
-    '[' date /[^\]]*/ ']'
+    '[' date /.*\]/
   end
 
   rule year
