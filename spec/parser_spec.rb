@@ -20,14 +20,10 @@ describe Sherpa::Parser do
 Aanhang. Cramer's Uitl. Kapellen, V. 1790, 160
 Abh. K. bayer. Ak. Wiss. I. 1829-30 (Dec. 1832), 533
 Ann. Soc. Ent. France, I (1) c. Ap. 1832, 72
-Classif. Batrach. 1838,—ex Mém. Soc. Sci. Nat. Neuchütel, II. 1839 [1840], 38 & 78
-Reise (Senckenb. Nat. Ges.) Fische (—) 1830 vel 1831, 118
 H. N. g. et p. Moll., wrapper of livr. 15, 1822
 Mon. Limniades N. Amer., wrapper of (3) July 1841 [3]
 Nom. Brit. Ins., ed. 2, July 1833, App. ; & Ill. [Brit. Ent. (Mand. V.) Mar. 1835, 426
-Proc. Boston Soc. N. H. I (—) 184-, 186 ; Boston [Journ. N. H. V (1) 1845, 64
 Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
-Tav. sin. Hem. 1850,—ex Mem. Soc. Ital. Sci. XXV (1) 1852, [99
 =end
 
     it "should handle Linnaeus" do
