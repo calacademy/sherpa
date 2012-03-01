@@ -5,7 +5,6 @@ require_relative 'version'
 module Sherpa::Preprocessor
 
   def self.preprocess string
-
     fix_space_after_hyphen(
     remove_mismatched_brackets(
     fix_incorrect_closing_parenthesis(
@@ -24,7 +23,7 @@ module Sherpa::Preprocessor
   end
 
   def self.fix_incorrect_closing_parenthesis string
-    string.gsub /\[([^\]\)]+)\)/, '[\1]'
+    string.gsub /\[([^\]\(]+)\)/, '[\1]'
   end
 
   def self.fix_typos string

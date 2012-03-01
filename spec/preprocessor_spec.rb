@@ -48,4 +48,9 @@ describe Sherpa::Preprocessor do
     preprocessor.preprocess('   x y   z   ').should == 'x y z'
   end
 
+  it "should handle this" do
+    preprocessor.preprocess(
+      "Proc. Boston Soc. N. H. I (—) 1842, 48 ;  Boston [Journ. N. H. IV (1) 1842, 40").should ==
+      "Proc. Boston Soc. N. H. I (—) 1842, 48 ; Boston Journ. N. H. IV (1) 1842, 40"
+  end
 end
