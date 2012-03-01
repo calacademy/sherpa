@@ -14,7 +14,7 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     Then the file "sherborn.parsed.json" should contain the JSON:
     """
     [{
-    "citations": [{"title": "Linn. Syst. Nat.", "date": "1789", "volume": "ed. 13, I.", "pages": "1849"}],
+    "citations": [{"title": "Linn. Syst. Nat.", "date": "1789, 1849", "volume": "ed. 13, I.", "pages":null}],
     "citation": "Linn. Syst. Nat., ed. 13, I. 1789, 1849.",
     "them": {"title": "Linn. Syst. Nat., ed. 13, I.", "volume":null, "date": "1789", "pages": "1849"}
     }]

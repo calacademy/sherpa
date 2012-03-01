@@ -11,7 +11,7 @@ grammar SherbornGrammar
   end
   
   rule multipart_citation
-    citation (' ; ' '& '? citation)?
+    citation (' ; ' '& '? citation)? '.'?
   end
 
   #####################################
@@ -112,6 +112,10 @@ grammar SherbornGrammar
 
   #####################################
   rule date
+    date_part (/,? / date_part)*
+  end
+
+  rule date_part
       year_range (' ' bracketed_phrase)*
     | '? ' year
     | 'die indet.'
@@ -163,9 +167,17 @@ grammar SherbornGrammar
 
   #####################################
   rule pages
-    (plate_section | bracketed_pages | unbracketed_pages) {
+    (pages_part (/,? / pages_part)*) {
       to_s[-1] == '.' ? to_s[0..-2] : to_s
     }
+  end
+
+  rule pages_part
+    wrapper | plate_section | bracketed_pages | unbracketed_pages
+  end
+
+  rule wrapper
+    '(wrapper)'
   end
 
   rule bracketed_pages

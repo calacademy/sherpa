@@ -8,12 +8,13 @@ describe Sherpa::Parser do
     SherbornGrammar
   end
 
+  def parse_and_check citation, title, volume, date, pages
+    parser.parse(citation).should == {citations: [{
+      title: title, date: date, volume: volume, pages: pages
+    }]}
+  end
+
   describe "Exemplars" do
-    def parse_and_check citation, title, volume, date, pages
-      parser.parse(citation).should == {citations: [{
-        title: title, date: date, volume: volume, pages: pages
-      }]}
-    end
 
 =begin
 (Roret's Suite à Buffon), Acalèphes, 1843, 121
@@ -27,7 +28,7 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
 =end
 
     it "should handle Linnaeus" do
-      parse_and_check 'Linn. Syst. Nat., ed. 13, I. 1789, 1849.', 'Linn. Syst. Nat.', 'ed. 13, I.', '1789', '1849'
+      parse_and_check 'Linn. Syst. Nat., ed. 13, I. 1789, 1849.', 'Linn. Syst. Nat.', 'ed. 13, I.', '1789, 1849', nil
     end
     it "should handle TITLE VOLUME DATE, PAGE" do
       parse_and_check 'Ent. Syst. IV. 1794, 262', 'Ent. Syst.', 'IV.', '1794', '262'
@@ -75,6 +76,13 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
           {title: 'Mém. Soc. Sci. Nat. Neuchâtel', volume: 'II.', date: '1839 [1840]', pages: '59'},
         ]
       }
+    end
+  end
+
+  describe "Combinations of components" do
+    it "should handle list of dates followed by list of pages, with no demarcation" do
+      parse_and_check 'Ann. Soc. Agric. Puy, XII. 1842-46, 1846, 1848 (wrapper), 248',
+        'Ann. Soc. Agric. Puy', 'XII.', '1842-46, 1846, 1848', '(wrapper), 248'
     end
   end
 
@@ -222,6 +230,9 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
       it "should handle vero proprius" do
         parser.parse '1840-46 [vero [propius 1847]', root: :date
       end
+      it "should handle comma-separated year list" do
+        parser.parse '1842-46, 1846, 1848', root: :date
+      end
     end
 
     describe "Pages" do
@@ -242,6 +253,9 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
       end
       it "should handle a plate in parentheses" do
         parser.parse "(pl. 17)", root: :pages
+      end
+      it "should handle '(wrapper)'" do
+        parser.parse '(wrapper)', root: :pages
       end
       it "should handle a plate section starting with an abbreviated word with comma" do
         parser.parse 'Melan., pl. 1', root: :pages
