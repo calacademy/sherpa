@@ -36,6 +36,8 @@ module Sherpa::Preprocessor
     string = string.gsub /\bpi\./, 'pl.'
     string = string.gsub /\bhist,/, 'hist.'
     string = string.gsub /\bfoss,/, 'foss.'
+    string = string.gsub /\bpropius\b/, 'proprius'
+    string = string.gsub /\[proprius/, 'proprius'
     string
   end
 

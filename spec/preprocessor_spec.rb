@@ -27,7 +27,7 @@ describe Sherpa::Preprocessor do
   end
 
   it "should fix incorrect ending brackets" do
-    preprocessor.preprocess('[vero propius 1847)').should == '[vero propius 1847]'
+    preprocessor.preprocess('[vero propius 1847)').should == '[vero proprius 1847]'
   end
 
   it "should fix misspelled strings" do
@@ -36,12 +36,21 @@ describe Sherpa::Preprocessor do
     end
   end
 
+  it "should change 'propius' to 'proprius'" do
+    preprocessor.preprocess('propius').should == 'proprius'
+  end
+
   it "should change 'hist,' to 'hist.'" do
     preprocessor.preprocess('Ic. hist, lepidopt. Europe, II (—) 1837, 177').should == 'Ic. hist. lepidopt. Europe, II (—) 1837, 177'
   end
 
   it "should change 'foss,' to 'foss.'" do
-    preprocessor.preprocess('Atlas to Conch. foss, tert. Adour, 1840-46 [vero propius 1847], Turbinelles, pl. ii').should == 'Atlas to Conch. foss. tert. Adour, 1840-46 [vero propius 1847], Turbinelles, pl. ii'
+    preprocessor.preprocess('Atlas to Conch. foss, tert. Adour, 1840-46 [vero propius 1847], Turbinelles, pl. ii').should == 'Atlas to Conch. foss. tert. Adour, 1840-46 [vero proprius 1847], Turbinelles, pl. ii'
+  end
+
+  it "should change '[propius' to 'proprius'" do
+    preprocessor.preprocess('[vero [propius 1847]').should == '[vero proprius 1847]'
+    preprocessor.preprocess('[vero [propius 1847]').should == '[vero proprius 1847]'
   end
 
   it "should convert multiple spaces to one, and trim leading and trailing space" do

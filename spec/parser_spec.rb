@@ -62,7 +62,7 @@ Tav. sin. Hem. 1850,—ex Mem. Soc. Ital. Sci. XXV (1) 1852, [99
     end
     it "should handle the Atlas..Adour" do
       parse_and_check 'Atlas to Conch, foss. tert. Adour, 1840-46 [vero propius 1847] Turbinellus, pl. iii.',
-        'Atlas to Conch. foss. tert. Adour', nil, '1840-46 [vero propius 1847]', 'Turbinellus, pl. iii'
+        'Atlas to Conch. foss. tert. Adour', nil, '1840-46 [vero proprius 1847]', 'Turbinellus, pl. iii'
     end
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
@@ -180,7 +180,7 @@ Tav. sin. Hem. 1850,—ex Mem. Soc. Ital. Sci. XXV (1) 1852, [99
         parser.parse '1840-46', root: :date
       end
       it "should include a bracketed phrase following a year range" do
-        parser.parse "1840-46 [vero propius 1847]", root: :date
+        parser.parse "1840-46 [vero proprius 1847]", root: :date
       end
       it "should handle a one-digit end year in a range" do
         parser.parse "1830-2", root: :year_range
@@ -219,6 +219,9 @@ Tav. sin. Hem. 1850,—ex Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       end
       it "should handle year followed by bracketed year" do
         parser.parse '1883 [1932]', root: :date
+      end
+      it "should handle vero proprius" do
+        parser.parse '1840-46 [vero [propius 1847]', root: :date
       end
     end
 
