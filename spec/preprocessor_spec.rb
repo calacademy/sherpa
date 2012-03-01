@@ -44,4 +44,8 @@ describe Sherpa::Preprocessor do
     preprocessor.preprocess('Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii').should == 'Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii'
   end
 
+  it "should convert multiple spaces to one, and trim leading and trailing space" do
+    preprocessor.preprocess('   x y   z   ').should == 'x y z'
+  end
+
 end

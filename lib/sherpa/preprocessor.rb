@@ -3,13 +3,24 @@ require_relative 'progress'
 require_relative 'version'
 
 module Sherpa::Preprocessor
+
   def self.preprocess string
+
     fix_space_after_hyphen(
     remove_mismatched_brackets(
     fix_incorrect_closing_parenthesis(
     remove_trailing_comma(
+    squish_spaces(
     fix_typos(
-      string)))))
+      string))))))
+
+  end
+
+  def self.squish_spaces string
+    string = string.gsub /^\s+/, ''
+    string = string.gsub /\s+$/, ''
+    string = string.gsub /\s{2,}/, ' '
+    string
   end
 
   def self.fix_incorrect_closing_parenthesis string
