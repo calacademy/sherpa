@@ -6,12 +6,12 @@ grammar SherbornGrammar
     }
   end
 
-  rule citation_with_ex
-    citation /[.,]/? '—ex ' citation
-  end
-  
   rule multipart_citation
     citation (' ; ' '& '? citation)? '.'?
+  end
+
+  rule citation_with_ex
+    citation /[.,]/? '—ex ' citation
   end
 
   #####################################
@@ -42,14 +42,7 @@ grammar SherbornGrammar
 
   #####################################
   rule volume
-      volume_with_tab
-    | (edition ', ')?
-      (
-          volume_with_issue
-        | volume_without_period_with_issue
-        | volume_without_issue
-        | issue_without_volume
-      )
+      volume_with_tab | volume_without_tab
   end
 
   rule volume_with_tab
@@ -58,31 +51,24 @@ grammar SherbornGrammar
     | (volume_number /,? /)? 'Tab.'
   end 
 
+  rule volume_without_tab
+    (edition ', ')?
+    (
+        volume_number ' ' issue
+      | volume_number
+      | issue
+    )
+  end
+
   rule volume_number
     roman_number '.'?
   end
 
-  rule volume_without_issue
-    volume_number
-  end
-
-  rule volume_with_issue
-    roman_number '. ' issue
-  end
-
-  rule volume_without_period_with_issue
-    roman_number ' ' issue
-  end
-
-  rule issue_without_volume
-    issue
-  end
-
   rule issue
-    '(' issue_designator ')'
+    '(' issue_number ')'
   end
 
-  rule issue_designator
+  rule issue_number
     /\d+/ | hyphen
   end
 
@@ -92,22 +78,6 @@ grammar SherbornGrammar
 
   rule bracketed_tab_number
     '[' (number|hyphen) ']'
-  end
-
-  rule taxon_name
-    species_name | genus_name
-  end
-
-  rule genus_name
-    capitalized_word
-  end
-
-  rule species_name
-    genus_name ' ' species_epithet
-  end
-
-  rule species_epithet
-    lowercase_word
   end
 
   #####################################
@@ -243,6 +213,22 @@ grammar SherbornGrammar
 
   rule bracketed_phrase
     /\[[^\]].+\]/
+  end
+
+  rule taxon_name
+    species_name | genus_name
+  end
+
+  rule genus_name
+    capitalized_word
+  end
+
+  rule species_name
+    genus_name ' ' species_epithet
+  end
+
+  rule species_epithet
+    lowercase_word
   end
 
 end

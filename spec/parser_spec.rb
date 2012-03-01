@@ -116,19 +116,15 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
 
     describe "Volume" do
       it "should handle a roman number + period" do
-        grammar.parse 'I.', root: :volume_without_issue
         grammar.parse 'I.', root: :volume
       end
       it "should handle a roman number + (issue)" do
-        grammar.parse 'I. (1)', root: :volume_with_issue
         grammar.parse 'I. (1)', root: :volume
       end
       it "should handle a roman number without a period" do
-        grammar.parse 'I', root: :volume_without_issue
         grammar.parse 'I', root: :volume
       end
       it "should handle a roman number without a period followed by the issue" do
-        grammar.parse 'I (—)', root: :volume_without_period_with_issue
         grammar.parse 'I (—)', root: :volume
       end
       it "should handle any number in the issue" do
