@@ -27,7 +27,7 @@ describe Sherpa::Preprocessor do
   end
 
   it "should fix incorrect ending brackets" do
-    preprocessor.preprocess('[<em>vero propius</em> 1847)').should == '[<em>vero propius</em> 1847]'
+    preprocessor.preprocess('[vero propius 1847)').should == '[vero propius 1847]'
   end
 
   it "should fix misspelled strings" do
@@ -41,7 +41,7 @@ describe Sherpa::Preprocessor do
   end
 
   it "should change 'foss,' to 'foss.'" do
-    preprocessor.preprocess('Atlas to Conch. foss, tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii').should == 'Atlas to Conch. foss. tert. Adour, 1840-46 [<em>vero propius</em> 1847], Turbinelles, pl. ii'
+    preprocessor.preprocess('Atlas to Conch. foss, tert. Adour, 1840-46 [vero propius 1847], Turbinelles, pl. ii').should == 'Atlas to Conch. foss. tert. Adour, 1840-46 [vero propius 1847], Turbinelles, pl. ii'
   end
 
   it "should convert multiple spaces to one, and trim leading and trailing space" do

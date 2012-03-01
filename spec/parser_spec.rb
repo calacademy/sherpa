@@ -241,6 +241,9 @@ Tav. sin. Hem. 1850,—ex Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       it "should handle a plate in parentheses" do
         parser.parse "(pl. 17)", root: :pages
       end
+      it "should handle a plate section starting with an abbreviated word with comma" do
+        parser.parse 'Melan., pl. 1', root: :pages
+      end
     end
 
     describe "Multipart citations" do
