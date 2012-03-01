@@ -101,6 +101,9 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
       it "should not include the volume in the title, even if it doesn't have a period" do
         -> {grammar.parse 'Ent. Syst. IV', root: :title}.should raise_error Citrus::ParseError
       end
+      it "should handle a title with a comma" do
+        parser.parse 'Atlas zu Rueppell, Reise', root: :title
+      end
     end
 
     describe "Volume" do
