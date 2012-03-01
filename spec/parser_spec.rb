@@ -189,9 +189,16 @@ Tav. sin. Hem. 1850,—<em>ex</em> Mem. Soc. Ital. Sci. XXV (1) 1852, [99
       it "should handle a bracketed date" do
         parser.parse "[1830-2]", root: :date
       end
-      it "should handle x or y" do
+      it "should handle x vel y" do
         parser.parse '1830 <em>vel</em> 1831', root: :year_range
         parser.parse '1830 <em>vel</em> 1831', root: :date
+      end
+      it "should handle x & y" do
+        parser.parse '1830 & 1831', root: :year_range
+      end
+      it "should handle x or y" do
+        parser.parse '1830 or 1831', root: :year_range
+        parser.parse '1830 or 1831', root: :date
       end
       it "should handle a year with open last digit" do
         parser.parse '184-', root: :year_range

@@ -136,7 +136,8 @@ grammar SherbornGrammar
       year hyphen (year_in_century | year_in_decade)
     | century hyphen
     | decade hyphen
-    | year ' ' vel ' ' year
+    | year ' ' or_or_vel ' ' year
+    | year ' & ' year
     | year ' [' year ']'
   end
 
@@ -156,8 +157,8 @@ grammar SherbornGrammar
     /\d/
   end
 
-  rule vel
-    '<em>vel</em>'
+  rule or_or_vel
+    '<em>vel</em>' | 'or'
   end
 
   #####################################
