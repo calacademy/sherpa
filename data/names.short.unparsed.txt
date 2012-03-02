@@ -1,54 +1,23 @@
-{:citation=>"Syst. Nat., ed. 10, 1758, 58 ; ed. 12, 1766, 78", :rich=>{:title=>"Syst. Nat., ed. 10, 1758, 58"}}
-{:citation=>"Syst. Nat., ed. 10, 1758, 598 ; ed. 12, 1767, 994", :rich=>{:title=>"Syst. Nat., ed. 10, 1758, 598"}}
-{:citation=>"Syst. Nat., ed. 10, 1758, 637 ; ed. 12, 1767, 1060", :rich=>{:title=>"Syst. Nat., ed. 10, 1758, 637"}}
-{:citation=>"Ency. Méth. IX (2) (Ins.) 1824, 446", :rich=>{:title=>"Ency. Méth. IX (2) (Ins.) 1824, 446"}}
-{:citation=>"H. N. g. et p. Moll., Tabl. Auricules [1821], 113", :rich=>{:title=>"H. N. g. et p. Moll., Tabl. Auricules [1821], 113"}}
-{:citation=>"Linnaea Entom. III. Ap. 1848, 223", :rich=>{:title=>"Linnaea Entom. III. Ap. 1848, 223"}}
-{:citation=>"Entom. Compend., June 1819, 201", :rich=>{:title=>"Entom. Compend., June 1819, 201"}}
-{:citation=>"(Roret's Suite à Buffon), Diptères, I. 1834, 254", :rich=>{:title=>"(Roret's Suite à Buffon), Diptères, I. 1834, [254"}}
-{:citation=>"Gen diurn. Lepidopt. II (1850), 274", :rich=>{:title=>"Gen diurn. Lepidopt. [II (1850), 274"}}
-{:citation=>"H. N. g. et p. Moll., Tabl. Limaçons, 1821, 63", :rich=>{:title=>"H. N. g. et p. Moll., Tabl. Limaçons, [1821, 63"}}
-{:citation=>"Mon. Trachyd, in Magasin de Zool. VIII. 1838, 52", :rich=>{:title=>"Mon. Trachyd, in Magasin de Zool. VIII. 1838, [52"}}
-{:citation=>"Europ. Schmett., Tab. Tort. 20 (Fernaldo judice 1797)", :rich=>{:title=>"Europ. Schmett., Tab. Tort. 20 (Fernaldo judice 1797)"}}
-{:citation=>"Explor. Algér. (Artic. II) 1846, 58", :rich=>{:title=>"Explor. Algér. (Artic. II) 1846, 58"}}
-{:citation=>"Reliq. conserv. 1826, 32", :rich=>{:title=>"Reliq. conserv. 1826, 32"}}
-{:citation=>"Ency. Méth. IX (1) (Ins.) 1819, 315", :rich=>{:title=>"Ency. Méth. IX (1) (Ins.) 1819, 315"}}
-{:citation=>"Genera of Birds, I. June 1847, 98", :rich=>{:title=>"Genera of Birds, I. June 1847, 98"}}
-{:citation=>"Abh. ph.-Kl. K. pr. Ak. Wiss. 1832 (1834), 285", :rich=>{:title=>"Abh. ph.-Kl. K. pr. Ak. Wiss. 1832 (1834), 285"}}
-{:citation=>"Mon. Erotyl., Sept. 1842, 332", :rich=>{:title=>"Mon. Erotyl., Sept. 1842, 332"}}
-{:citation=>"N. Acta Soc. Sci. Upsal. VIII. 1821 [sep. 1819], 53", :rich=>{:title=>"N. Acta Soc. Sci. Upsal. VIII. 1821 [sep. 1819], 53"}}
-{:citation=>"Catal. Coléopt., ed. 2 (1) Jan. 1833, 59", :rich=>{:title=>"Catal. Coléopt., ed. 2 (1) Jan. 1833, 59"}}
-{:citation=>"Min. Conch., Alph. Index, 1840, 1", :rich=>{:title=>"Min. Conch., Alph. Index, 1840, 1"}}
-{:citation=>"Verz. bekannt. Schmett. 1818, 27", :rich=>{:title=>"Verz. bekannt. Schmett. 1818, 27"}}
-{:citation=>"Zool. Journ. II (8) Jan. [<em>i.e.</em> Ap.] 1826, 452", :rich=>{:title=>"Zool. Journ. II (8) Jan. [<em>i.e.</em> Ap.] 1826, 452"}}
-{:citation=>"Mém. Soc. géol. France, V. 1842, 7", :rich=>{:title=>"Mém. Soc. géol. France, V. 1842, 7"}}
-{:citation=>"Faune Française (1 & 2) Coléopt. 1821, 35", :rich=>{:title=>"Faune Française (1 & 2) Coléopt. 1821, 35"}}
-{:citation=>"Mag. f. Insektenk. (Illiger) V. 1806, 70", :rich=>{:title=>"Mag. f. Insektenk. (Illiger) V. 1806, 70"}}
-{:citation=>"Ostéogr., Canis, 1843, 30", :rich=>{:title=>"Ostéogr., Canis, 1843, 30"}}
-{:citation=>"Entom. Zeitung, Stettin, IX (1) Jan. 1848, 21", :rich=>{:title=>"Entom. Zeitung, Stettin, IX (1) Jan. 1848, 21"}}
-{:citation=>"Rev. et Mag. de Zool. (2) I. Nov. 1849, 549", :rich=>{:title=>"Rev. et Mag. de Zool. (2) I. Nov. 1849, 549"}}
-{:citation=>"Proc. Zool. Soc. London, X (119) Feb. 1843, 185", :rich=>{:title=>"Proc. Zool. Soc. London, X (119) Feb. 1843, 185"}}
-{:citation=>"(Roret's Suite à Buffon), Crustacés, III. 1840, 215", :rich=>{:title=>"(Roret's Suite à Buffon), Crustacés, III. 1840, 215"}}
-{:citation=>"Descr. Coq. foss. Paris, II. 1832, 175", :rich=>{:title=>"Descr. Coq. foss. Paris, II. 1832, 175"}}
-{:citation=>"Mém. Soc. géol. France, IV (1) 1840, 14", :rich=>{:title=>"Mém. Soc. géol. France, IV (1) 1840, 14"}}
-{:citation=>"Thes. Conch. I (4) <em>ante</em> 11 Ap. 1844, 121", :rich=>{:title=>"Thes. Conch. I (4) <em>ante</em> 11 Ap. 1844, 121"}}
-{:citation=>"Linnaeus, Syst. Nat. III. 1802, 374", :rich=>{:title=>"Linnaeus, Syst. Nat. III. 1802, 374"}}
-{:citation=>"Zuträge z. Exot. Schmett. II. 1823, 25", :rich=>{:title=>"Zuträge z. Exot. Schmett. II. 1823, 25"}}
-{:citation=>"Exp. méth. Polyp. 1821, 78", :rich=>{:title=>"Exp. méth. Polyp. 1821, 78"}}
-{:citation=>"Entomologist (15) Jan. 1842, 246", :rich=>{:title=>"Entomologist (15) Jan. 1842, 246"}}
-{:citation=>"Forst-Insekten, III. 1844, 173", :rich=>{:title=>"Forst-Insekten, III. 1844, 173"}}
-{:citation=>"Revue Entom. I (4) <em>c.</em> Sept. 1833, 152", :rich=>{:title=>"Revue Entom. I (4) <em>c.</em> Sept. 1833, 152"}}
-{:citation=>"Rev. Zool. (Soc. Cuv.) III. Sept. 1840, 287", :rich=>{:title=>"Rev. Zool. (Soc. Cuv.) III. Sept. 1840, 287"}}
-{:citation=>"Brit. Mar. conch., Ap. 1844, 236", :rich=>{:title=>"Brit. Mar. conch., Ap. 1844, 236"}}
-{:citation=>"Bull. Soc. stat. Isèee, IV. 1846 (May 1848), 308", :rich=>{:title=>"Bull. Soc. stat. Isèee, IV. 1846 (May 1848), 308"}}
-{:citation=>"An. s. vert. VII. 1822, 248", :rich=>{:title=>"An. s. vert. VII. 1822, 248"}}
-{:citation=>"Nom. Brit. Ins., Aug. 1829, 24 [<em>n. n.</em>] ; & Ill. Brit. Ent. (Mand. V.) Nov. 1833, 281", :rich=>{:title=>"Nom. Brit. Ins., Aug. 1829, 24"}}
-{:citation=>"Tavole [1804] xxi", :rich=>{:title=>"Tavole [1804] xxi"}}
-{:citation=>"Fauna Ins. Europ. (11) [1825-28], 16", :rich=>{:title=>"Fauna Ins. Europ. (11) [1825-28], 16"}}
-{:citation=>"Bull. Soc. géol. France (sér. 2) VII. 1850, 127", :rich=>{:title=>"Bull. Soc. géol. France (sér. 2) VII. 1850, 127"}}
-{:citation=>"H. N. Anim. artic. (Orth. etc.) III. 1840, 500", :rich=>{:title=>"H. N. Anim. artic. (Orth. etc.) III. 1840, 500"}}
-{:citation=>"Ges. Nat. Fr. Berlin, Mag. VIII (2) 1817, 138", :rich=>{:title=>"Ges. Nat. Fr. Berlin, Mag. VIII (2) 1817, [138"}}
-{:citation=>"Tr. Amer. Phil. Soc., n. s. VI (2) 1839, 186", :rich=>{:title=>"Tr. Amer. Phil. Soc., n. s. VI (2) 1839, 186"}}
-{:citation=>"Ann. Mag. N. H. (2) III. Mar. 1849, 213", :rich=>{:title=>"Ann. Mag. N. H. (2) III. Mar. 1849, 213"}}
-{:citation=>"K. Vet. Ac. Handl. 1816 (1) 91", :rich=>{:title=>"K. Vet. Ac. Handl. 1816 (1) 91"}}
-{:citation=>"Bull. Soc. géol. France (1) X. 1839, 10 [<em>n. n.</em>] ; Nat. Verh. Holland. Maat. Weten. Haarlem [2] III (2) 1847, 74", :rich=>{:title=>"Bull. Soc. géol. France (1) X. 1839, 10"}}
+Abh. ph.-Kl. K. pr. Ak. Wiss. 1832 (1834), 285
+Ann. Mag. N. H. (2) III. Mar. 1849, 213
+Bull. Soc. géol. France (1) X. 1839, 10 [<em>n. n.</em>] ; Nat. Verh. Holland. Maat. Weten. Haarlem [2] III (2) 1847, 74
+Bull. Soc. géol. France (sér. 2) VII. 1850, 127
+Catal. Coléopt., ed. 2 (1) Jan. 1833, 59
+Ency. Méth. IX (1) (Ins.) 1819, 315
+Ency. Méth. IX (2) (Ins.) 1824, 446
+Europ. Schmett., Tab. Tort. 20 (Fernaldo judice 1797)
+Explor. Algér. (Artic. II) 1846, 58
+Faune Française (1 & 2) Coléopt. 1821, 35
+Forst-Insekten, III. 1844, 173
+Genera of Birds, I. June 1847, 98
+Linnaea Entom. III. Ap. 1848, 223
+Nom. Brit. Ins., Aug. 1829, 24 [<em>n. n.</em>] ; & Ill. Brit. Ent. (Mand. V.) Nov. 1833, 281
+Rev. Zool. (Soc. Cuv.) III. Sept. 1840, 287
+Rev. et Mag. de Zool. (2) I. Nov. 1849, 549
+Revue Entom. I (4) <em>c.</em> Sept. 1833, 152
+Syst. Nat., ed. 10, 1758, 58 ; ed. 12, 1766, 78
+Syst. Nat., ed. 10, 1758, 598 ; ed. 12, 1767, 994
+Syst. Nat., ed. 10, 1758, 637 ; ed. 12, 1767, 1060
+Tavole [1804] xxi
+Thes. Conch. I (4) <em>ante</em> 11 Ap. 1844, 121
+Zool. Journ. II (8) Jan. [<em>i.e.</em> Ap.] 1826, 452
