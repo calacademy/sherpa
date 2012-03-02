@@ -98,12 +98,12 @@ grammar SherbornGrammar
     | '? ' year
     | 'die indet.'
     | year
-    | abbreviated_month ' ' year
+    | '('? abbreviated_month ' ' year ')'?
     | bracketed_date
   end
 
   rule abbreviated_month
-    'Oct.'
+    ('Jan'|'Feb'|'Mar'|'Apr'|'May'|'Jun'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec') '.'
   end
 
   rule bracketed_date

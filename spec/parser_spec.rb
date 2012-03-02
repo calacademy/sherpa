@@ -239,6 +239,9 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
       it "should handle comma-separated year list" do
         parser.parse '1842-46, 1846, 1848', root: :date
       end
+      it "should handle a rane with another date in parens" do
+        parser.parse '1829-30 (Dec. 1832)', root: :date
+      end
     end
 
     describe "Pages" do
