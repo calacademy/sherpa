@@ -119,6 +119,9 @@ Revue Entom. I (—) 1833, Descr. d'esp. nouv., no. 11
       it "should handle a title with a comma" do
         parser.parse 'Atlas zu Rueppell, Reise', root: :title
       end
+      it "should handle an apostrophe" do
+        parser.parse "Aanhang. Cramer's Uitl. Kapellen", root: :title
+      end
     end
 
     describe "Volume" do
