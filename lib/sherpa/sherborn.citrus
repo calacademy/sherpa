@@ -96,7 +96,7 @@ grammar SherbornGrammar
   rule date_part
       year_range (' ' bracketed_phrase)*
     | '? ' year
-    | 'die indet.'
+    | 'die indet.' | 'c.' | 'Ap.'
     | year
     | '('? abbreviated_month ' ' year ')'?
     | bracketed_date
