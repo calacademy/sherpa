@@ -10,6 +10,16 @@ describe Sherpa::Parser do
     }]}
   end
 
+    it "should handle this" do
+      parser.parse "
+"
+    end
+
+=begin
+  Tricky ones
+  Is (Cambr. 1845) part of the issue or the date? 15 Rept. Brit. Assoc. (Cambr. 1845) 1846, 282
+=end
+
   describe "Exemplars" do
 
     it "should handle Linnaeus" do
