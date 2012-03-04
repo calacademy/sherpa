@@ -180,7 +180,7 @@ grammar SherbornGrammar
   # utility
 
   rule word
-    /[[:alnum:]']+/ 
+    /[[:alnum:]'.-]+/ 
   end
 
   rule capitalized_word

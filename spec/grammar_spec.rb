@@ -38,6 +38,9 @@ describe 'SherbornGrammar' do
     it "should handle a number" do
       grammar.parse "15 Rept. Brit. Assoc.", root: :title
     end
+    it "should handle a hyphen" do
+      grammar.parse "Abh. ph.-Kl. K. pr. Ak. Wiss.", root: :title
+    end
   end
 
   describe "Volume" do
