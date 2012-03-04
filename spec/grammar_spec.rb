@@ -35,6 +35,9 @@ describe 'SherbornGrammar' do
     it "should handle an apostrophe" do
       grammar.parse "Aanhang. Cramer's Uitl. Kapellen", root: :title
     end
+    it "should handle a number" do
+      grammar.parse "15 Rept. Brit. Assoc.", root: :title
+    end
   end
 
   describe "Volume" do

@@ -45,7 +45,7 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    !volume word '.'? | '(' title ')'
+    !date !volume word '.'? | '(' title ')'
   end
 
   #####################################
@@ -180,7 +180,7 @@ grammar SherbornGrammar
   # utility
 
   rule word
-    /[[:alpha:]']+/ 
+    /[[:alnum:]']+/ 
   end
 
   rule capitalized_word
