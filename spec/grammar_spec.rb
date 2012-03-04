@@ -62,7 +62,9 @@ describe 'SherbornGrammar' do
     it "should handle an edition" do
       grammar.parse 'ed. 13, I', root: :volume
     end
-
+    it "should handle a parenthesized phrase" do
+      grammar.parse "VIII (2) (Ins.)", root: :volume
+    end
     describe "Tab." do
       it "should handle a volume with a Tab." do
         grammar.parse 'II. Tab. Hamadryas amphinosa', root: :volume_with_tab

@@ -62,7 +62,7 @@ grammar SherbornGrammar
   rule volume_without_tab
     (edition ', ')?
     (
-        volume_number ' ' issue
+        volume_number ' ' issue (' ' parenthesized_phrase)?
       | volume_number
       | issue
     )
@@ -221,6 +221,10 @@ grammar SherbornGrammar
 
   rule bracketed_phrase
     /\[[^\]].+\]/
+  end
+
+  rule parenthesized_phrase
+    /\([^)].+\)/
   end
 
   rule taxon_name
