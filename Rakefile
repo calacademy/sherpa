@@ -8,7 +8,6 @@ require 'rdoc/task'
 
 include Rake::DSL
 
-Bundler::GemHelper.install_tasks
 
 RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = ['--color']
