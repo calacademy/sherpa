@@ -11,8 +11,6 @@ describe Sherpa::Parser do
   end
 
     it "should handle this" do
-      parser.parse "
-"
     end
 
 =begin
