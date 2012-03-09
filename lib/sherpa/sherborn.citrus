@@ -19,6 +19,7 @@ grammar SherbornGrammar
     (   (title /,? / volume /,? / date /,? / pages)
       | (title /,? / volume /,? / date /,? / unparsed)
       | (title /,? / volume /,? / date)
+      | (title /,? / volume /,? / pages /,? / unparsed)
       | (title /,? / volume /,? / pages)
       | (title /,? / date /,? / pages)
       | (title /,? / date)
@@ -54,7 +55,8 @@ grammar SherbornGrammar
   end
 
   rule volume_with_tab
-      (volume_number /,? /)? 'Tab.' ' ' taxon_name
+      (volume_number /,? /)? 'Tab.' ' ' 'Tort.'
+    | (volume_number /,? /)? 'Tab.' ' ' taxon_name
     | (volume_number /,? /)? 'Tab.' ' ' bracketed_tab_number
     | (volume_number /,? /)? 'Tab.'
   end 
@@ -63,6 +65,7 @@ grammar SherbornGrammar
     (edition ', ')?
     (
         volume_number ' ' issue (' ' parenthesized_phrase)?
+      | issue ' ' volume_number
       | volume_number
       | issue
     )
