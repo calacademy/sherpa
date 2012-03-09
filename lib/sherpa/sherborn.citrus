@@ -98,15 +98,32 @@ grammar SherbornGrammar
 
   rule date_part
       year_range (' ' bracketed_phrase)*
+    | full_date
     | '? ' year
-    | 'die indet.' | 'c.' | 'Ap.'
+    | 'die indet.' | 'c.' | 'Ap.' | 'ante'
     | year
-    | '('? abbreviated_month ' ' year ')'?
+    | '('? month ' ' year ')'?
     | bracketed_date
   end
 
+  rule full_date
+    day ' ' month ' ' year
+  end
+
+  rule day
+    number
+  end
+
+  rule month
+    abbreviated_month | unabbreviated_month
+  end
+
   rule abbreviated_month
-    ('Jan'|'Feb'|'Mar'|'Apr'|'May'|'Jun'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec') '.'
+    ('Jan'|'Feb'|'Mar'|/Apr?/|'May'|'Jun'|'Jul'|'Aug'|/Sept?/|'Oct'|'Nov'|'Dec') '.'
+  end
+
+  rule unabbreviated_month
+    'Jan'|'Feb'|'Mar'|'Apr'|'May'|'June'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'
   end
 
   rule bracketed_date

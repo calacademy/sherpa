@@ -169,8 +169,17 @@ describe 'SherbornGrammar' do
     it "should handle a rane with another date in parens" do
       grammar.parse '1829-30 (Dec. 1832)', root: :date
     end
-    it "should handle this" do
+    it "should handle c. Ap." do
       grammar.parse "c. Ap. 1833", root: :date
+    end
+    it "should handle full month name" do
+      grammar.parse 'June 1847', root: :date
+    end
+    it "should handle slightly longer abbreviation" do
+      grammar.parse 'Sept. 1847', root: :date
+    end
+    it "should handle ante plus full date" do
+      grammar.parse 'ante 11 Ap. 1844', root: :date
     end
   end
 
