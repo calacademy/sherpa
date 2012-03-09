@@ -10,9 +10,6 @@ describe Sherpa::Parser do
     }]}
   end
 
-    it "should handle this" do
-    end
-
 =begin
   Tricky ones
   Is (Cambr. 1845) part of the issue or the date? 15 Rept. Brit. Assoc. (Cambr. 1845) 1846, 282
@@ -35,7 +32,7 @@ describe Sherpa::Parser do
     it "should handle TITLE VOLUME (ISSUE) DATE, PAGE" do
       parse_and_check 'Uitl. Kapellen, I. (8) 1776, 146', 'Uitl. Kapellen', 'I. (8)', '1776', '146'
     end
-    it "should handle TITLE (ISSUE) DATE, PAGE" do
+    it "should handle TITLE (TITLE) (ISSUE) DATE, PAGE" do
       parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
     end
     it "should handle TITLE VOLUME" do

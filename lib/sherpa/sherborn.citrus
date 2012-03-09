@@ -45,12 +45,12 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    !date !volume word '.'? | '(' title ')'
+    !date !volume (word '.'? | '(' title ')')
   end
 
   #####################################
   rule volume
-      volume_with_tab | volume_without_tab
+    volume_with_tab | volume_without_tab
   end
 
   rule volume_with_tab
