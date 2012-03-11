@@ -74,8 +74,11 @@ describe 'SherbornGrammar' do
     it "should handle an issue?/series? before the volume" do
       grammar.parse "(3) III.", root: :volume
     end
-    it "should handle a bracketed issue?/series? before the volume" do
+    it "should handle a bracketed issue?/series? before the volume with a parenthesized phrase" do
       grammar.parse "[2] (Zool.) XV", root: :volume
+    end
+    it "should handle a bracketed issue?/series? before the volume" do
+      grammar.parse "[2] II", root: :volume
     end
     describe "Tab." do
       it "should handle a volume with a Tab." do
