@@ -220,6 +220,9 @@ describe 'SherbornGrammar' do
     it "should handle a plate section starting with an abbreviated word with comma" do
       grammar.parse 'Melan., pl. 1', root: :pages
     end
+    it "should handle Ins." do
+      grammar.parse 'Ins. 486', root: :pages
+    end
   end
 
   describe "Multipart citations" do

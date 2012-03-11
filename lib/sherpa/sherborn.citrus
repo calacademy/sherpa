@@ -187,6 +187,7 @@ grammar SherbornGrammar
 
   rule unbracketed_pages
       'pl. ' number
+    | /Ins\.,? / number
     | number ' & ' number
     | number '.'? 
   end
