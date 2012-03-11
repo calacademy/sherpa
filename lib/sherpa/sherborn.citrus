@@ -46,7 +46,7 @@ grammar SherbornGrammar
   end
 
   rule title_word
-    !date !volume (word '.'? | '(' title ')')
+    !date !volume (word | '(' title ')')
   end
 
   #####################################
@@ -65,6 +65,7 @@ grammar SherbornGrammar
     (edition ', ')?
     (
         volume_number ' ' issue (' ' parenthesized_phrase)?
+      | '(' word ' ' volume_number ')'
       | volume_number ' ' parenthesized_phrase
       | issue ' ' volume_number
       | '[' number ']' (' ' parenthesized_phrase)? ' ' volume_number
@@ -202,7 +203,7 @@ grammar SherbornGrammar
   # utility
 
   rule word
-    /[[:alnum:]'.-]+/ 
+    /[[:alnum:]'.-]+\.?/ 
   end
 
   rule capitalized_word
