@@ -44,6 +44,7 @@ main do |file_name|
       citation = parse_citation citation
       @parsed_citations << citation unless file_is_really_big
       @counts[:parsed] += 1
+      @counts[:parsed_with_unparsed_part] += 1 if citation[:citations].first[:unparsed]
     rescue Citrus::ParseError
       @unparsed_citations << citation unless file_is_really_big
       @counts[:unparsed] += 1
@@ -148,6 +149,7 @@ end
 def show_results
   Progress.show_results
   Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
+  Progress.show_count @counts[:parsed_with_unparsed_part], @counts[:parsed], 'with unparsed parts'
 end
 
 description "SHERborn PArser - Parses the citation field of Sherborn's Index Animalium"
