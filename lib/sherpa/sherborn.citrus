@@ -124,7 +124,7 @@ grammar SherbornGrammar
   end
 
   rule unabbreviated_month
-    'Jan'|'Feb'|'Mar'|'Apr'|'May'|'June'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'
+    'Jan'|'Feb'|'Mar'|'Apr'|'May'|'June'|'July'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'
   end
 
   rule bracketed_date
