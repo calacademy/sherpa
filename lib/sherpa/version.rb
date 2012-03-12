@@ -1,3 +1,3 @@
 module Sherpa
-  VERSION = "8.9"
+  VERSION = "9.2"
 end
