@@ -111,22 +111,47 @@ grammar SherbornGrammar
 
   #####################################
   rule date
-    date_part (/,? / date_part)*
+      years_with_parenthesized_number_in_between
+    | date_part (/,? / date_part)*
+    | 'die indet.' 
   end
 
   rule date_part
-      year_range (' ' bracketed_phrase)*
-    | '(' capitalized_abbreviation ' ' year ')'
-    | full_date
-    | '? ' year
-    | 'die indet.' | 'c.' | 'Ap.' | 'ante' | 'post'
+      date_with_month
+    | bracketed_date_part
+    | parenthesized_year_preceded_by_word
+    | '(' date_part ')'
+    | year_conjunction
+    | year_range
     | year
-    | '('? month ' ' year ')'?
-    | bracketed_date
   end
 
-  rule full_date
-    day ' ' month ' ' year
+  rule parenthesized_year_preceded_by_word
+    '(' capitalized_abbreviation ' ' year ')'
+  end
+
+  rule bracketed_date_part
+    '[' (bracketed_date_part_prefix ' ')? (year_range|year) (', ' bracketed_date_part_suffix)? ']'
+  end
+
+  rule bracketed_date_part_prefix
+    '?' | 'vero proprius'
+  end
+
+  rule bracketed_date_part_suffix
+    'teste Scudder'
+  end
+
+  rule years_with_parenthesized_number_in_between
+    year ' (' number ') ' year
+  end
+
+  rule date_with_month
+    (date_qualifier ' ')? (day ' ')? month ' ' year
+  end
+
+  rule date_qualifier
+    'c.' | 'ante' | 'post'
   end
 
   rule day
@@ -142,11 +167,7 @@ grammar SherbornGrammar
   end
 
   rule unabbreviated_month
-    'Jan'|'Feb'|'Mar'|'Apr'|'May'|'June'|'July'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'
-  end
-
-  rule bracketed_date
-    '[' date /.*\]/
+    'June'|'July'
   end
 
   rule year
@@ -154,33 +175,12 @@ grammar SherbornGrammar
   end
 
   rule year_range
-      year '-' (year_in_century | year_in_decade)
-    | century '-'
-    | decade '-'
-    | year ' ' or_or_vel ' ' year
-    | year ' & ' year
-    | year ' ' '(' number ')' ' ' year
-    | year ' [' year ']'
+      /\d{4}-\d{1,2}/
+    | /\d{2,3}-/
   end
 
-  rule century
-    /\d{2}/
-  end
-
-  rule decade
-    /\d{3}/
-  end
-
-  rule year_in_century
-    /\d{2}/
-  end
-
-  rule year_in_decade
-    /\d/
-  end
-
-  rule or_or_vel
-    'vel' | 'or'
+  rule year_conjunction
+    year ' ' ('or'|'vel'|'&') ' ' year
   end
 
   #####################################

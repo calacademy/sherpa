@@ -181,25 +181,21 @@ describe 'SherbornGrammar' do
       grammar.parse "[1830-2]", root: :date
     end
     it "should handle x vel y" do
-      grammar.parse '1830 vel 1831', root: :year_range
       grammar.parse '1830 vel 1831', root: :date
     end
     it "should handle x & y" do
-      grammar.parse '1830 & 1831', root: :year_range
+      grammar.parse '1830 & 1831', root: :date
     end
     it "should handle x or y" do
-      grammar.parse '1830 or 1831', root: :year_range
       grammar.parse '1830 or 1831', root: :date
     end
     it "should handle year, number in parens, year (??)" do
       grammar.parse '1844 (3) 1844', root: :date
     end
     it "should handle a year with open last digit" do
-      grammar.parse '184-', root: :year_range
       grammar.parse '184-', root: :date
     end
     it "should handle a year with open last two digits" do
-      grammar.parse '18-', root: :year_range
       grammar.parse '18-', root: :date
     end
     it "should handle a bracketed date with query" do
@@ -214,33 +210,39 @@ describe 'SherbornGrammar' do
     it "should handle year followed by bracketed year" do
       grammar.parse '1883 [1932]', root: :date
     end
+    it "should handle year, parenthesized year, bracketed year" do
+      grammar.parse '1835 (1837) [1836]', root: :date
+    end
     it "should handle vero proprius" do
-      grammar.parse '1840-46 [vero [propius 1847]', root: :date
+      grammar.parse '1840 [vero proprius 1847]', root: :date
     end
     it "should handle comma-separated year list" do
       grammar.parse '1842-46, 1846, 1848', root: :date
     end
-    it "should handle a rane with another date in parens" do
+    it "should handle a range with another date in parens" do
       grammar.parse '1829-30 (Dec. 1832)', root: :date
     end
-    it "should handle c. Ap." do
-      grammar.parse "c. Ap. 1833", root: :date
+    describe "Dates with months" do
+      it "should handle c. Ap." do
+        grammar.parse "c. Ap. 1833", root: :date
+      end
+      it "should handle c. plus date" do
+        grammar.parse 'c. Sept. 1833', root: :date
+      end
+      it "should handle full month name" do
+        grammar.parse 'June 1847', root: :date
+      end
+      it "should handle slightly longer abbreviation" do
+        grammar.parse 'Sept. 1847', root: :date
+      end
+      it "should handle ante plus full date" do
+        grammar.parse 'ante 11 Ap. 1844', root: :date
+      end
+      it "should handle post" do
+        grammar.parse 'post Sept. 1834', root: :date
+      end
     end
-    it "should handle c. plus date" do
-      grammar.parse 'c. Sept. 1833', root: :date
-    end
-    it "should handle full month name" do
-      grammar.parse 'June 1847', root: :date
-    end
-    it "should handle slightly longer abbreviation" do
-      grammar.parse 'Sept. 1847', root: :date
-    end
-    it "should handle ante plus full date" do
-      grammar.parse 'ante 11 Ap. 1844', root: :date
-    end
-    it "should handle post" do
-      grammar.parse 'post Sept. 1834', root: :date
-    end
+
     it "should handle year inside parentheses with word" do
       grammar.parse '(Cambr. 1845)', root: :date
     end
