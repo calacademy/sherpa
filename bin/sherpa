@@ -46,20 +46,16 @@ main do |file_name|
       @counts[:parsed] += 1
       @counts[:parsed_with_unparsed_part] += 1 if citation[:citations].first[:unparsed]
     rescue Citrus::ParseError
-      @unparsed_citations << citation unless file_is_really_big
+      @unparsed_citations << citation
       @counts[:unparsed] += 1
     end
 
     show_progress
   end
 
-  unless file_is_really_big
-    write_parsed_citations
-    write_unparsed_citations
-    write_comparisons
-  end
-
   show_results
+
+  write_unparsed_citations
 
 end
 
