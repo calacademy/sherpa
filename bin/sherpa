@@ -132,8 +132,8 @@ end
 
 def show_results
   Progress.show_results
-  Progress.show_count @counts[:parsed], Progress.processed_count, 'parsed'
-  Progress.show_count @counts[:parsed_with_unparsed_part], @counts[:parsed], 'with unparsed parts'
+  Progress.puts "#{@counts[:parsed]} parsed (#{@counts[:parsed_with_unparsed_part]} with unparsed part), #{@counts[:unparsed]} unparsed"
+  Progress.puts "#{Progress.percent(@counts[:parsed])} (#{Progress.percent(@counts[:parsed_with_unparsed_part], @counts[:parsed])})"
 end
 
 description "SHERborn PArser - Parses the citation field of Sherborn's Index Animalium"
