@@ -75,7 +75,13 @@ grammar SherbornGrammar
   end
 
   rule issue_part
-    '(' (arabic_or_roman_number|'-') ')'
+    '('
+      (
+          arabic_or_roman_number '-' arabic_or_roman_number
+        | arabic_or_roman_number
+        | '-'
+      )
+     ')'
   end
 
   rule other_part
@@ -147,6 +153,7 @@ grammar SherbornGrammar
     | decade '-'
     | year ' ' or_or_vel ' ' year
     | year ' & ' year
+    | year ' ' '(' number ')' ' ' year
     | year ' [' year ']'
   end
 
@@ -172,36 +179,34 @@ grammar SherbornGrammar
 
   #####################################
   rule pages
-    (pages_part (/,? / pages_part)*) {
+    (pages_part (', ' pages_part)*) {
+      # remove trailing period
       to_s[-1] == '.' ? to_s[0..-2] : to_s
     }
   end
 
   rule pages_part
-    wrapper | plate_section | bracketed_pages | unbracketed_pages
+    pages_section | '(' pages_section ')'
   end
 
-  rule wrapper
-    '(wrapper)'
+  rule pages_section
+    (pages_prefix /,? /)? (pages_type ' ')? page_numbers
   end
 
-  rule bracketed_pages
-    ('[' unbracketed_pages ']') | ('(' unbracketed_pages ')')
+  rule pages_prefix
+    capitalized_word '.'?
   end
 
-  rule unbracketed_pages
-      'pl. ' number
-    | /Ins\.,? / number
-    | number ' & ' number
-    | number '.'? 
+  rule pages_type
+    /(pl|Ins|no)\./
   end
 
-  rule plate_section
-    plate_section_word  /,?/ ' pl. ' arabic_or_roman_number '.'?
+  rule page_numbers
+    page_number (' & ' page_number)? | 'wrapper'
   end
 
-  rule plate_section_word
-    'Suppl.' | capitalized_word '.'?
+  rule page_number
+    arabic_or_roman_number
   end
 
   #####################################

@@ -44,6 +44,9 @@ describe 'SherbornGrammar' do
     it "should handle bracketed phrase and parenthesized phrase as part of the title" do
       grammar.parse "Ann. Sci. Nat. [2] (Zool.)", root: :title
     end
+    it "should handle parenthesized arabic number as part of title" do
+      grammar.parse "Coléopt. Mex. (7)", root: :title
+    end
   end
 
   describe "Volume" do
@@ -58,6 +61,9 @@ describe 'SherbornGrammar' do
     end
     it "should handle a roman number without a period followed by the issue with a hyphen" do
       grammar.parse 'I (-)', root: :volume
+    end
+    it "should handle an issue range" do
+      grammar.parse 'I (2-5)', root: :volume
     end
     it "should handle a roman number without a period followed by the issue with a number" do
       grammar.parse 'I (4)', root: :volume
@@ -182,6 +188,9 @@ describe 'SherbornGrammar' do
       grammar.parse '1830 or 1831', root: :year_range
       grammar.parse '1830 or 1831', root: :date
     end
+    it "should handle year, number in parens, year (??)" do
+      grammar.parse '1844 (3) 1844', root: :date
+    end
     it "should handle a year with open last digit" do
       grammar.parse '184-', root: :year_range
       grammar.parse '184-', root: :date
@@ -255,6 +264,12 @@ describe 'SherbornGrammar' do
     end
     it "should handle Ins." do
       grammar.parse 'Ins. 486', root: :pages
+    end
+    it "should handle no." do
+      grammar.parse 'no. 160', root: :pages
+    end
+    it "should multiple parts" do
+      grammar.parse '(wrapper), 248', root: :pages
     end
   end
 
