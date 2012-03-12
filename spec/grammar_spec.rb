@@ -47,6 +47,9 @@ describe 'SherbornGrammar' do
     it "should handle parenthesized arabic number as part of title" do
       grammar.parse "Coléopt. Mex. (7)", root: :title
     end
+    it "should handle a title that starts out looking like a Tab. volume" do
+      grammar.parse "Tab. Planch. Enl.", root: :title
+    end
   end
 
   describe "Volume" do

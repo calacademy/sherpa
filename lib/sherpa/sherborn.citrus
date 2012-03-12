@@ -42,15 +42,19 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_part (/,? / title_part)*
+    title_word (/,? / title_part)*
   end
 
   rule title_part
-    (title_word | '(' title ')')
+    title_word_not_date_or_volume | '(' title ')'
+  end
+
+  rule title_word_not_date_or_volume
+    !date !volume title_word
   end
 
   rule title_word
-    !date !volume /[^\s,]+/
+    /[^\s,]+/
   end
 
   #####################################
