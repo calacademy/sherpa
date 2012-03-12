@@ -75,15 +75,22 @@ describe 'SherbornGrammar' do
       grammar.parse "VI (Ins.)", root: :volume
     end
     it "should handle a volume and issue followed by a parenthesized phrase" do
+      
       grammar.parse "VIII (2) (Ins.)", root: :volume
     end
-
+    it "should handle a volume and issue followed by a parenthesized phrase" do
+      grammar.parse "VIII (2) (Ins.)", root: :volume
+    end
     it "should handle a parenthesized volume prepended with Haust." do
       grammar.parse "(Haust. IV.)", root: :volume
     end
     it "should handle a parenthesized volume prepended with another word" do
       grammar.parse "(Mand. IV.)", root: :volume
     end
+    it "should handle a parenthesized volume prepended with a phrase" do
+      grammar.parse "II (Nat. Libr. XIX.)", root: :volume
+    end
+
     it "should handle a volume + parenthesized volume" do
       grammar.parse "I (I)", root: :volume
     end

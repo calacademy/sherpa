@@ -66,12 +66,12 @@ grammar SherbornGrammar
   end 
 
   rule volume_without_tab
-    (edition ', ')? volume_part (' ' issue_part)? (' ' other_part)?
+    (edition ', ')? volume_part (' ' volume_part)* (' ' issue_part)? (' ' other_part)?
   end
 
   rule volume_part
         volume_number |
-    '(' capitalized_abbreviation ' ' volume_number ')'
+    '(' (capitalized_abbreviation ' ')+ volume_number ')'
   end
 
   rule issue_part
