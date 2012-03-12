@@ -74,6 +74,11 @@ describe Sherpa::Parser do
         ]
       }
     end
+    it "should handle a title starting with a number, and a date with a word in parentheses" do
+      parser.parse("15 Rept. Brit. Assoc. (Cambr. 1845) 1846, 282").should == {
+        citations: [{title: '15 Rept. Brit. Assoc.', volume: nil, date: '(Cambr. 1845) 1846', pages: '282'}]
+      }
+    end
   end
 
   describe "Combinations of components" do

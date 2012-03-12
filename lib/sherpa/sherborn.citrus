@@ -115,6 +115,7 @@ grammar SherbornGrammar
 
   rule date_part
       year_range (' ' bracketed_phrase)*
+    | '(' capitalized_abbreviation ' ' year ')'
     | full_date
     | '? ' year
     | 'die indet.' | 'c.' | 'Ap.' | 'ante' | 'post'

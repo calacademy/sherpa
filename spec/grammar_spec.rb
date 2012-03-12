@@ -241,6 +241,9 @@ describe 'SherbornGrammar' do
     it "should handle post" do
       grammar.parse 'post Sept. 1834', root: :date
     end
+    it "should handle year inside parentheses with word" do
+      grammar.parse '(Cambr. 1845)', root: :date
+    end
   end
 
   describe "Pages" do
