@@ -1,3 +1,4 @@
+# coding: UTF-8
 require 'citrus'
 require_relative 'progress'
 require_relative 'version'
@@ -12,8 +13,12 @@ module Sherpa::Preprocessor
     remove_em(
     squish_spaces(
     fix_typos(
-      string)))))))
+    replace_dashes_with_hyphens(
+      string))))))))
+  end
 
+  def self.replace_dashes_with_hyphens string
+    string.gsub /—/, '-'
   end
 
   def self.remove_em string

@@ -41,7 +41,7 @@ describe Sherpa::Preprocessor do
   end
 
   it "should change 'hist,' to 'hist.'" do
-    preprocessor.preprocess('Ic. hist, lepidopt. Europe, II (—) 1837, 177').should == 'Ic. hist. lepidopt. Europe, II (—) 1837, 177'
+    preprocessor.preprocess('Ic. hist, lepidopt. Europe, II (—) 1837, 177').should == 'Ic. hist. lepidopt. Europe, II (-) 1837, 177'
   end
 
   it "should change 'foss,' to 'foss.'" do
@@ -59,6 +59,10 @@ describe Sherpa::Preprocessor do
 
   it "should remove <em> tags, even if mismatched" do
     preprocessor.preprocess('<em>foo</em><em>').should == 'foo'
+  end
+
+  it "should convert dashes to hyphens" do
+    preprocessor.preprocess('—').should == '-'
   end
 
 end

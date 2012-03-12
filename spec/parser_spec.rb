@@ -24,7 +24,7 @@ describe Sherpa::Parser do
       parse_and_check 'Ent. Syst. IV. 1794, 262', 'Ent. Syst.', 'IV.', '1794', '262'
     end
     it "should handle TITLE VOLUME, DATE" do
-      parse_and_check 'Exot. Schmett. II. Tab. [168], 18—', 'Exot. Schmett.', 'II. Tab. [168]', '18—', nil
+      parse_and_check 'Exot. Schmett. II. Tab. [168], 18—', 'Exot. Schmett.', 'II. Tab. [168]', '18-', nil
     end
     it "should handle TITLE, DATE, PAGE (no volume; title does not end in a period)" do
       parse_and_check 'Gen. Sp. Ins. Geer, 1783, 32.', 'Gen. Sp. Ins. Geer', nil, '1783', '32'
@@ -42,7 +42,7 @@ describe Sherpa::Parser do
       parse_and_check 'Classif. Batrach. 1838', 'Classif. Batrach.', nil, '1838', nil
     end
     it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
-      parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (—)', '[1830-2]', '(pl. 17)'
+      parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (-)', '[1830-2]', '(pl. 17)'
     end
     it "should handle an exotic Schmett" do
       parse_and_check 'Exot. Schmett. II. Tab. Hamadryas amphinosa', 'Exot. Schmett.', 'II. Tab. Hamadryas amphinosa', nil, nil
@@ -54,7 +54,7 @@ describe Sherpa::Parser do
     it "should handle this one by doing its best, then putting the rest in :unparsed" do
       parser.parse("Revue Entom. I (—) 1833, Descr. d'esp. nouv., [no. 9").should == {
         citations: [
-          {title: 'Revue Entom.', volume: 'I (—)', date: '1833', pages: nil, unparsed: "Descr. d'esp. nouv., no. 9"},
+          {title: 'Revue Entom.', volume: 'I (-)', date: '1833', pages: nil, unparsed: "Descr. d'esp. nouv., no. 9"},
         ]
       }
     end
@@ -67,7 +67,7 @@ describe Sherpa::Parser do
       }
     end
     it "should handle a multipart citation with ex" do
-      parser.parse('Classif. Batrach. 1838,—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').should == {
+      parser.parse('Classif. Batrach. 1838,-ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').should == {
         citations: [
           {title: 'Classif. Batrach.', volume: nil, date: '1838', pages: nil},
           {title: 'Mém. Soc. Sci. Nat. Neuchâtel', volume: 'II.', date: '1839 [1840]', pages: '59'},

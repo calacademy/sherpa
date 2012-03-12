@@ -54,7 +54,7 @@ describe 'SherbornGrammar' do
       grammar.parse 'I', root: :volume
     end
     it "should handle a roman number without a period followed by the issue" do
-      grammar.parse 'I (—)', root: :volume
+      grammar.parse 'I (-)', root: :volume
     end
     it "should handle any number in the issue" do
       grammar.parse '(43)', root: :issue
@@ -111,7 +111,7 @@ describe 'SherbornGrammar' do
         grammar.parse 'Tab. [2]', root: :volume_with_tab
       end
       it "should handle Tab. with bracketed hyphen" do
-        grammar.parse 'Tab. [—]', root: :volume_with_tab
+        grammar.parse 'Tab. [-]', root: :volume_with_tab
       end
       it "should handle Tab. with a following word" do
         grammar.parse "Tab. Tort.", root: :volume
@@ -227,15 +227,15 @@ describe 'SherbornGrammar' do
 
   describe "Multipart citations" do
     it "should handle a multipart without a &" do
-      grammar.parse('Proc. Boston Soc. N. H. I (—) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').value.should == {citations: [
-          {title: 'Proc. Boston Soc. N. H.', volume: 'I (—)', date: '1844', pages: '187'},
+      grammar.parse('Proc. Boston Soc. N. H. I (-) 1844, 187 ; Boston Journ. N. H. V (1) 1845, 84').value.should == {citations: [
+          {title: 'Proc. Boston Soc. N. H.', volume: 'I (-)', date: '1844', pages: '187'},
           {title: 'Boston Journ. N. H.', volume: 'V (1)', date: '1845', pages: '84'},
         ]}
     end
 
     describe "With ex" do
       it "should handle a multipart citation with ex" do
-        grammar.parse('Classif. Batrach. 1838,—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').value.should == {
+        grammar.parse('Classif. Batrach. 1838,-ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 59').value.should == {
           citations: [
             {title: 'Classif. Batrach.', volume: nil, date: '1838', pages: nil},
             {title: 'Mém. Soc. Sci. Nat. Neuchâtel', volume: 'II.', date: '1839 [1840]', pages: '59'},
@@ -243,10 +243,10 @@ describe 'SherbornGrammar' do
         }
       end
       it "should handle period instead of comma" do
-        grammar.parse "Classif. Batrach. 1838.—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 34"
+        grammar.parse "Classif. Batrach. 1838.-ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 34"
       end
       it "handle nothing before dash" do
-        grammar.parse 'Classif. Batrach. 1838—ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 32'
+        grammar.parse 'Classif. Batrach. 1838-ex Mém. Soc. Sci. Nat. Neuchâtel, II. 1839 [1840], 32'
       end
     end
   end

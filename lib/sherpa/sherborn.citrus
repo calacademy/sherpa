@@ -11,7 +11,7 @@ grammar SherbornGrammar
   end
 
   rule citation_with_ex
-    citation /[.,]/? '—ex ' citation
+    citation /[.,]/? '-ex ' citation
   end
 
   #####################################
@@ -83,7 +83,7 @@ grammar SherbornGrammar
   end
 
   rule issue_number
-    /\d+/ | hyphen
+    /\d+/ | '-'
   end
 
   rule edition
@@ -91,7 +91,7 @@ grammar SherbornGrammar
   end
 
   rule bracketed_tab_number
-    '[' (number|hyphen) ']'
+    '[' (number|'-') ']'
   end
 
   #####################################
@@ -138,9 +138,9 @@ grammar SherbornGrammar
   end
 
   rule year_range
-      year hyphen (year_in_century | year_in_decade)
-    | century hyphen
-    | decade hyphen
+      year '-' (year_in_century | year_in_decade)
+    | century '-'
+    | decade '-'
     | year ' ' or_or_vel ' ' year
     | year ' & ' year
     | year ' [' year ']'
@@ -237,10 +237,6 @@ grammar SherbornGrammar
 
   rule arabic_or_roman_number
     roman_number | arabic_number
-  end
-
-  rule hyphen
-    '-' | '—'
   end
 
   rule bracketed_phrase
