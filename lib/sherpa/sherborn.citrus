@@ -113,7 +113,7 @@ grammar SherbornGrammar
       year_range (' ' bracketed_phrase)*
     | full_date
     | '? ' year
-    | 'die indet.' | 'c.' | 'Ap.' | 'ante'
+    | 'die indet.' | 'c.' | 'Ap.' | 'ante' | 'post'
     | year
     | '('? month ' ' year ')'?
     | bracketed_date

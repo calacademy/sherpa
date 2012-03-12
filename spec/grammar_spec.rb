@@ -235,6 +235,9 @@ describe 'SherbornGrammar' do
     it "should handle ante plus full date" do
       grammar.parse 'ante 11 Ap. 1844', root: :date
     end
+    it "should handle post" do
+      grammar.parse 'post Sept. 1834', root: :date
+    end
   end
 
   describe "Pages" do
