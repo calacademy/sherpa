@@ -87,13 +87,7 @@ end
 def get_fields_from_row row
   citation = row[spreadsheet_column_to_offset('M')]
   return unless citation
-  {citation: citation,
-   them: {
-    title: row[spreadsheet_column_to_offset('P')],
-    volume: row[spreadsheet_column_to_offset('Q')],
-    date: row[spreadsheet_column_to_offset('S')],
-    pages: row[spreadsheet_column_to_offset('T')],
-  }}
+  {citation: citation}
 end
 
 def parse_citation citation
@@ -128,12 +122,6 @@ def sort_by_frequency strings
       group_size += 1 if citation[:citation][0, prefix_length] == this_prefix
     end
     - group_size
-  end
-end
-
-def write_comparisons
-  File.open make_file_name('comparison.html'), 'w' do |file|
-    file.write Sherpa::Formatter.format_comparisons @parsed_citations
   end
 end
 

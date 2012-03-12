@@ -15,8 +15,7 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     """
     [{
     "citations": [{"title": "Linn. Syst. Nat.", "date": "1789, 1849", "volume": "ed. 13, I.", "pages":null}],
-    "citation": "Linn. Syst. Nat., ed. 13, I. 1789, 1849.",
-    "them": {"title": "Linn. Syst. Nat., ed. 13, I.", "volume":null, "date": "1789", "pages": "1849"}
+    "citation": "Linn. Syst. Nat., ed. 13, I. 1789, 1849."
     }]
     """
 
@@ -38,12 +37,3 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
   Scenario: The file name is not supplied
     When I run `sherpa`
     Then the stdout should contain "parse error: 'file_name' is required"
-
-  Scenario: Producing a report on the comparison
-    Given a file named "sherborn.txt" with:
-    """
-uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgenus	OrigAuthor	CombAuthor	Citation	Cit1Author	Cit1NameString	Cit1Title	Cit1Volume	Cit1Number	Cit1Date	Cit1Pages	Cit1Status	Cit1Other	Cit2	Cit3	Cit4	varr	publication	leftovers	AfterDash	bid	extra_lines_flag	Iteration	Unicode	AdditionCorrection	TaxonRankID	IsHomonym	RLPComments	Flag
-6009	1	SIL34_01_01_0165	36	99	australis	0	Cerambyx	0			J. F. Gmelin	Linn. Syst. Nat., ed. 13, I. 1789, 1849.			Linn. Syst. Nat., ed. 13, I.			1789	1849							Linn Syst Nat				0	12	australis Cerambyx, J. F. Gmelin. Linn. Syst. Nat., ed. 13, I. 1789, 1849.	0	70	0		0
-    """
-    When I run `sherpa sherborn.txt`
-    Then a file named "sherborn.comparison.html" should exist
