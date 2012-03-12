@@ -42,11 +42,15 @@ grammar SherbornGrammar
 
   #####################################
   rule title
-    title_word (/,? / title_word)*
+    title_part (/,? / title_part)*
+  end
+
+  rule title_part
+    (title_word | '(' title ')')
   end
 
   rule title_word
-    !date !volume (word | '(' title ')')
+    !date !volume /[^\s,]+/
   end
 
   #####################################
@@ -62,29 +66,28 @@ grammar SherbornGrammar
   end 
 
   rule volume_without_tab
-    (edition ', ')?
+    (edition ', ')? volume_part (' ' issue_part)? (' ' other_part)?
+  end
+
+  rule volume_part
+        volume_number |
+    '(' capitalized_abbreviation ' ' volume_number ')'
+  end
+
+  rule issue_part
+    '(' (arabic_or_roman_number|'-') ')'
+  end
+
+  rule other_part
+    !date
     (
-        volume_number ' ' issue (' ' parenthesized_phrase)?
-      | volume_number ' ' '(' volume_number ')'
-      | '(' word ' ' volume_number ')'
-      | volume_number ' ' parenthesized_phrase
-      | issue ' ' volume_number
-      | '[' number ']' (' ' parenthesized_phrase)? ' ' volume_number
-      | volume_number
-      | issue
+      '(' capitalized_abbreviation ')'
+      | lowercase_roman_number
     )
   end
 
   rule volume_number
-    roman_number '.'?
-  end
-
-  rule issue
-    '(' issue_number ')'
-  end
-
-  rule issue_number
-    /\d+/ | '-'
+    uppercase_roman_number '.'?
   end
 
   rule edition
@@ -262,6 +265,10 @@ grammar SherbornGrammar
 
   rule species_epithet
     lowercase_word
+  end
+
+  rule capitalized_abbreviation
+    capitalized_word '.'
   end
 
 end

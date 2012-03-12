@@ -33,7 +33,7 @@ describe Sherpa::Parser do
       parse_and_check 'Uitl. Kapellen, I. (8) 1776, 146', 'Uitl. Kapellen', 'I. (8)', '1776', '146'
     end
     it "should handle TITLE (TITLE) (ISSUE) DATE, PAGE" do
-      parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers)', '(2)', '1792', '750'
+      parse_and_check 'Ency. Méth. (Vers) (2) 1792, 750', 'Ency. Méth. (Vers) (2)', nil, '1792', '750'
     end
     it "should handle TITLE VOLUME" do
       parse_and_check 'Exot. Schmett. II. Tab. [103]', 'Exot. Schmett.', 'II. Tab. [103]', nil, nil

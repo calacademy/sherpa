@@ -41,6 +41,9 @@ describe 'SherbornGrammar' do
     it "should handle a hyphen" do
       grammar.parse "Abh. ph.-Kl. K. pr. Ak. Wiss.", root: :title
     end
+    it "should handle bracketed phrase and parenthesized phrase as part of the title" do
+      grammar.parse "Ann. Sci. Nat. [2] (Zool.)", root: :title
+    end
   end
 
   describe "Volume" do
@@ -53,41 +56,39 @@ describe 'SherbornGrammar' do
     it "should handle a roman number without a period" do
       grammar.parse 'I', root: :volume
     end
-    it "should handle a roman number without a period followed by the issue" do
+    it "should handle a roman number without a period followed by the issue with a hyphen" do
       grammar.parse 'I (-)', root: :volume
     end
-    it "should handle any number in the issue" do
-      grammar.parse '(43)', root: :issue
+    it "should handle a roman number without a period followed by the issue with a number" do
+      grammar.parse 'I (4)', root: :volume
     end
-    it "should an issue without a volume" do
-      grammar.parse '(43)', root: :volume
+    it "should handle any number in the issue" do
+      grammar.parse '(43)', root: :issue_part
     end
     it "should handle a placeholder issue" do
-      grammar.parse '(-)', root: :issue
+      grammar.parse '(-)', root: :issue_part
     end
     it "should handle an edition" do
       grammar.parse 'ed. 13, I', root: :volume
     end
-    it "should handle a parenthesized phrase" do
-      grammar.parse "VIII (2) (Ins.)", root: :volume
-    end
-    it "should handle an issue?/series? before the volume" do
-      grammar.parse "(3) III.", root: :volume
-    end
-    it "should handle a bracketed issue?/series? before the volume with a parenthesized phrase" do
-      grammar.parse "[2] (Zool.) XV", root: :volume
-    end
-    it "should handle a bracketed issue?/series? before the volume" do
-      grammar.parse "[2] II", root: :volume
-    end
     it "should handle a volume followed by a parenthesized phrase" do
       grammar.parse "VI (Ins.)", root: :volume
     end
-    it "should handle a parenthesized volume prepended with word" do
+    it "should handle a volume and issue followed by a parenthesized phrase" do
+      grammar.parse "VIII (2) (Ins.)", root: :volume
+    end
+
+    it "should handle a parenthesized volume prepended with Haust." do
       grammar.parse "(Haust. IV.)", root: :volume
+    end
+    it "should handle a parenthesized volume prepended with another word" do
+      grammar.parse "(Mand. IV.)", root: :volume
     end
     it "should handle a volume + parenthesized volume" do
       grammar.parse "I (I)", root: :volume
+    end
+    it "should handle a volume + issue + another part" do
+      grammar.parse  "II (2) i", root: :volume
     end
     describe "Tab." do
       it "should handle a volume with a Tab." do
@@ -123,6 +124,22 @@ describe 'SherbornGrammar' do
         grammar.parse "III. Tab", root: :volume
       end
     end
+
+    describe "Previous interpretations" do
+      it "should NOT handle an issue?/series? before the volume" do
+        -> {grammar.parse "(3) III.", root: :volume}.should raise_error Citrus::ParseError
+      end
+      it "should NOT handle a bracketed issue?/series? before the volume with a parenthesized phrase" do
+        -> {grammar.parse "[2] (Zool.) XV", root: :volume}.should raise_error Citrus::ParseError
+      end
+      it "should NOT handle a bracketed issue?/series? before the volume" do
+        -> {grammar.parse "[2] II", root: :volume}.should raise_error Citrus::ParseError
+      end
+      it "should NOT handle an 'issue without a volume'" do
+        -> {grammar.parse '(43)', root: :volume}.should raise_error Citrus::ParseError
+      end
+    end
+
   end
 
   describe "Date" do
@@ -189,6 +206,9 @@ describe 'SherbornGrammar' do
     end
     it "should handle c. Ap." do
       grammar.parse "c. Ap. 1833", root: :date
+    end
+    it "should handle c. plus date" do
+      grammar.parse 'c. Sept. 1833', root: :date
     end
     it "should handle full month name" do
       grammar.parse 'June 1847', root: :date
