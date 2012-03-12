@@ -55,10 +55,10 @@ grammar SherbornGrammar
   end
 
   rule volume_with_tab
-      (volume_number /,? /)? 'Tab.' ' ' 'Tort.'
-    | (volume_number /,? /)? 'Tab.' ' ' taxon_name
-    | (volume_number /,? /)? 'Tab.' ' ' bracketed_tab_number
-    | (volume_number /,? /)? 'Tab.'
+      (volume_number /,? /)? /Tab\.?/ ' ' 'Tort.'
+    | (volume_number /,? /)? /Tab\.?/ ' ' taxon_name
+    | (volume_number /,? /)? /Tab\.?/ ' ' bracketed_tab_number
+    | (volume_number /,? /)? /Tab\.?/
   end 
 
   rule volume_without_tab

@@ -119,6 +119,9 @@ describe 'SherbornGrammar' do
       it "should handle Tab. with a following word" do
         grammar.parse "Tab. Tort.", root: :volume
       end
+      it "should handle volume with Tab (missing period)" do
+        grammar.parse "III. Tab", root: :volume
+      end
     end
   end
 
