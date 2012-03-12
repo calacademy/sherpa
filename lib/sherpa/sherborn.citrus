@@ -65,6 +65,7 @@ grammar SherbornGrammar
     (edition ', ')?
     (
         volume_number ' ' issue (' ' parenthesized_phrase)?
+      | volume_number ' ' '(' volume_number ')'
       | '(' word ' ' volume_number ')'
       | volume_number ' ' parenthesized_phrase
       | issue ' ' volume_number

@@ -86,6 +86,9 @@ describe 'SherbornGrammar' do
     it "should handle a parenthesized volume prepended with word" do
       grammar.parse "(Haust. IV.)", root: :volume
     end
+    it "should handle a volume + parenthesized volume" do
+      grammar.parse "I (I)", root: :volume
+    end
     describe "Tab." do
       it "should handle a volume with a Tab." do
         grammar.parse 'II. Tab. Hamadryas amphinosa', root: :volume_with_tab
