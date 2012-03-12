@@ -31,7 +31,7 @@ uid	Status	Filename	Sequence	Page	NameString	NameStringSic	Genus	GenusSic	Subgen
     When I run `sherpa sherborn.txt`
     Then it should pass with:
     """
-    1 parsed (0 with unparsed part), 1 unparsed
+    2 parsed (0 with unparsed part), 0 unparsed
     """
 
   Scenario: The file name is not supplied
