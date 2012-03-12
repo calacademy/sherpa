@@ -21,6 +21,7 @@ grammar SherbornGrammar
       | (title /,? / volume /,? / date)
       | (title /,? / volume /,? / pages /,? / unparsed)
       | (title /,? / volume /,? / pages)
+      | (title /,? / date /,? / pages / / unparsed)
       | (title /,? / date /,? / pages)
       | (title /,? / date)
       | (title /,? / volume)

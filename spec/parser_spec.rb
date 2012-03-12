@@ -41,6 +41,9 @@ describe Sherpa::Parser do
     it "should handle TITLE DATE" do
       parse_and_check 'Classif. Batrach. 1838', 'Classif. Batrach.', nil, '1838', nil
     end
+    it "should handle TITLE, DATE, PAGE, NOTE" do
+      parser.parse "Abh. ph.- Kl. K. pr. Ak. Wiss. 1835, 169 [n. n.]"
+    end
     it "should handle a bracketed year range without a trailing comma followed by a plate section in parentheses" do
       parse_and_check "Ill. Indian Zool. I (—) [1830-2] (pl. 17)", 'Ill. Indian Zool.', 'I (-)', '[1830-2]', '(pl. 17)'
     end
