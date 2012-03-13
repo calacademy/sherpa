@@ -92,7 +92,7 @@ grammar SherbornGrammar
   rule other_part
     !date
     (
-      '(' capitalized_abbreviation ')'
+        parenthesized_phrase
       | lowercase_roman_number
     )
   end
@@ -259,7 +259,7 @@ grammar SherbornGrammar
   end
 
   rule parenthesized_phrase
-    /\([^)].+\)/
+    /\([^)]+\)/
   end
 
   rule taxon_name

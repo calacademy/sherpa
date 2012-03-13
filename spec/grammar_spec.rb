@@ -106,6 +106,9 @@ describe 'SherbornGrammar' do
     it "should handle a volume + issue + another part" do
       grammar.parse  "II (2) i", root: :volume
     end
+    it "should handle a volume + issue + another part" do
+      grammar.parse  "VII (2) (Noct. 4, pt. 2)", root: :volume
+    end
     describe "Tab." do
       it "should handle a volume with a Tab." do
         grammar.parse 'II. Tab. Hamadryas amphinosa', root: :volume_with_tab
