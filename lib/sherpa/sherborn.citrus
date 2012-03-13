@@ -176,7 +176,7 @@ grammar SherbornGrammar
 
   rule year_range
       /\d{4}-\d{1,2}/
-    | /\d{2,3}-/
+    | /\d{2,3}-\D?$/
   end
 
   rule year_conjunction
@@ -208,7 +208,10 @@ grammar SherbornGrammar
   end
 
   rule page_numbers
-    page_number (' & ' page_number)? | 'wrapper'
+      page_number ' & ' page_number
+    | page_number '-' page_number
+    | page_number
+    | 'wrapper'
   end
 
   rule page_number

@@ -249,11 +249,17 @@ describe 'SherbornGrammar' do
     it "should handle year inside parentheses with word" do
       grammar.parse '(Cambr. 1845)', root: :date
     end
+    it "should not consider this a date" do
+      -> {grammar.parse '186-199', root: :date}.should raise_error Citrus::ParseError
+    end
   end
 
   describe "Pages" do
     it "should handle page & page" do
       grammar.parse '2 & 4', root: :pages
+    end
+    it "should handle page range" do
+      grammar.parse '186-199', root: :pages
     end
     it "should handle a reference to a section of a plate" do
       grammar.parse "Volutes, pl. ii", root: :pages

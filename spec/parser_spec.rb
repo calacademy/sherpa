@@ -61,6 +61,11 @@ describe Sherpa::Parser do
         ]
       }
     end
+    it "should handle where the page looks like a year" do
+      parser.parse("Beitr. z. Nat. schädl. Ins. IV. 1836, 186-199").should == {
+        citations: [{title: 'Beitr. z. Nat. schädl. Ins.', volume: 'IV.', date: '1836', pages: '186-199'}]
+      }
+    end
     it "should handle multipart citations where both parts are complete" do
       parser.parse('Danske Atlas, I. 1763, 621 ; & Danischer Atlas, I. 1765, 401.').should == {
         citations: [
