@@ -20,6 +20,9 @@ describe Sherpa::Parser do
     it "should handle Linnaeus" do
       parse_and_check 'Linn. Syst. Nat., ed. 13, I. 1789, 1849.', 'Linn. Syst. Nat.', 'ed. 13, I.', '1789, 1849', nil
     end
+    it "should handle just a title" do
+      parse_and_check 'Conch. Icon', 'Conch. Icon', nil, nil, nil
+    end
     it "should handle TITLE VOLUME DATE, PAGE" do
       parse_and_check 'Ent. Syst. IV. 1794, 262', 'Ent. Syst.', 'IV.', '1794', '262'
     end

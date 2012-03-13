@@ -16,15 +16,15 @@ grammar SherbornGrammar
 
   #####################################
   rule citation
-    (   (title /,? / volume /,? / date /,? / pages)
-      | (title /,? / volume /,? / date /,? / unparsed)
-      | (title /,? / volume /,? / date)
-      | (title /,? / volume /,? / pages /,? / unparsed)
-      | (title /,? / volume /,? / pages)
-      | (title /,? / date /,? / pages / / unparsed)
-      | (title /,? / date /,? / pages)
-      | (title /,? / date)
-      | (title /,? / volume)
+    (   title /,? / volume /,? / date /,? / pages
+      | title /,? / volume /,? / date /,? / unparsed
+      | title /,? / volume /,? / date
+      | title /,? / volume /,? / pages /,? / unparsed
+      | title /,? / volume /,? / pages
+      | title /,? / date /,? / pages / / unparsed
+      | title /,? / date /,? / pages
+      | title /,? / date
+      | title (/,? / volume)?
     ) {
       value = 
         { title:  title.value,
